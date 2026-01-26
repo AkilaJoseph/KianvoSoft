@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+	<!-- Start Meta -->
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Bantec - IT Service & Technology HTML5 Template">
+	<meta name="keywords" content="Creative, Digital, multipage, landing, freelancer template">
+	<meta name="author" content="ThemeOri">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Title of Site -->
+	<title>{% block title%}kianvoSoft - Software Development and IT Consulting Service{% endblock title%}</title>
+	<!-- Favicons -->
+	<link rel="icon" type="image/png" href="{% static 'assets/img/favicon-1.png' %}">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="{% static 'assets/css/all.css' %}">
+	<!-- Flat Icon CSS -->
+	<link rel="stylesheet" href="{% static 'assets/webfonts/flat-icon/flaticon_bantec.css' %}">
+	<!-- Animate CSS -->
+	<link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+	<!-- Swiper Bundle CSS -->
+	<link rel="stylesheet" href="{% static 'assets/css/swiper-bundle.min.css' %}">
+	<!-- Slick CSS -->
+	<link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+	<!-- Magnific Popup CSS -->
+	<link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+	<!-- Mean Menu CSS -->
+	<link rel="stylesheet" href="{% static 'assets/css/meanmenu.min.css' %}">
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="{% static 'assets/sass/style.css' %}">
+</head>
+
+<body>
+	<!-- Preloader Start -->
+	 <div class="loader">
+		 <span class="loader-container"></span>
+	 </div>
+	<!-- Preloader End -->
+
+	<!-- Header Area Start -->
+	<div class="header__area header__sticky five">
+        <div class="container">
+            <div class="header__area-menubar">
+                <div class="header__area-menubar-left">
+                    <div class="header__area-menubar-left-logo">
+                        <a href="index.html"><img class="dark-n" src="{% static 'assets/img/logo-1.png' %}" alt="image"></a>
+                    </div>
+                </div>
+				<div class="header__area-menubar-center">
+                    <div class="header__area-menubar-center-menu menu-responsive">						
+                        <ul id="mobilemenu">
+                            <li class="menu-item-has-children">
+								<a href="#">Home<i class="fas fa-angle-down"></i></a>
+                                <ul class="sub-menu">
+                                    <li><a href="index.html">Home 01</a></li>
+                                    <li><a href="index-two.html">Home 02</a></li>								
+                                    <li><a href="index-three.html">Home 03</a></li>								
+                                    <li><a href="index-four.html">Home 04</a></li>								
+                                    <li><a href="index-five.html">Home 05</a></li>								
+                                </ul>
+                            </li>                            
+							<li class="menu-item-has-children"><a href="#">Pages <i class="fas fa-angle-down"></i></a>
+                                <ul class="sub-menu">
+									<li><a href="about.html">About Us</a></li>
+                                    <li><a href="testimonial.html">Testimonials</a></li>									
+                                    <li><a href="pricing-plan.html">Pricing Plan</a></li>								
+                                    <li><a href="faq.html">Faq</a></li>								
+                                    <li class="menu-item-has-children"><a href="#">Team<i class="fas fa-angle-right"></i></a>
+										<ul class="sub-menu">
+											<li><a href="team-one.html">Team 01</a></li>
+											<li><a href="team-two.html">Team 02</a></li>
+										</ul>
+									</li>
+                                    <li><a href="request-quote.html">Request Quote</a></li>
+                                    <li><a href="404.html">404</a></li>
+                                </ul>
+                            </li>
+							<li class="menu-item-has-children"><a href="#">Services <i class="fas fa-angle-down"></i></a>
+								<ul class="sub-menu">
+									<li><a href="service.html">Service 01</a></li>
+									<li><a href="service-two.html">Service 02</a></li>								
+									<li><a href="service-details.html">Service Details</a></li>						
+								</ul>
+							</li>
+                            <li class="menu-item-has-children"><a href="#">Portfolio <i class="fas fa-angle-down"></i></a>
+                                <ul class="sub-menu">
+									<li><a href="portfolio-slider.html">Slider Style</a></li>
+									<li><a href="portfolio-column-two.html">Column 2</a></li>
+									<li><a href="portfolio-column-three.html">Column 3</a></li>
+									<li><a href="project-details.html">Details</a></li>
+                                </ul>
+                            </li>
+							<li class="menu-item-has-children"><a href="#">Blog <i class="fas fa-angle-down"></i></a>
+                                <ul class="sub-menu">
+									<li class="menu-item-has-children"><a href="#">Blog Grid<i class="fas fa-angle-right"></i></a>
+										<ul class="sub-menu">
+											<li><a href="blog-grid-two.html">2 Columns</a></li>
+											<li><a href="blog-grid-three.html">3 Columns</a></li>
+										</ul>
+									</li>
+									<li><a href="blog-standard.html">Blog Standard</a></li>
+									<li><a href="blog-details.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children"><a href="#">Contact<i class="fas fa-angle-down"></i></a>
+                                <ul class="sub-menu">
+									<li><a href="contact.html">Contact Style 1</a></li>
+									<li><a href="contact-two.html">Contact Style 2</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+				</div>
+                <div class="header__area-menubar-right">
+                    <div class="header__area-menubar-right-box">
+						<div class="header__area-menubar-right-box-btn">
+							<a class="btn-one" href="request-quote.html">Get Started
+								<i class="fas fa-arrow-right"></i>
+							</a>
+						</div>
+                    </div>
+					<div class="responsive-menu"></div>
+                </div>
+            </div>
+        </div>
+    </div>    
+	<!-- Header Area End -->
+     
+
+   {% block content %} {% endblock content %}
+
+
+   <!-- Footer One Area Start -->
+	<div class="footer__five">
+		<div class="container pb-80">
+			<div class="row gy-4 justify-content-between">
+				<div class="col-xl-3 col-md-6 col-sm-7 xl-mb-30">
+					<div class="footer__five-widget">
+						<div class="footer__five-widget-about">
+							<a href="#"><img src="{% static 'assets/img/logo-1.png' %}" alt="image"></a>
+							<p>Financial planners help people to gain knowledge about</p>
+							<div class="footer__five-widget-about-social">
+								<ul>
+									<li><a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a></li>
+									<li><a href="https://www.twitter.com"><i class="fab fa-twitter"></i></a></li>
+									<li><a href="https://www.linkedin.com"><i class="fab fa-linkedin"></i></a></li>
+									<li><a href="https://www.pinterest.com"><i class="fab fa-pinterest-p"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-md-6 col-sm-5 sm-mb-30">
+					<div class="footer__five-widget border-one">
+						<h4 class="ml-60">Resources​</h4>
+						<div class="footer__five-widget-solution ml-60">
+							<ul>
+								<li><a href="services-right-sidebar.html">Service</a></li>
+								<li><a href="services-right-sidebar.html">FAQ</a></li>
+								<li><a href="services-right-sidebar.html">Testimonial</a></li>
+								<li><a href="services-right-sidebar.html">About Us</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-md-6 col-sm-5 sm-mb-30">
+					<div class="footer__five-widget border-one">
+						<h4>Service</h4>
+						<div class="footer__five-widget-solution">
+							<ul>
+								<li><a href="services-right-sidebar.html">Hosting Solution</a></li>
+								<li><a href="services-right-sidebar.html">Cyber Security</a></li>
+								<li><a href="services-right-sidebar.html">Network Analysis</a></li>
+								<li><a href="services-right-sidebar.html">Data Recovery</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-md-6 col-sm-6 sm-mb-30">
+					<div class="footer__five-widget border-one">
+						<h4>Contact</h4>
+						<div class="footer__five-widget-location">
+							<p>Call now for expert assistance with our software solutions</p>
+							<div class="footer__five-widget-location-item">
+								<div class="footer__five-widget-location-item-icon">
+									<i class="flaticon-telephone-call"></i>
+								</div>
+								<div class="footer__five-widget-location-item-info email">
+									<span>Make a call</span>
+									<a href="tel:+09(307)555-0133">+09 (307) 555-0133</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copyright__one two">
+			<div class="container">
+				<div class="row justify-content-between copyright__one-container-area">
+					<div class="col-xl-5 col-lg-6"> 
+						<div class="copyright__one-left">
+							<p>© ThemeOri  2026 | All Rights Reserved</p>
+						</div>
+					</div>
+					<div class="col-xl-5 col-lg-6">
+						<div class="copyright__one-right">
+							<a href="about.html">Privacy Policy</a>
+							<a href="contact.html">Contact Us</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer One Area End -->
+
+
+	<!-- Scroll Btn Start -->
+	<div class="scroll-up">
+		<svg class="scroll-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102"><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" /> </svg>
+	</div>
+	<!-- Scroll Btn End -->
+	<!-- Main JS -->
+	<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+	<!-- Bootstrap JS -->
+	<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+	<!-- Counter Up JS -->
+	<script src="{% static 'assets/js/jquery.counterup.min.js' %}"></script>
+	<!-- Popper JS -->
+	<script src="{% static 'assets/js/popper.min.js' %}"></script>
+	<!-- Progressbar JS -->
+	<script src="{% static 'assets/js/progressbar.min.js' %}"></script>
+	<!-- Magnific Popup JS -->
+	<script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+	<!-- Swiper Bundle JS -->
+	<script src="{% static 'assets/js/swiper-bundle.min.js' %}"></script>
+	<!-- Slick JS -->
+	<script src="{% static 'assets/js/slick.min.js' %}"></script>
+    <!-- Isotope JS -->
+	<script src="{% static 'assets/js/isotope.pkgd.min.js' %}"></script>
+	<!-- Waypoints JS -->
+	<script src="{% static 'assets/js/jquery.waypoints.min.js' %}"></script>
+	<!-- Mean Menu JS -->
+	<script src="{% static 'assets/js/jquery.meanmenu.min.js' %}"></script>
+	<!-- Custom JS -->
+	<script src="{% static 'assets/js/custom.js' %}"></script>
+</body>
+</html>

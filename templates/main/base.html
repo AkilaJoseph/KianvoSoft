@@ -7,14 +7,18 @@
 	<!-- Start Meta -->
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="KianvoSoft - Professional Software Development, Web, Mobile & AI Solutions in Tanzania">
-	<meta name="keywords" content="Software Development, Web Development, Mobile Apps, AI Solutions, Machine Learning, IT Consulting, Tanzania">
+	<meta name="description" content="KianvoSoft — Tanzania's homegrown technology company delivering software development, network infrastructure, CCTV systems, and tech education in Mbeya, Tanzania.">
+	<meta name="keywords" content="KianvoSoft, Software Development Tanzania, Network Infrastructure Mbeya, CCTV Installation, Tech Education Africa, SaaS Tanzania, AI Research East Africa">
 	<meta name="author" content="KianvoSoft">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Title of Site -->
-	<title>{% block title %}KianvoSoft - Software Development & IT Solutions{% endblock title %}</title>
+	<title>{% block title %}KianvoSoft — Technology & Software Solutions{% endblock title %}</title>
 	<!-- Favicons -->
 	<link rel="icon" type="image/png" href="{% static 'assets/img/favicon-1.png' %}">
+	<!-- Google Fonts: Outfit + Inter -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
 	<!-- Font Awesome CSS -->
@@ -33,6 +37,8 @@
 	<link rel="stylesheet" href="{% static 'assets/css/meanmenu.min.css' %}">
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="{% static 'assets/sass/style.css' %}">
+	<!-- Futuristic Theme Override -->
+	<link rel="stylesheet" href="{% static 'assets/css/futuristic.css' %}">
 </head>
 
 <body>
@@ -49,7 +55,7 @@
 				<div class="col-xl-7 col-md-7">
 					<div class="top__bar-left">
 						<a href="tel:+255687445294"><i class="fas fa-phone-alt"></i>+255 687 445 294</a>
-						<a href="mailto:info@kianvosoft.com"><i class="fas fa-envelope"></i>info@kianvosoft.com</a>
+						<a href="mailto:info@kianvosoft.co.tz"><i class="fas fa-envelope"></i>info@kianvosoft.co.tz</a>
 					</div>
 				</div>
 				<div class="col-xl-5 col-md-5">
@@ -79,12 +85,12 @@
 							<li class="menu-item-has-children"><a href="{% url 'services' %}">Services <i class="fas fa-angle-down"></i></a>
 								<ul class="sub-menu">
 									<li><a href="{% url 'services' %}">All Services</a></li>
-									<li><a href="{% url 'services' %}#software">Custom Software Development</a></li>
-									<li><a href="{% url 'services' %}#web">Web Application Development</a></li>
-									<li><a href="{% url 'services' %}#mobile">Mobile App Development</a></li>
-									<li><a href="{% url 'services' %}#ai">AI & Machine Learning</a></li>
-									<li><a href="{% url 'services' %}#automation">Automation Systems</a></li>
-									<li><a href="{% url 'services' %}#consulting">IT Consulting</a></li>
+									<li><a href="{% url 'services' %}#software">Software Development</a></li>
+									<li><a href="{% url 'services' %}#network">Network Infrastructure</a></li>
+									<li><a href="{% url 'services' %}#cctv">CCTV & Security</a></li>
+									<li><a href="{% url 'services' %}#training">Tech Training</a></li>
+									<li><a href="{% url 'services' %}#academy">KianvoSoft Academy</a></li>
+									<li><a href="{% url 'services' %}#saas">SaaS Products</a></li>
 								</ul>
 							</li>
 							<li><a href="{% url 'portfolio' %}">Portfolio</a></li>
@@ -111,7 +117,7 @@
 							<div class="header__area-menubar-right-sidebar-popup-logo">
 								<a href="{% url 'home' %}"><img src="{% static 'assets/img/logo-2.png' %}" alt="KianvoSoft"></a>
 							</div>
-							<p>KianvoSoft is a technology-driven company delivering advanced software, AI, and digital solutions. We help businesses transform through innovative technology.</p>
+							<p>KianvoSoft is a Tanzanian-born technology company headquartered in Mbeya. We develop modern software, provide ICT infrastructure services, and deliver quality technology education.</p>
 							<div class="header__area-menubar-right-sidebar-popup-contact">
 								<h4 class="mb-30">Get In Touch</h4>
 								<div class="header__area-menubar-right-sidebar-popup-contact-item">
@@ -138,7 +144,7 @@
 									</div>
 									<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
 										<span>Quick Email</span>
-										<h6><a href="mailto:info@kianvosoft.com">info@kianvosoft.com</a></h6>
+										<h6><a href="mailto:info@kianvosoft.co.tz">info@kianvosoft.co.tz</a></h6>
 									</div>
 								</div>
 								<div class="header__area-menubar-right-sidebar-popup-contact-item">
@@ -182,7 +188,7 @@
 					<div class="footer__five-widget">
 						<div class="footer__five-widget-about">
 							<a href="{% url 'home' %}"><img src="{% static 'assets/img/logo-1.png' %}" alt="KianvoSoft"></a>
-							<p>Delivering advanced software, AI, and digital solutions to drive business growth and innovation.</p>
+							<p>Developing modern software solutions and providing quality technology education for Tanzanian and African communities. Based in Mbeya, Tanzania.</p>
 							<div class="footer__five-widget-about-social">
 								<ul>
 									<li><a href="https://facebook.com/kianvosoft" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
@@ -214,12 +220,12 @@
 						<h4>Our Services</h4>
 						<div class="footer__five-widget-solution">
 							<ul>
-								<li><a href="{% url 'services' %}#software">Custom Software</a></li>
-								<li><a href="{% url 'services' %}#web">Web Development</a></li>
-								<li><a href="{% url 'services' %}#mobile">Mobile Apps</a></li>
-								<li><a href="{% url 'services' %}#ai">AI & Machine Learning</a></li>
-								<li><a href="{% url 'services' %}#automation">Automation Systems</a></li>
-								<li><a href="{% url 'services' %}#consulting">IT Consulting</a></li>
+								<li><a href="{% url 'services' %}#software">Software Development</a></li>
+								<li><a href="{% url 'services' %}#network">Network Infrastructure</a></li>
+								<li><a href="{% url 'services' %}#cctv">CCTV & Security</a></li>
+								<li><a href="{% url 'services' %}#training">Tech Training</a></li>
+								<li><a href="{% url 'services' %}#academy">KianvoSoft Academy</a></li>
+								<li><a href="{% url 'services' %}#saas">SaaS Products</a></li>
 							</ul>
 						</div>
 					</div>
@@ -228,7 +234,7 @@
 					<div class="footer__five-widget border-one">
 						<h4>Contact Us</h4>
 						<div class="footer__five-widget-location">
-							<p>Ready to start your project? Get in touch with us today.</p>
+							<p>Mbeya Region, Tanzania — East Africa's rising tech hub.</p>
 							<div class="footer__five-widget-location-item">
 								<div class="footer__five-widget-location-item-icon">
 									<i class="flaticon-telephone-call"></i>
@@ -266,7 +272,7 @@
 				<div class="row justify-content-between copyright__one-container-area">
 					<div class="col-xl-5 col-lg-6">
 						<div class="copyright__one-left">
-							<p>&copy; KianvoSoft 2026 | All Rights Reserved</p>
+							<p>&copy; KianvoSoft 2025–2026 | All Rights Reserved</p>
 						</div>
 					</div>
 					<div class="col-xl-5 col-lg-6">
@@ -312,5 +318,85 @@
 	<script src="{% static 'assets/js/jquery.meanmenu.min.js' %}"></script>
 	<!-- Custom JS -->
 	<script src="{% static 'assets/js/custom.js' %}"></script>
+
+	<!-- Futuristic Enhancements -->
+	<script>
+	// Scroll-based reveal animation using IntersectionObserver
+	document.addEventListener('DOMContentLoaded', function() {
+		var reveals = document.querySelectorAll('.ks-reveal');
+		if ('IntersectionObserver' in window) {
+			var observer = new IntersectionObserver(function(entries) {
+				entries.forEach(function(entry) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('ks-visible');
+						observer.unobserve(entry.target);
+					}
+				});
+			}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+			reveals.forEach(function(el) { observer.observe(el); });
+		} else {
+			reveals.forEach(function(el) { el.classList.add('ks-visible'); });
+		}
+
+		// Particle canvas (lightweight constellation effect)
+		var canvas = document.getElementById('ks-particles-canvas');
+		if (canvas) {
+			var ctx = canvas.getContext('2d');
+			var particles = [];
+			var particleCount = 60;
+
+			function resizeCanvas() {
+				canvas.width = canvas.parentElement.offsetWidth;
+				canvas.height = canvas.parentElement.offsetHeight;
+			}
+			resizeCanvas();
+			window.addEventListener('resize', resizeCanvas);
+
+			function Particle() {
+				this.x = Math.random() * canvas.width;
+				this.y = Math.random() * canvas.height;
+				this.vx = (Math.random() - 0.5) * 0.5;
+				this.vy = (Math.random() - 0.5) * 0.5;
+				this.radius = Math.random() * 2 + 0.5;
+			}
+
+			for (var i = 0; i < particleCount; i++) {
+				particles.push(new Particle());
+			}
+
+			function drawParticles() {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				particles.forEach(function(p, i) {
+					p.x += p.vx;
+					p.y += p.vy;
+					if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+					if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+					ctx.beginPath();
+					ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+					ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
+					ctx.fill();
+
+					// Draw connections
+					for (var j = i + 1; j < particles.length; j++) {
+						var dx = p.x - particles[j].x;
+						var dy = p.y - particles[j].y;
+						var dist = Math.sqrt(dx * dx + dy * dy);
+						if (dist < 120) {
+							ctx.beginPath();
+							ctx.moveTo(p.x, p.y);
+							ctx.lineTo(particles[j].x, particles[j].y);
+							ctx.strokeStyle = 'rgba(0, 240, 255, ' + (0.12 - dist / 1000) + ')';
+							ctx.lineWidth = 0.5;
+							ctx.stroke();
+						}
+					}
+				});
+				requestAnimationFrame(drawParticles);
+			}
+			drawParticles();
+		}
+	});
+	</script>
 </body>
 </html>

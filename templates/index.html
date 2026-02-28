@@ -1,110 +1,89 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}KianvoSoft - Professional Software Development, Web, Mobile & AI Solutions{% endblock title %}
+{% block title %}KianvoSoft — Elevating Software, Education & Technology in Tanzania{% endblock title %}
 {% block content %}
 
-<!-- Banner Area Start -->
-<div class="banner__five" style="background-image: url({% static 'assets/img/banner/banner-five-bg.png' %});">
+<!-- Hero Banner Start -->
+<div class="banner__five"
+	style="background: var(--ks-gradient-hero); min-height: 92vh; display: flex; align-items: center;">
+	<canvas id="ks-particles-canvas"></canvas>
 	<div class="container">
 		<div class="row align-items-center gy-4 justify-content-center">
-			<div class="col-xl-7 col-lg-6">
-				<div class="banner__five-content">
-					<span class="subtitle-one">Innovation Meets Excellence</span>
-					<h2>Transforming Ideas Into Powerful Software Solutions</h2>
-					<p>KianvoSoft delivers cutting-edge software development, web applications, mobile apps, and AI solutions that drive business growth and digital transformation.</p>
-					<div class="banner__five-content-bottom">
-						<a href="{% url 'contact' %}" class="btn-two">Get a Quote
+			<div class="col-xl-7 col-lg-8">
+				<div class="banner__five-content ks-reveal">
+					<span class="subtitle-one">🇹🇿 Tanzania's Homegrown Tech Company</span>
+					<h2 style="font-size: 3.4rem; line-height: 1.12; margin-bottom: 20px;">
+						Elevating <span class="ks-gradient-text">Software, Education</span> & Technology in Africa
+					</h2>
+					<p style="font-size: 1.2rem; max-width: 560px; margin-bottom: 30px;">We build modern software,
+						install network & CCTV infrastructure, and train the next generation of Tanzanian developers.
+						Based in Mbeya — building for Africa.</p>
+					<div class="banner__five-content-bottom" style="display: flex; gap: 15px; flex-wrap: wrap;">
+						<a href="{% url 'services' %}" class="btn-one">Explore Services
 							<i class="fas fa-arrow-right"></i>
 						</a>
-						<a href="{% url 'services' %}" class="btn-one">Our Services
+						<a href="{% url 'contact' %}" class="btn-two">Get a Quote
 							<i class="fas fa-arrow-right"></i>
 						</a>
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-5 col-lg-6 col-md-9">
-				<div class="banner__five-image">
+			<div class="col-xl-5 col-lg-4 col-md-8">
+				<div class="banner__five-image ks-reveal ks-reveal-delay-2">
 					<div class="banner__five-image-wrapper">
-						<img src="{% static 'assets/img/banner/banner-five.png' %}" alt="KianvoSoft Software Development">
-						<img src="{% static 'assets/img/banner/banner-five-2.png' %}" class="img-2 animate-y-axis" alt="Technology Solutions">
+						<img src="{% static 'assets/img/banner/banner-five.png' %}"
+							alt="KianvoSoft Software Development">
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- Banner Area End -->
+<!-- Hero Banner End -->
 
-<!-- About Area Start -->
-<div class="about__five section-padding" style="background-image: url({% static 'assets/img/about/about-five-bg.png' %});">
-
-	<!-- Brand Area Start -->
-	<div class="brand__area mb-120">
-		<div class="container">
-			<div class="row justify-content-center text-center mb-50">
-				<div class="col-xl-6 col-lg-7 col-md-9">
-					<span class="subtitle-one">Trusted By</span>
-					<h2>Our Technology Partners</h2>
-				</div>
-			</div>
-			<div class="row brand__area-border">
-				<div class="col-xl-12">
-					<div class="swiper brand__slider">
-						<div class="swiper-wrapper">
-							<div class="brand__area-item swiper-slide">
-								<img src="{% static 'assets/img/brand/brand-1.png' %}" alt="Partner">
-							</div>
-							<div class="brand__area-item swiper-slide">
-								<img src="{% static 'assets/img/brand/brand-2.png' %}" alt="Partner">
-							</div>
-							<div class="brand__area-item swiper-slide">
-								<img src="{% static 'assets/img/brand/brand-3.png' %}" alt="Partner">
-							</div>
-							<div class="brand__area-item swiper-slide">
-								<img src="{% static 'assets/img/brand/brand-4.png' %}" alt="Partner">
-							</div>
-							<div class="brand__area-item swiper-slide">
-								<img src="{% static 'assets/img/brand/brand-5.png' %}" alt="Partner">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Brand Area End -->
-
+<!-- About Teaser Start -->
+<div class="about__five section-padding" style="background: var(--ks-bg-primary);">
 	<div class="container">
 		<div class="row align-items-center flex-wrap-reverse gy-4">
-			<div class="col-xl-6 col-lg-8">
-				<div class="about__five-image">
+			<div class="col-xl-6 col-lg-6">
+				<div class="about__five-image ks-reveal">
 					<div class="about__five-image-wrapper">
 						<img src="{% static 'assets/img/about/about-five-1.png' %}" alt="About KianvoSoft">
-						<img src="{% static 'assets/img/about/about-five-2.png' %}" alt="" class="image-2 animate-y-axis-slider">
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-6 col-lg-7 col-md-9">
-				<div class="about__five-content">
-					<span class="subtitle-one">About KianvoSoft</span>
-					<h2>Your Trusted Technology Partner for Digital Excellence</h2>
-					<div class="about__five-content-service">
-						<div class="single-service">
-							<i class="fas fa-check-circle"></i>
+			<div class="col-xl-6 col-lg-6 col-md-9">
+				<div class="about__five-content ks-reveal ks-reveal-delay-2">
+					<span class="subtitle-one">Who We Are</span>
+					<h2>Tanzania's Rising Technology Company</h2>
+					<p style="font-size: 1.05rem; line-height: 1.8;">KianvoSoft is an early-stage technology company
+						based in Mbeya, Tanzania, founded by three software developers who share a common vision: to
+						elevate software development and technology adoption so that Tanzania — and Africa at large —
+						can move from one stage of development to the next.</p>
+					<div class="about__five-content-service" style="margin-top: 25px;">
+						<div class="single-service"
+							style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+							<i class="fas fa-check-circle" style="color: var(--ks-cyan);"></i>
 							<div class="single-service-content">
-								<h4>Custom Software Development</h4>
-								<p>Tailored solutions designed to meet your unique business requirements and drive operational efficiency.</p>
+								<h4 style="margin: 0; font-size: 1rem;">Software & ICT Solutions</h4>
 							</div>
 						</div>
-						<div class="single-service">
-							<i class="fas fa-check-circle"></i>
+						<div class="single-service"
+							style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+							<i class="fas fa-check-circle" style="color: var(--ks-cyan);"></i>
 							<div class="single-service-content">
-								<h4>AI & Machine Learning</h4>
-								<p>Harness the power of artificial intelligence to automate processes and gain actionable insights.</p>
+								<h4 style="margin: 0; font-size: 1rem;">Technology Education in Swahili & English</h4>
+							</div>
+						</div>
+						<div class="single-service"
+							style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+							<i class="fas fa-check-circle" style="color: var(--ks-cyan);"></i>
+							<div class="single-service-content">
+								<h4 style="margin: 0; font-size: 1rem;">Applied AI Research for African Challenges</h4>
 							</div>
 						</div>
 					</div>
-					<a href="{% url 'about' %}" class="btn-one">Learn More About Us
+					<a href="{% url 'about' %}" class="btn-one" style="margin-top: 20px;">Learn More About Us
 						<i class="fas fa-arrow-right"></i>
 					</a>
 				</div>
@@ -112,97 +91,75 @@
 		</div>
 	</div>
 </div>
-<!-- About Area End -->
+<!-- About Teaser End -->
 
-<!-- Services Area Start -->
-<div class="services__five section-padding">
+<!-- Current Services Start -->
+<div class="services__five section-padding" style="background: var(--ks-bg-secondary);">
 	<div class="container">
 		<div class="row justify-content-center text-center mb-50">
-			<div class="col-xl-7 col-lg-7 col-md-9">
-				<span class="subtitle-one">Our Services</span>
-				<h2>Comprehensive Technology Solutions for Your Business</h2>
+			<div class="col-xl-7 col-lg-8 col-md-10">
+				<span class="subtitle-one ks-reveal">What We Do Today</span>
+				<h2 class="ks-reveal ks-reveal-delay-1">Our Current Services</h2>
+				<p class="ks-reveal ks-reveal-delay-2">We operate across four high-impact areas — generating revenue
+					today while building toward tomorrow.</p>
 			</div>
 		</div>
 		<div class="row gy-4 justify-content-center">
-			<div class="col-xl-4 col-lg-4 col-md-6" id="software">
-				<div class="services__five-single-service">
+			<div class="col-xl-3 col-lg-6 col-md-6">
+				<div class="services__five-single-service ks-reveal ks-reveal-delay-1" style="min-height: 280px;">
 					<div class="services__five-single-service-icon">
 						<i class="flaticon-software-development"></i>
 					</div>
 					<div class="services__five-single-service-content">
 						<h4>Custom Software Development</h4>
-						<p>Build scalable, secure, and high-performance software tailored to your business needs.</p>
+						<p>Web and mobile applications, management systems, e-commerce platforms, and automation tools
+							for businesses and institutions.</p>
 						<a href="{% url 'services' %}#software" class="btn-three">Learn More
 							<i class="fas fa-arrow-right"></i>
 						</a>
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-4 col-lg-4 col-md-6" id="web">
-				<div class="services__five-single-service">
+			<div class="col-xl-3 col-lg-6 col-md-6">
+				<div class="services__five-single-service ks-reveal ks-reveal-delay-2" style="min-height: 280px;">
 					<div class="services__five-single-service-icon">
-						<i class="flaticon-web-research"></i>
+						<i class="flaticon-satellite-signal"></i>
 					</div>
 					<div class="services__five-single-service-content">
-						<h4>Web Application Development</h4>
-						<p>Modern, responsive web applications using the latest technologies and frameworks.</p>
-						<a href="{% url 'services' %}#web" class="btn-three">Learn More
+						<h4>Network Infrastructure</h4>
+						<p>Planning, installation, and maintenance of LANs, fibre connections, and wireless systems for
+							offices and schools in Mbeya.</p>
+						<a href="{% url 'services' %}#network" class="btn-three">Learn More
 							<i class="fas fa-arrow-right"></i>
 						</a>
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-4 col-lg-4 col-md-6" id="mobile">
-				<div class="services__five-single-service">
+			<div class="col-xl-3 col-lg-6 col-md-6">
+				<div class="services__five-single-service ks-reveal ks-reveal-delay-3" style="min-height: 280px;">
 					<div class="services__five-single-service-icon">
-						<i class="flaticon-mobile-phone-1"></i>
+						<i class="flaticon-cyber-security"></i>
 					</div>
 					<div class="services__five-single-service-content">
-						<h4>Mobile App Development</h4>
-						<p>Native and cross-platform mobile applications for Android and iOS platforms.</p>
-						<a href="{% url 'services' %}#mobile" class="btn-three">Learn More
+						<h4>CCTV & Security</h4>
+						<p>Supply, installation, and configuration of surveillance systems for homes, businesses, and
+							institutions across the region.</p>
+						<a href="{% url 'services' %}#cctv" class="btn-three">Learn More
 							<i class="fas fa-arrow-right"></i>
 						</a>
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-4 col-lg-4 col-md-6" id="ai">
-				<div class="services__five-single-service">
-					<div class="services__five-single-service-icon">
-						<i class="flaticon-data-scientist"></i>
-					</div>
-					<div class="services__five-single-service-content">
-						<h4>AI & Machine Learning</h4>
-						<p>Intelligent solutions powered by artificial intelligence and machine learning algorithms.</p>
-						<a href="{% url 'services' %}#ai" class="btn-three">Learn More
-							<i class="fas fa-arrow-right"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-4 col-md-6" id="automation">
-				<div class="services__five-single-service">
-					<div class="services__five-single-service-icon">
-						<i class="flaticon-computer-mouse"></i>
-					</div>
-					<div class="services__five-single-service-content">
-						<h4>Automation Systems</h4>
-						<p>Streamline your operations with intelligent automation and workflow optimization.</p>
-						<a href="{% url 'services' %}#automation" class="btn-three">Learn More
-							<i class="fas fa-arrow-right"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-4 col-md-6" id="consulting">
-				<div class="services__five-single-service">
+			<div class="col-xl-3 col-lg-6 col-md-6">
+				<div class="services__five-single-service ks-reveal ks-reveal-delay-4" style="min-height: 280px;">
 					<div class="services__five-single-service-icon">
 						<i class="flaticon-consultant"></i>
 					</div>
 					<div class="services__five-single-service-content">
-						<h4>IT Consulting & Support</h4>
-						<p>Expert guidance and technical support to help you make informed technology decisions.</p>
-						<a href="{% url 'services' %}#consulting" class="btn-three">Learn More
+						<h4>Short Courses & Training</h4>
+						<p>Practical technology courses for students, young professionals, and employees — programming,
+							networking, and digital tools.</p>
+						<a href="{% url 'services' %}#training" class="btn-three">Learn More
 							<i class="fas fa-arrow-right"></i>
 						</a>
 					</div>
@@ -211,136 +168,226 @@
 		</div>
 	</div>
 </div>
-<!-- Services Area End -->
+<!-- Current Services End -->
 
-<!-- Work Process Area Start -->
-<div class="work-process__three" style="background-image: url({% static 'assets/img/work-process/work-process-bg-2.png' %});">
+<!-- Stats Counter Section Start -->
+<div class="ks-stats-section">
+	<div class="container">
+		<div class="row gy-4 justify-content-center">
+			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
+				<div class="ks-stat-card ks-reveal ks-reveal-delay-1">
+					<div class="ks-stat-icon"><i class="flaticon-software-development"></i></div>
+					<div class="ks-stat-number"><span class="counter">50</span>+</div>
+					<div class="ks-stat-label">Projects Delivered</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
+				<div class="ks-stat-card ks-reveal ks-reveal-delay-2">
+					<div class="ks-stat-icon"><i class="flaticon-consultant"></i></div>
+					<div class="ks-stat-number"><span class="counter">40</span>+</div>
+					<div class="ks-stat-label">Students Trained</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
+				<div class="ks-stat-card ks-reveal ks-reveal-delay-3">
+					<div class="ks-stat-icon"><i class="flaticon-telephone-call"></i></div>
+					<div class="ks-stat-number"><span class="counter">10</span>+</div>
+					<div class="ks-stat-label">Active Clients</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
+				<div class="ks-stat-card ks-reveal ks-reveal-delay-4">
+					<div class="ks-stat-icon"><i class="flaticon-data-scientist"></i></div>
+					<div class="ks-stat-number"><span class="counter">3</span></div>
+					<div class="ks-stat-label">Co-Founders</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Stats Counter Section End -->
+
+<!-- Future Vision Section Start -->
+<div class="section-padding" style="background: var(--ks-bg-primary);">
 	<div class="container">
 		<div class="row justify-content-center text-center mb-50">
-			<div class="col-xl-6 col-lg-7 col-md-9">
-				<span class="subtitle-one">How We Work</span>
-				<h2>Our Development Process</h2>
+			<div class="col-xl-7 col-lg-8 col-md-10">
+				<span class="subtitle-one ks-reveal">Where We're Heading</span>
+				<h2 class="ks-reveal ks-reveal-delay-1">Building the Future</h2>
+				<p class="ks-reveal ks-reveal-delay-2">Beyond today's services, we're building products and institutions
+					that will shape Tanzania's digital future.</p>
 			</div>
 		</div>
-		<div class="work-process__three-card">
-			<div class="work-process__three-card-arrows">
-				<img src="{% static 'assets/img/work-process/work-process-arrow-1.png' %}" alt="" class="arrow-1">
-				<img src="{% static 'assets/img/work-process/work-process-arrow-2.png' %}" alt="" class="arrow-2">
-				<img src="{% static 'assets/img/work-process/work-process-arrow-1.png' %}" alt="" class="arrow-3">
-			</div>
-			<div class="work-process__three-card-single">
-				<h3>01</h3>
-				<h5>Discovery & Planning</h5>
-				<p>We analyze your requirements, understand your goals, and create a comprehensive project roadmap.</p>
-			</div>
-			<div class="work-process__three-card-single middle">
-				<h3>02</h3>
-				<h5>Design & Development</h5>
-				<p>Our experts craft elegant solutions using cutting-edge technologies and best practices.</p>
-			</div>
-			<div class="work-process__three-card-single">
-				<h3>03</h3>
-				<h5>Testing & Deployment</h5>
-				<p>Rigorous testing ensures quality, followed by seamless deployment and ongoing support.</p>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Work Process Area End -->
-
-<!-- Technology Solution Start -->
-<div class="technology-solution__one section-padding">
-	<div class="container">
-		<div class="row align-items-center gy-4">
-			<div class="col-xl-6 col-lg-6 col-md-9">
-				<div class="technology-solution__one-content">
-					<span class="subtitle-one">Why Choose KianvoSoft</span>
-					<h2>Technology Excellence That Drives Results</h2>
-					<p>We combine technical expertise with business acumen to deliver solutions that not only work but also drive measurable business outcomes. Our team stays ahead of technology trends to bring you the most innovative solutions.</p>
-					<div class="satisfied-customer-counter">
-						<div class="counter-wrapper">
-							<h3 class="counter">50</h3>
-							<h3>+</h3>
-						</div>
-						<span>Projects Delivered</span>
-					</div>
+		<div class="row gy-4 justify-content-center">
+			<div class="col-xl-4 col-lg-4 col-md-6">
+				<div class="ks-vision-card ks-reveal ks-reveal-delay-1">
+					<div class="ks-vision-icon"><i class="flaticon-consultant"></i></div>
+					<span class="ks-badge ks-badge-upcoming">2026–2027</span>
+					<h4>KianvoSoft Academy</h4>
+					<p>A structured coding and technology academy offering courses in software development, networking,
+						data science, and digital business — in Swahili and English.</p>
 				</div>
 			</div>
-			<div class="col-xl-6 col-lg-6">
-				<div class="technology-solution__one-image">
-					<div class="technology-solution__one-image-wrapper">
-						<img src="{% static 'assets/img/technology-solution/tech-solution-one.png' %}" alt="Technology Solutions">
-					</div>
+			<div class="col-xl-4 col-lg-4 col-md-6">
+				<div class="ks-vision-card ks-reveal ks-reveal-delay-2">
+					<div class="ks-vision-icon"><i class="flaticon-cloud-computing"></i></div>
+					<span class="ks-badge ks-badge-upcoming">2026–2028</span>
+					<h4>SaaS Products</h4>
+					<p>Software-as-a-Service products designed for Tanzanian markets — school management systems,
+						farmers' market platforms, and micro-business accounting tools.</p>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-4 col-md-6">
+				<div class="ks-vision-card ks-reveal ks-reveal-delay-3">
+					<div class="ks-vision-icon"><i class="flaticon-data-scientist"></i></div>
+					<span class="ks-badge ks-badge-upcoming">2026–2030</span>
+					<h4>AI Research Unit</h4>
+					<p>Applied AI research in collaboration with universities — Swahili NLP, agricultural AI, and
+						health-tech tools for rural communities.</p>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- Technology Solution End -->
+<!-- Future Vision Section End -->
 
-<!-- Why Choose Us Area Start -->
-<div class="why-choose-us__four section-padding">
+<!-- Why Choose Us Start -->
+<div class="section-padding" style="background: var(--ks-bg-secondary);">
 	<div class="container">
 		<div class="row gy-4 align-items-center">
 			<div class="col-xl-6 col-lg-6 col-md-10">
-				<div class="why-choose-us__four-image">
-					<img src="{% static 'assets/img/why-choose-us/why-choose-us-four-2.png' %}" alt="" class="why-choose-us__four-floating-image animate-y-axis-slider">
-					<img src="{% static 'assets/img/why-choose-us/why-choose-us-four.png' %}" alt="Why Choose KianvoSoft">
+				<div class="ks-reveal">
+					<span class="subtitle-one">Why KianvoSoft</span>
+					<h2 style="margin-top: 15px;">Our Unfair Advantage</h2>
+					<p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 30px;">KianvoSoft occupies a
+						distinctive position in the market that is difficult for foreign competitors to replicate.</p>
+					<ul class="ks-checklist">
+						<li><i class="fas fa-check-circle"></i> <strong>Local Language:</strong> We build and teach in
+							Swahili, reaching a wider population</li>
+						<li><i class="fas fa-check-circle"></i> <strong>Regional Presence:</strong> First-mover
+							advantage in Mbeya — Tanzania's underserved secondary market</li>
+						<li><i class="fas fa-check-circle"></i> <strong>Affordable Pricing:</strong> We understand
+							Tanzanian purchasing power without sacrificing quality</li>
+						<li><i class="fas fa-check-circle"></i> <strong>Cultural Relevance:</strong> Software designed
+							around Tanzanian workflows, regulations, and social norms</li>
+						<li><i class="fas fa-check-circle"></i> <strong>Community Trust:</strong> Local founders
+							building relationships external firms cannot replicate</li>
+					</ul>
+					<a href="{% url 'about' %}" class="btn-one" style="margin-top: 25px;">Learn More
+						<i class="fas fa-arrow-right"></i>
+					</a>
 				</div>
 			</div>
-			<div class="col-xl-5 col-lg-7 col-md-9">
-				<div class="why-choose-us__four-left">
-					<div class="why-choose-us__four-title">
-						<span class="subtitle-one">Why Choose Us</span>
-						<h2>KianvoSoft - Your Trusted Technology Partner</h2>
-						<p>With expertise in software development, AI, and digital solutions, we ensure your business stays ahead in the digital landscape, driving success and growth together.</p>
-						<div class="why-choose-us__four-progress-bar">
-							<div class="why-choose-us__four-progress-bar-wrapper">
-								<div class="single-progress-bar">
-									<span>95%</span>
-								</div>
-								<h3>Client Satisfaction</h3>
-							</div>
-							<div class="why-choose-us__four-progress-bar-wrapper">
-								<div class="single-progress-bar">
-									<span>100%</span>
-								</div>
-								<h3>On-Time Delivery</h3>
-							</div>
-						</div>
+			<div class="col-xl-6 col-lg-6">
+				<div class="ks-reveal ks-reveal-delay-2">
+					<div class="why-choose-us__four-image">
+						<img src="{% static 'assets/img/why-choose-us/why-choose-us-four.png' %}"
+							alt="Why Choose KianvoSoft">
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- Why Choose Us Area End -->
+<!-- Why Choose Us End -->
+
+<!-- Strategic Roadmap Start -->
+<div class="ks-roadmap-section">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-7 col-lg-8 col-md-10">
+				<span class="subtitle-one ks-reveal">Our Journey</span>
+				<h2 class="ks-reveal ks-reveal-delay-1">Strategic Roadmap 2025–2030</h2>
+				<p class="ks-reveal ks-reveal-delay-2">A clear, phased roadmap with measurable milestones — from
+					foundation to East African leadership.</p>
+			</div>
+		</div>
+		<div class="ks-timeline">
+			<div class="ks-timeline-item ks-reveal">
+				<div class="ks-timeline-card">
+					<div class="ks-timeline-year">2025</div>
+					<div class="ks-timeline-title">Foundation</div>
+					<p class="ks-timeline-desc">Raise seed funding. Secure physical office in Mbeya. Grow to 10+ active
+						projects. Deliver short courses with 40+ students. Build brand presence.</p>
+				</div>
+			</div>
+			<div class="ks-timeline-item ks-reveal ks-reveal-delay-1">
+				<div class="ks-timeline-card">
+					<div class="ks-timeline-year">2026</div>
+					<div class="ks-timeline-title">Growth</div>
+					<p class="ks-timeline-desc">Launch KianvoSoft Academy formally. Hire 3 additional staff. Grow to 30+
+						clients. Train 120+ students. Begin first SaaS product development.</p>
+				</div>
+			</div>
+			<div class="ks-timeline-item ks-reveal ks-reveal-delay-2">
+				<div class="ks-timeline-card">
+					<div class="ks-timeline-year">2027</div>
+					<div class="ks-timeline-title">Expansion</div>
+					<p class="ks-timeline-desc">Release first SaaS product (beta). Expand course catalogue to 8+
+						programmes. Market to Dar es Salaam, Dodoma, and Arusha. Train 350+ students.</p>
+				</div>
+			</div>
+			<div class="ks-timeline-item ks-reveal ks-reveal-delay-3">
+				<div class="ks-timeline-card">
+					<div class="ks-timeline-year">2028</div>
+					<div class="ks-timeline-title">Scaling</div>
+					<p class="ks-timeline-desc">SaaS subscriptions live and growing. AI research unit established. Staff
+						of 12+. Explore East African markets — Kenya, Uganda, Rwanda.</p>
+				</div>
+			</div>
+			<div class="ks-timeline-item ks-reveal ks-reveal-delay-4">
+				<div class="ks-timeline-card">
+					<div class="ks-timeline-year">2029–2030</div>
+					<div class="ks-timeline-title">Leadership</div>
+					<p class="ks-timeline-desc">Tanzania's best-known homegrown tech company. 1,000+ students trained.
+						200+ active clients. $250,000+ annual revenue. Pan-African digital reach.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Strategic Roadmap End -->
 
 <!-- Testimonial Area Start -->
-<div class="testimonial__four">
-	<div class="testimonial__four-card">
-		<div class="testimonial__four-card-profile">
-			<img src="{% static 'assets/img/testimonial/user-pic-2.png' %}" alt="Client Testimonial">
+<div class="testimonial__four" style="background: var(--ks-bg-secondary); padding: 80px 0;">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-6 col-lg-7">
+				<span class="subtitle-one ks-reveal">What People Say</span>
+				<h2 class="ks-reveal ks-reveal-delay-1">Client Testimonials</h2>
+			</div>
 		</div>
-		<h3>Happy Client</h3>
-		<p>"KianvoSoft transformed our business operations with their innovative software solutions. Their team's expertise and dedication to quality exceeded our expectations. We highly recommend their services."</p>
-		<div class="testimonial__four-card-rating">
-			<i class="fas fa-star"></i>
-			<i class="fas fa-star"></i>
-			<i class="fas fa-star"></i>
-			<i class="fas fa-star"></i>
-			<i class="fas fa-star"></i>
+		<div class="row justify-content-center">
+			<div class="col-xl-8">
+				<div class="testimonial__four-card ks-reveal" style="padding: 40px; text-align: center;">
+					<div class="testimonial__four-card-profile" style="margin-bottom: 20px;">
+						<img src="{% static 'assets/img/testimonial/user-pic-2.png' %}" alt="Client Testimonial"
+							style="width: 80px; border-radius: 50%; border: 2px solid var(--ks-cyan);">
+					</div>
+					<h3 style="margin-bottom: 15px;">Happy Client</h3>
+					<p style="font-size: 1.1rem; line-height: 1.8;">"KianvoSoft transformed our business operations with
+						their innovative software solutions. Their team's expertise and dedication to quality exceeded
+						our expectations. We highly recommend their services to any business in Tanzania."</p>
+					<div class="testimonial__four-card-rating" style="margin-top: 15px;">
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 <!-- Testimonial Area End -->
 
 <!-- Blog Area Start -->
-<div class="blog__five section-padding">
+<div class="blog__five section-padding" style="background: var(--ks-bg-primary);">
 	<div class="container">
 		<div class="row justify-content-center text-center">
-			<div class="col-xl-6 col-lg-6 col-md-8 col-sm-9">
-				<div class="blog__five-title">
+			<div class="col-xl-6 col-lg-7 col-md-9">
+				<div class="blog__five-title ks-reveal">
 					<span class="subtitle-one">Latest News</span>
 					<h2>Insights & Updates from KianvoSoft</h2>
 				</div>
@@ -348,26 +395,21 @@
 		</div>
 		<div class="row gy-4">
 			<div class="col-xl-4 col-lg-6">
-				<div class="blog__five-single-blog">
+				<div class="blog__five-single-blog ks-reveal ks-reveal-delay-1">
 					<div class="blog__five-single-blog-img">
 						<div class="blog__five-single-blog-date">
 							<span class="date">15</span>
 							<span class="month">Jan</span>
 						</div>
-						<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="AI in Business">
+						<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="Tanzania Digital Transformation">
 					</div>
 					<div class="blog__five-single-blog-content">
 						<div class="blog__five-single-blog-content-top">
-							<span>
-								<i class="far fa-user"></i>
-								by KianvoSoft
-							</span>
-							<span>
-								<i class="far fa-folder"></i>
-								Technology
-							</span>
+							<span><i class="far fa-user"></i> by KianvoSoft</span>
+							<span><i class="far fa-folder"></i> Technology</span>
 						</div>
-						<a href="{% url 'blog' %}" class="blog__five-single-blog-content-title">How AI is Transforming Business Operations in 2026</a>
+						<a href="{% url 'blog' %}" class="blog__five-single-blog-content-title">Tanzania's Digital
+							Transformation: Opportunities for Local Tech Companies</a>
 						<a href="{% url 'blog' %}" class="btn-three">Read More
 							<i class="fas fa-chevron-right"></i>
 						</a>
@@ -375,26 +417,21 @@
 				</div>
 			</div>
 			<div class="col-xl-4 col-lg-6">
-				<div class="blog__five-single-blog">
+				<div class="blog__five-single-blog ks-reveal ks-reveal-delay-2">
 					<div class="blog__five-single-blog-img">
 						<div class="blog__five-single-blog-date">
 							<span class="date">10</span>
 							<span class="month">Jan</span>
 						</div>
-						<img src="{% static 'assets/img/blog/blog-2.png' %}" alt="Web Development">
+						<img src="{% static 'assets/img/blog/blog-2.png' %}" alt="Swahili EdTech">
 					</div>
 					<div class="blog__five-single-blog-content">
 						<div class="blog__five-single-blog-content-top">
-							<span>
-								<i class="far fa-user"></i>
-								by KianvoSoft
-							</span>
-							<span>
-								<i class="far fa-folder"></i>
-								Development
-							</span>
+							<span><i class="far fa-user"></i> by KianvoSoft</span>
+							<span><i class="far fa-folder"></i> Education</span>
 						</div>
-						<a href="{% url 'blog' %}" class="blog__five-single-blog-content-title">Best Practices for Modern Web Application Development</a>
+						<a href="{% url 'blog' %}" class="blog__five-single-blog-content-title">Why Swahili-Language
+							Tech Education is the Future of African Development</a>
 						<a href="{% url 'blog' %}" class="btn-three">Read More
 							<i class="fas fa-chevron-right"></i>
 						</a>
@@ -402,26 +439,21 @@
 				</div>
 			</div>
 			<div class="col-xl-4 col-lg-6">
-				<div class="blog__five-single-blog">
+				<div class="blog__five-single-blog ks-reveal ks-reveal-delay-3">
 					<div class="blog__five-single-blog-img">
 						<div class="blog__five-single-blog-date">
 							<span class="date">05</span>
 							<span class="month">Jan</span>
 						</div>
-						<img src="{% static 'assets/img/blog/blog-3.png' %}" alt="Mobile Apps">
+						<img src="{% static 'assets/img/blog/blog-3.png' %}" alt="CCTV Security">
 					</div>
 					<div class="blog__five-single-blog-content">
 						<div class="blog__five-single-blog-content-top">
-							<span>
-								<i class="far fa-user"></i>
-								by KianvoSoft
-							</span>
-							<span>
-								<i class="far fa-folder"></i>
-								Mobile
-							</span>
+							<span><i class="far fa-user"></i> by KianvoSoft</span>
+							<span><i class="far fa-folder"></i> Security</span>
 						</div>
-						<a href="{% url 'blog' %}" class="blog__five-single-blog-content-title">The Rise of Cross-Platform Mobile Development</a>
+						<a href="{% url 'blog' %}" class="blog__five-single-blog-content-title">Guide to CCTV & Network
+							Infrastructure for Tanzanian Businesses</a>
 						<a href="{% url 'blog' %}" class="btn-three">Read More
 							<i class="fas fa-chevron-right"></i>
 						</a>
@@ -434,19 +466,24 @@
 <!-- Blog Area End -->
 
 <!-- Subscribe Area Start -->
-<div class="subscribe__one three">
-	<img src="{% static 'assets/img/subscribe/subscribe-three-shape.png' %}" class="subscribe__three-shape" alt="">
+<div class="subscribe__one three" style="background: var(--ks-bg-secondary);">
 	<div class="container">
-		<div class="row justify-content-center text-center subscribe__one-content" style="background-image: url({% static 'assets/img/subscribe/subscribe-three-bg.png' %});">
+		<div class="row justify-content-center text-center subscribe__one-content" style="padding: 60px 40px;">
 			<div class="col-xl-7 col-lg-8">
-				<div class="subscribe__one-title">
-					<h3>Stay Updated with KianvoSoft</h3>
-					<p>Subscribe to our newsletter for the latest tech insights, project updates, and industry news.</p>
+				<div class="subscribe__one-title ks-reveal">
+					<h3>Ready to Build Tanzania's Digital Future?</h3>
+					<p>Whether you need software built, networks installed, or your team trained — we're here to help.
+					</p>
 				</div>
-				<form action="#" class="subscribe__one-form">
-					<input type="email" placeholder="Enter Your Email">
-					<button class="btn-two" type="submit">Subscribe Now</button>
-				</form>
+				<div class="ks-reveal ks-reveal-delay-1"
+					style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 25px;">
+					<a href="{% url 'contact' %}" class="btn-one">Start Your Project
+						<i class="fas fa-arrow-right"></i>
+					</a>
+					<a href="https://wa.me/255687445294" target="_blank" class="btn-two">
+						<i class="fab fa-whatsapp" style="margin-right: 8px;"></i>WhatsApp Us
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>

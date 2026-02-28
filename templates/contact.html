@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Contact Us - KianvoSoft{% endblock title %}
+{% block title %}Contact Us — KianvoSoft | Mbeya, Tanzania{% endblock title %}
 {% block content %}
 
 <!-- Banner Area Start -->
@@ -35,10 +35,12 @@
 		<div class="row gy-4 align-items-center">
 			<div class="col-xl-6">
 				<div class="contact__two-content">
-					<div class="contact__two-title">
+					<div class="contact__two-title ks-reveal">
 						<span class="subtitle-one">Get in Touch</span>
 						<h2>Let's Discuss Your Project</h2>
-						<p>Have a project in mind? Want to learn more about our services? We'd love to hear from you. Fill out the form below and our team will get back to you promptly.</p>
+						<p>Have a project in mind? Need network installation, CCTV setup, or a software solution? Want
+							to enroll in a course? Fill out the form below and our team will get back to you promptly.
+						</p>
 					</div>
 					<div class="contact__two-form">
 						<form action="#" method="POST">
@@ -54,14 +56,16 @@
 									<input type="tel" name="phone" placeholder="Phone Number">
 								</div>
 								<div class="col-xl-6">
-									<select name="service" class="form-select" style="height: 60px; border-radius: 5px; border: 1px solid #e0e0e0; padding: 0 20px;">
+									<select name="service" class="form-select"
+										style="height: 60px; border-radius: 8px; padding: 0 20px;">
 										<option value="">Select Service Type</option>
 										<option value="software">Custom Software Development</option>
 										<option value="web">Web Application Development</option>
 										<option value="mobile">Mobile App Development</option>
+										<option value="network">Network Infrastructure</option>
+										<option value="cctv">CCTV & Security Systems</option>
+										<option value="training">Short Courses & Training</option>
 										<option value="ai">AI & Machine Learning</option>
-										<option value="automation">Automation Systems</option>
-										<option value="analytics">Data Analytics</option>
 										<option value="consulting">IT Consulting</option>
 										<option value="other">Other</option>
 									</select>
@@ -98,7 +102,8 @@
 						</div>
 						<div class="contact__two-single-info-content">
 							<h4>WhatsApp</h4>
-							<span><a href="https://wa.me/255687445294" target="_blank">Click to Chat on WhatsApp</a></span>
+							<span><a href="https://wa.me/255687445294" target="_blank">Click to Chat on
+									WhatsApp</a></span>
 							<span>Quick response guaranteed</span>
 						</div>
 					</div>
@@ -108,8 +113,8 @@
 						</div>
 						<div class="contact__two-single-info-content">
 							<h4>Email Address</h4>
-							<span><a href="mailto:info@kianvosoft.com">info@kianvosoft.com</a></span>
-							<span><a href="mailto:support@kianvosoft.com">support@kianvosoft.com</a></span>
+							<span><a href="mailto:info@kianvosoft.co.tz">info@kianvosoft.co.tz</a></span>
+							<span><a href="mailto:support@kianvosoft.co.tz">support@kianvosoft.co.tz</a></span>
 						</div>
 					</div>
 					<div class="contact__two-single-info">
@@ -188,12 +193,16 @@
 
 <!-- Map Section Start -->
 <div class="location-map">
-	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d253682.63051857045!2d39.12835045!3d-6.792354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4bae169bd6f1%3A0x940f6b26a086a1dd!2sDar%20es%20Salaam%2C%20Tanzania!5e0!3m2!1sen!2s!4v1706000000000!5m2!1sen!2s" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="width: 100%; height: 450px; border: none;"></iframe>
+	<iframe
+		src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126758.92636218573!2d33.3947!3d-8.9094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x18d7d0c1f6b087ff%3A0xb7c9f2b3c7c654bb!2sMbeya%2C%20Tanzania!5e0!3m2!1sen!2s!4v1706000000000!5m2!1sen!2s"
+		loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+		style="width: 100%; height: 450px; border: none; border-radius: 0;"></iframe>
 </div>
 <!-- Map Section End -->
 
 <!-- FAQ Section Start -->
-<div class="work-process-area__one section-padding" style="background-image: url({% static 'assets/img/work-process/work-process-bg.png' %});">
+<div class="work-process-area__one section-padding"
+	style="background-image: url({% static 'assets/img/work-process/work-process-bg.png' %});">
 	<div class="container">
 		<div class="row align-items-end work-process-area__one-title">
 			<div class="col-xl-7 col-lg-7">
@@ -214,21 +223,24 @@
 					<span>01</span>
 					<div class="work-process-area__one-single-work-content">
 						<h4>How do I request a quote?</h4>
-						<p>Fill out the contact form above with your project details, or reach out via WhatsApp or phone. We'll respond within 24 hours with a detailed quote.</p>
+						<p>Fill out the contact form above with your project details, or reach out via WhatsApp or
+							phone. We'll respond within 24 hours with a detailed quote.</p>
 					</div>
 				</div>
 				<div class="work-process-area__one-single-work">
 					<span>02</span>
 					<div class="work-process-area__one-single-work-content">
 						<h4>What is your typical project timeline?</h4>
-						<p>Project timelines vary based on complexity and scope. We provide detailed timelines during the planning phase after understanding your requirements.</p>
+						<p>Project timelines vary based on complexity and scope. We provide detailed timelines during
+							the planning phase after understanding your requirements.</p>
 					</div>
 				</div>
 				<div class="work-process-area__one-single-work">
 					<span>03</span>
 					<div class="work-process-area__one-single-work-content">
 						<h4>Do you provide ongoing support?</h4>
-						<p>Yes! We offer comprehensive maintenance and support packages to ensure your software continues to perform optimally after launch.</p>
+						<p>Yes! We offer comprehensive maintenance and support packages to ensure your software
+							continues to perform optimally after launch.</p>
 					</div>
 				</div>
 			</div>
@@ -237,21 +249,24 @@
 					<span>04</span>
 					<div class="work-process-area__one-single-work-content">
 						<h4>What technologies do you work with?</h4>
-						<p>We work with modern technologies including React, Django, Flutter, Python, Node.js, AI/ML frameworks, and more. We choose the best stack for your project.</p>
+						<p>We work with modern technologies including React, Django, Flutter, Python, Node.js, AI/ML
+							frameworks, and more. We choose the best stack for your project.</p>
 					</div>
 				</div>
 				<div class="work-process-area__one-single-work">
 					<span>05</span>
 					<div class="work-process-area__one-single-work-content">
 						<h4>Can you work with existing systems?</h4>
-						<p>Absolutely. We specialize in integrating with existing systems, APIs, and databases. We can also modernize legacy systems.</p>
+						<p>Absolutely. We specialize in integrating with existing systems, APIs, and databases. We can
+							also modernize legacy systems.</p>
 					</div>
 				</div>
 				<div class="work-process-area__one-single-work">
 					<span>06</span>
 					<div class="work-process-area__one-single-work-content">
 						<h4>What are your payment terms?</h4>
-						<p>We typically work with milestone-based payments. Specific terms are discussed and agreed upon before project commencement.</p>
+						<p>We typically work with milestone-based payments. Specific terms are discussed and agreed upon
+							before project commencement.</p>
 					</div>
 				</div>
 			</div>
@@ -263,7 +278,8 @@
 <!-- CTA Section Start -->
 <div class="subscribe__one">
 	<div class="container">
-		<div class="row justify-content-center text-center subscribe__one-content" style="background-image: url({% static 'assets/img/subscribe/subscribe-one-shape-1.png' %});">
+		<div class="row justify-content-center text-center subscribe__one-content"
+			style="background-image: url({% static 'assets/img/subscribe/subscribe-one-shape-1.png' %});">
 			<div class="col-xl-7 col-lg-8">
 				<div class="subscribe__one-title">
 					<h3>Ready to Start Your Project?</h3>

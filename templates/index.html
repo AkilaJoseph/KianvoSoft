@@ -1,266 +1,311 @@
-		
-		{% extends 'main/base.html' %}
-		{% load static %}
-		{% block title %}Home{% endblock title %}
-		{% block content %}
-		
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}KianvoSoft - Professional Software Development, Web, Mobile & AI Solutions{% endblock title %}
+{% block content %}
 
-	<!-- Banner Area Start -->
-	<div class="banner__five" style="background-image: url({% static 'assets/img/banner/banner-five-bg.png' %});">
-		<div class="container">
-			<div class="row align-items-center gy-4 justify-content-center">
-				<div class="col-xl-7 col-lg-6">
-					<div class="banner__five-content">
-						<span class="subtitle-one">Drive Growth</span>
-						<h2>Next-Gen Software for Your Business</h2>
-						<p>Embrace the latest advancements in technology with our cutting-edge software engineered to drive innovation</p>
-						<div class="banner__five-content-bottom">
-							<a href="contact.html" class="btn-two">Apply Today
-								<i class="fas fa-arrow-right"></i>
-							</a>
-							<a href="https://www.youtube.com/watch?v=SZEflIVnhH8" class="banner__five-content-video-btn video-popup">
-								<i class="fas fa-play"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-5 col-lg-6 col-md-9">
-					<div class="banner__five-image">
-						<div class="banner__five-image-wrapper">
-							<img src="{% static 'assets/img/banner/banner-five.png' %}" alt="image">
-							<img src="{% static 'assets/img/banner/banner-five-2.png' %}" class="img-2 animate-y-axis" alt="image">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Banner Area End -->	
-
-	<!-- About Area Start -->
-	<div class="about__five section-padding" style="background-image: url({% static 'assets/img/about/about-five-bg.png' %});">
-
-		<!-- Brand Area Start -->
-		<div class="brand__area mb-120">
-			<div class="container">
-				<div class="row brand__area-border">
-					<div class="col-xl-12">
-						<div class="swiper brand__slider">
-							<div class="swiper-wrapper">
-								<div class="brand__area-item swiper-slide">
-									<img src="{% static 'assets/img/brand/brand-1.png' %}" alt="image">
-								</div>
-								<div class="brand__area-item swiper-slide">
-									<img src="{% static 'assets/img/brand/brand-2.png' %}" alt="image">
-								</div>
-								<div class="brand__area-item swiper-slide">
-									<img src="{% static 'assets/img/brand/brand-3.png' %}" alt="image">
-								</div>
-								<div class="brand__area-item swiper-slide">
-									<img src="{% static 'assets/img/brand/brand-4.png' %}" alt="image">
-								</div>
-								<div class="brand__area-item swiper-slide">
-									<img src="{% static 'assets/img/brand/brand-5.png' %}" alt="image">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Brand Area End -->	
-
-		<div class="container">
-			<div class="row align-items-center flex-wrap-reverse gy-4">
-				<div class="col-xl-6 col-lg-8">
-					<div class="about__five-image">
-						<div class="about__five-image-wrapper">
-							<img src="{% static 'assets/img/about/about-five-1.png' %}" alt="image">
-							<img src="{% static 'assets/img/about/about-five-2.png' %}" alt="" class="image-2 animate-y-axis-slider">
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-6 col-lg-7 col-md-9">
-					<div class="about__five-content">
-						<span class="subtitle-one">About us</span>
-						<h2>Innovating Solutions for Your Business</h2>
-						<div class="about__five-content-service">
-							<div class="single-service">
-								<i class="fas fa-check-circle"></i>
-								<div class="single-service-content">
-									<h4>Shaping the Digital Future</h4>
-									<p>Intuitive and user-friendly Customizable themes and layouts Drag-and-drop functionality for ease of use</p>
-								</div>
-							</div>
-							<div class="single-service">
-								<i class="fas fa-check-circle"></i>
-								<div class="single-service-content">
-									<h4>Shaping the Digital Future</h4>
-									<p>Intuitive and user-friendly Customizable themes and layouts Drag-and-drop functionality for ease of use</p>
-								</div>
-							</div>
-						</div>
-						<a href="about.html" class="btn-one">Discover More
+<!-- Banner Area Start -->
+<div class="banner__five" style="background-image: url({% static 'assets/img/banner/banner-five-bg.png' %});">
+	<div class="container">
+		<div class="row align-items-center gy-4 justify-content-center">
+			<div class="col-xl-7 col-lg-6">
+				<div class="banner__five-content">
+					<span class="subtitle-one">Innovation Meets Excellence</span>
+					<h2>Transforming Ideas Into Powerful Software Solutions</h2>
+					<p>KianvoSoft delivers cutting-edge software development, web applications, mobile apps, and AI solutions that drive business growth and digital transformation.</p>
+					<div class="banner__five-content-bottom">
+						<a href="{% url 'contact' %}" class="btn-two">Get a Quote
 							<i class="fas fa-arrow-right"></i>
 						</a>
-					</div> 
+						<a href="{% url 'services' %}" class="btn-one">Our Services
+							<i class="fas fa-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-5 col-lg-6 col-md-9">
+				<div class="banner__five-image">
+					<div class="banner__five-image-wrapper">
+						<img src="{% static 'assets/img/banner/banner-five.png' %}" alt="KianvoSoft Software Development">
+						<img src="{% static 'assets/img/banner/banner-five-2.png' %}" class="img-2 animate-y-axis" alt="Technology Solutions">
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- About Area End -->
+</div>
+<!-- Banner Area End -->
 
-	<!-- Work Process Three Area End -->	
-	<div class="work-process__three" style="background-image: url(assets/img/work-process/work-process-bg-2.png);">
+<!-- About Area Start -->
+<div class="about__five section-padding" style="background-image: url({% static 'assets/img/about/about-five-bg.png' %});">
+
+	<!-- Brand Area Start -->
+	<div class="brand__area mb-120">
 		<div class="container">
 			<div class="row justify-content-center text-center mb-50">
 				<div class="col-xl-6 col-lg-7 col-md-9">
-					<span class="subtitle-one">Work Process</span>
-					<h2>Workflow Journey</h2>
+					<span class="subtitle-one">Trusted By</span>
+					<h2>Our Technology Partners</h2>
 				</div>
 			</div>
-			<div class="work-process__three-card">
-				<div class="work-process__three-card-arrows">
-					<img src="{% static 'assets/img/work-process/work-process-arrow-1.png' %}" alt="" class="arrow-1">
-					<img src="{% static 'assets/img/work-process/work-process-arrow-2.png' %}" alt="" class="arrow-2">
-					<img src="{% static 'assets/img/work-process/work-process-arrow-1.png' %}" alt="" class="arrow-3">
-				</div>
-				<div class="work-process__three-card-single">
-					<h3>01</h3>
-					<h5>Idea Generation</h5>
-					<p>Creativity at this initial stage, we focus on understanding your unique challenge</p>
-				</div>
-				<div class="work-process__three-card-single middle">
-					<h3>02</h3>
-					<h5>Solution Development</h5>
-					<p>Transitioning from ideas to actionable solutions, our experts employ cutting-edge technologies</p>
-				</div>
-				<div class="work-process__three-card-single">
-					<h3>03</h3>
-					<h5>Outcome Delivery</h5>
-					<p>The culmination of our process, outcome delivery, is where plans become reality.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Work Process Three Area End -->
-
-	<!-- Technology Solution Start -->
-	<div class="technology-solution__one section-padding">
-		<div class="container">
-			<div class="row align-items-center gy-4">
-				<div class="col-xl-6 col-lg-6 col-md-9">
-					<div class="technology-solution__one-content">
-						<span class="subtitle-one">Tech Solutions</span>
-						<h2>Technology that Drives Business</h2>
-						<p>Streamlining operations to customer experiences, Business across all sectors are cutting-edge technologies</p>
-						<div class="satisfied-customer-counter">
-							<div class="counter-wrapper">
-								<h3 class="counter">400</h3>
-								<h3>+</h3>
+			<div class="row brand__area-border">
+				<div class="col-xl-12">
+					<div class="swiper brand__slider">
+						<div class="swiper-wrapper">
+							<div class="brand__area-item swiper-slide">
+								<img src="{% static 'assets/img/brand/brand-1.png' %}" alt="Partner">
 							</div>
-							<span>Satisficed Customers</span>
-						</div>
-					</div> 
-				</div>
-				<div class="col-xl-6 col-lg-6">
-					<div class="technology-solution__one-image">
-						<div class="technology-solution__one-image-wrapper">
-							<img src="{% static 'assets/img/technology-solution/tech-solution-one.png' %}" alt="image">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Technology Solution End -->
-
-	<!-- Service Five Area Start -->
-	<div class="services__five section-padding">
-		<div class="container">
-			<div class="row justify-content-center text-center mb-50">
-				<div class="col-xl-7 col-lg-7 col-md-9">
-					<span class="subtitle-one">Our Services</span>
-					<h2>Services to Accelerate Your Business</h2>
-				</div>
-			</div>
-			<div class="row gy-4 justify-content-center">
-				<div class="col-xl-4 col-lg-4 col-md-6">
-					<div class="services__five-single-service">
-						<div class="services__five-single-service-icon">
-                            <i class="flaticon-software-development"></i>
-						</div>
-						<div class="services__five-single-service-content">
-							<h4>Software Planning</h4>
-							<p>Our meticulous software planning process ensures that every</p>
-							<a href="service-details.html" class="btn-three">view details
-								<i class="fas fa-arrow-right"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-4 col-md-6">
-					<div class="services__five-single-service">
-						<div class="services__five-single-service-icon">
-                            <i class="flaticon-cyber-security"></i>
-						</div>
-						<div class="services__five-single-service-content">
-							<h4>Cyber Security</h4>
-							<p>Protect your digital assets with our comprehensive cyber security</p>
-							<a href="service-details.html" class="btn-three">view details
-								<i class="fas fa-arrow-right"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-4 col-md-6">
-					<div class="services__five-single-service">
-						<div class="services__five-single-service-icon">
-                            <i class="flaticon-data-scientist"></i>
-						</div>
-						<div class="services__five-single-service-content">
-							<h4>Data Management</h4>
-							<p>Our meticulous software planning process ensures that every aspect</p>
-							<a href="service-details.html" class="btn-three">view details
-								<i class="fas fa-arrow-right"></i>
-							</a>
+							<div class="brand__area-item swiper-slide">
+								<img src="{% static 'assets/img/brand/brand-2.png' %}" alt="Partner">
+							</div>
+							<div class="brand__area-item swiper-slide">
+								<img src="{% static 'assets/img/brand/brand-3.png' %}" alt="Partner">
+							</div>
+							<div class="brand__area-item swiper-slide">
+								<img src="{% static 'assets/img/brand/brand-4.png' %}" alt="Partner">
+							</div>
+							<div class="brand__area-item swiper-slide">
+								<img src="{% static 'assets/img/brand/brand-5.png' %}" alt="Partner">
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Service Five Area End -->
+	<!-- Brand Area End -->
 
-	<!-- Why Choose us Area Start -->
-	<div class="why-choose-us__four section-padding">
-		<div class="container">
-			<div class="row gy-4 align-items-center">
-				<div class="col-xl-6 col-lg-6 col-md-10">
-					<div class="why-choose-us__four-image">
-						<img src="{% static 'assets/img/why-choose-us/why-choose-us-four-2.png' %}" alt="" class="why-choose-us__four-floating-image animate-y-axis-slider">
-						<img src="{% static 'assets/img/why-choose-us/why-choose-us-four.png' %}" alt="image">
+	<div class="container">
+		<div class="row align-items-center flex-wrap-reverse gy-4">
+			<div class="col-xl-6 col-lg-8">
+				<div class="about__five-image">
+					<div class="about__five-image-wrapper">
+						<img src="{% static 'assets/img/about/about-five-1.png' %}" alt="About KianvoSoft">
+						<img src="{% static 'assets/img/about/about-five-2.png' %}" alt="" class="image-2 animate-y-axis-slider">
 					</div>
 				</div>
-				<div class="col-xl-5 col-lg-7 col-md-9">
-					<div class="why-choose-us__four-left">
-						<div class="why-choose-us__four-title">
-							<span class="subtitle-one">Why Chose Us</span>
-							<h2>Bantech Your Trusted IT Partner</h2>
-							<p>Our expertise, we ensure your business stays ahead in the digital landscape, driving success and growth together</p>
-							<div class="why-choose-us__four-progress-bar">
-								<div class="why-choose-us__four-progress-bar-wrapper">
-									<div class="single-progress-bar">
-										<span>75%</span>
-									</div>
-									<h3>Successful</h3>
+			</div>
+			<div class="col-xl-6 col-lg-7 col-md-9">
+				<div class="about__five-content">
+					<span class="subtitle-one">About KianvoSoft</span>
+					<h2>Your Trusted Technology Partner for Digital Excellence</h2>
+					<div class="about__five-content-service">
+						<div class="single-service">
+							<i class="fas fa-check-circle"></i>
+							<div class="single-service-content">
+								<h4>Custom Software Development</h4>
+								<p>Tailored solutions designed to meet your unique business requirements and drive operational efficiency.</p>
+							</div>
+						</div>
+						<div class="single-service">
+							<i class="fas fa-check-circle"></i>
+							<div class="single-service-content">
+								<h4>AI & Machine Learning</h4>
+								<p>Harness the power of artificial intelligence to automate processes and gain actionable insights.</p>
+							</div>
+						</div>
+					</div>
+					<a href="{% url 'about' %}" class="btn-one">Learn More About Us
+						<i class="fas fa-arrow-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- About Area End -->
+
+<!-- Services Area Start -->
+<div class="services__five section-padding">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-7 col-lg-7 col-md-9">
+				<span class="subtitle-one">Our Services</span>
+				<h2>Comprehensive Technology Solutions for Your Business</h2>
+			</div>
+		</div>
+		<div class="row gy-4 justify-content-center">
+			<div class="col-xl-4 col-lg-4 col-md-6" id="software">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-software-development"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Custom Software Development</h4>
+						<p>Build scalable, secure, and high-performance software tailored to your business needs.</p>
+						<a href="{% url 'services' %}#software" class="btn-three">Learn More
+							<i class="fas fa-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-4 col-md-6" id="web">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-web-research"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Web Application Development</h4>
+						<p>Modern, responsive web applications using the latest technologies and frameworks.</p>
+						<a href="{% url 'services' %}#web" class="btn-three">Learn More
+							<i class="fas fa-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-4 col-md-6" id="mobile">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-mobile-phone-1"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Mobile App Development</h4>
+						<p>Native and cross-platform mobile applications for Android and iOS platforms.</p>
+						<a href="{% url 'services' %}#mobile" class="btn-three">Learn More
+							<i class="fas fa-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-4 col-md-6" id="ai">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-data-scientist"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>AI & Machine Learning</h4>
+						<p>Intelligent solutions powered by artificial intelligence and machine learning algorithms.</p>
+						<a href="{% url 'services' %}#ai" class="btn-three">Learn More
+							<i class="fas fa-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-4 col-md-6" id="automation">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-computer-mouse"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Automation Systems</h4>
+						<p>Streamline your operations with intelligent automation and workflow optimization.</p>
+						<a href="{% url 'services' %}#automation" class="btn-three">Learn More
+							<i class="fas fa-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-4 col-md-6" id="consulting">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-consultant"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>IT Consulting & Support</h4>
+						<p>Expert guidance and technical support to help you make informed technology decisions.</p>
+						<a href="{% url 'services' %}#consulting" class="btn-three">Learn More
+							<i class="fas fa-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Services Area End -->
+
+<!-- Work Process Area Start -->
+<div class="work-process__three" style="background-image: url({% static 'assets/img/work-process/work-process-bg-2.png' %});">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-6 col-lg-7 col-md-9">
+				<span class="subtitle-one">How We Work</span>
+				<h2>Our Development Process</h2>
+			</div>
+		</div>
+		<div class="work-process__three-card">
+			<div class="work-process__three-card-arrows">
+				<img src="{% static 'assets/img/work-process/work-process-arrow-1.png' %}" alt="" class="arrow-1">
+				<img src="{% static 'assets/img/work-process/work-process-arrow-2.png' %}" alt="" class="arrow-2">
+				<img src="{% static 'assets/img/work-process/work-process-arrow-1.png' %}" alt="" class="arrow-3">
+			</div>
+			<div class="work-process__three-card-single">
+				<h3>01</h3>
+				<h5>Discovery & Planning</h5>
+				<p>We analyze your requirements, understand your goals, and create a comprehensive project roadmap.</p>
+			</div>
+			<div class="work-process__three-card-single middle">
+				<h3>02</h3>
+				<h5>Design & Development</h5>
+				<p>Our experts craft elegant solutions using cutting-edge technologies and best practices.</p>
+			</div>
+			<div class="work-process__three-card-single">
+				<h3>03</h3>
+				<h5>Testing & Deployment</h5>
+				<p>Rigorous testing ensures quality, followed by seamless deployment and ongoing support.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Work Process Area End -->
+
+<!-- Technology Solution Start -->
+<div class="technology-solution__one section-padding">
+	<div class="container">
+		<div class="row align-items-center gy-4">
+			<div class="col-xl-6 col-lg-6 col-md-9">
+				<div class="technology-solution__one-content">
+					<span class="subtitle-one">Why Choose KianvoSoft</span>
+					<h2>Technology Excellence That Drives Results</h2>
+					<p>We combine technical expertise with business acumen to deliver solutions that not only work but also drive measurable business outcomes. Our team stays ahead of technology trends to bring you the most innovative solutions.</p>
+					<div class="satisfied-customer-counter">
+						<div class="counter-wrapper">
+							<h3 class="counter">50</h3>
+							<h3>+</h3>
+						</div>
+						<span>Projects Delivered</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6">
+				<div class="technology-solution__one-image">
+					<div class="technology-solution__one-image-wrapper">
+						<img src="{% static 'assets/img/technology-solution/tech-solution-one.png' %}" alt="Technology Solutions">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Technology Solution End -->
+
+<!-- Why Choose Us Area Start -->
+<div class="why-choose-us__four section-padding">
+	<div class="container">
+		<div class="row gy-4 align-items-center">
+			<div class="col-xl-6 col-lg-6 col-md-10">
+				<div class="why-choose-us__four-image">
+					<img src="{% static 'assets/img/why-choose-us/why-choose-us-four-2.png' %}" alt="" class="why-choose-us__four-floating-image animate-y-axis-slider">
+					<img src="{% static 'assets/img/why-choose-us/why-choose-us-four.png' %}" alt="Why Choose KianvoSoft">
+				</div>
+			</div>
+			<div class="col-xl-5 col-lg-7 col-md-9">
+				<div class="why-choose-us__four-left">
+					<div class="why-choose-us__four-title">
+						<span class="subtitle-one">Why Choose Us</span>
+						<h2>KianvoSoft - Your Trusted Technology Partner</h2>
+						<p>With expertise in software development, AI, and digital solutions, we ensure your business stays ahead in the digital landscape, driving success and growth together.</p>
+						<div class="why-choose-us__four-progress-bar">
+							<div class="why-choose-us__four-progress-bar-wrapper">
+								<div class="single-progress-bar">
+									<span>95%</span>
 								</div>
-								<div class="why-choose-us__four-progress-bar-wrapper">
-									<div class="single-progress-bar">
-										<span>85%</span>
-									</div>
-									<h3>Branching</h3>
+								<h3>Client Satisfaction</h3>
+							</div>
+							<div class="why-choose-us__four-progress-bar-wrapper">
+								<div class="single-progress-bar">
+									<span>100%</span>
 								</div>
+								<h3>On-Time Delivery</h3>
 							</div>
 						</div>
 					</div>
@@ -268,143 +313,144 @@
 			</div>
 		</div>
 	</div>
-	<!-- Why choose us Area End -->
+</div>
+<!-- Why Choose Us Area End -->
 
-	<!-- Testimonial Area Start -->
-	<div class="testimonial__four">
-		<div class="testimonial__four-card">
-			<div class="testimonial__four-card-profile">
-				<img src="{% static 'assets/img/testimonial/user-pic-2.png' %}" alt="image">
-			</div>
-			<h3>Sara Albert</h3>
-			<p>Their professionals demonstrated a deep understanding of our business needs and provided tailored solutions that exceeded our expectations.</p>
-			<div class="testimonial__four-card-rating">
-				<i class="fas fa-star"></i>
-				<i class="fas fa-star"></i>
-				<i class="fas fa-star"></i>
-				<i class="fas fa-star"></i>
-				<i class="fas fa-star"></i>
-			</div>
+<!-- Testimonial Area Start -->
+<div class="testimonial__four">
+	<div class="testimonial__four-card">
+		<div class="testimonial__four-card-profile">
+			<img src="{% static 'assets/img/testimonial/user-pic-2.png' %}" alt="Client Testimonial">
+		</div>
+		<h3>Happy Client</h3>
+		<p>"KianvoSoft transformed our business operations with their innovative software solutions. Their team's expertise and dedication to quality exceeded our expectations. We highly recommend their services."</p>
+		<div class="testimonial__four-card-rating">
+			<i class="fas fa-star"></i>
+			<i class="fas fa-star"></i>
+			<i class="fas fa-star"></i>
+			<i class="fas fa-star"></i>
+			<i class="fas fa-star"></i>
 		</div>
 	</div>
-	<!-- Testimonial Area End -->
+</div>
+<!-- Testimonial Area End -->
 
-	<!-- Blog Five Area Start -->
-	<div class="blog__five section-padding">
-		<div class="container">
-			<div class="row justify-content-center text-center">
-				<div class="col-xl-6 col-lg-6 col-md-8 col-sm-9">
-					<div class="blog__five-title">
-						<span class="subtitle-one">Blog And news</span>
-						<h2>Cloud productivity IT expertise</h2>
-					</div>
-				</div>
-			</div>
-			<div class="row gy-4">
-				<div class="col-xl-4 col-lg-6">
-					<div class="blog__five-single-blog">
-						<div class="blog__five-single-blog-img">
-							<div class="blog__five-single-blog-date">
-								<span class="date">09</span>
-								<span class="month">Mar</span>
-							</div>
-							<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="image">
-						</div>
-						<div class="blog__five-single-blog-content">
-							<div class="blog__five-single-blog-content-top">
-								<span>
-									<i class="far fa-user"></i>
-									by Admin
-								</span>
-								<span>
-									<i class="far fa-comment-dots"></i>
-									Comments (0)
-								</span>
-							</div>
-							<a href="blog-details.html" class="blog__five-single-blog-content-title">Software Development Agility a Primer</a>
-							<a href="blog-details.html" class="btn-three">Read more
-								<i class="fas fa-chevron-right"></i>
-							</a> 
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-6">
-					<div class="blog__five-single-blog">
-						<div class="blog__five-single-blog-img">
-							<div class="blog__five-single-blog-date">
-								<span class="date">09</span>
-								<span class="month">Mar</span>
-							</div>
-							<img src="{% static 'assets/img/blog/blog-2.png' %}" alt="image">
-						</div>
-						<div class="blog__five-single-blog-content">
-							<div class="blog__five-single-blog-content-top">
-								<span>
-									<i class="far fa-user"></i>
-									by Admin
-								</span>
-								<span>
-									<i class="far fa-comment-dots"></i>
-									Comments (0)
-								</span>
-							</div>
-							<a href="blog-details.html" class="blog__five-single-blog-content-title">UX/UI Designing the Future Web Design</a>
-							<a href="blog-details.html" class="btn-three">Read more
-								<i class="fas fa-chevron-right"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-6">
-					<div class="blog__five-single-blog">
-						<div class="blog__five-single-blog-img">
-							<div class="blog__five-single-blog-date">
-								<span class="date">09</span>
-								<span class="month">Mar</span>
-							</div>
-							<img src="{% static 'assets/img/blog/blog-3.png' %}" alt="image">
-						</div>
-						<div class="blog__five-single-blog-content">
-							<div class="blog__five-single-blog-content-top">
-								<span>
-									<i class="far fa-user"></i>
-									by Admin
-								</span>
-								<span>
-									<i class="far fa-comment-dots"></i>
-									Comments (0)
-								</span>
-							</div>
-							<a href="blog-details.html" class="blog__five-single-blog-content-title">Pioneering Contactless Payment Technologies</a>
-							<a href="blog-details.html" class="btn-three">Read more
-								<i class="fas fa-chevron-right"></i>
-							</a>
-						</div>
-					</div>
+<!-- Blog Area Start -->
+<div class="blog__five section-padding">
+	<div class="container">
+		<div class="row justify-content-center text-center">
+			<div class="col-xl-6 col-lg-6 col-md-8 col-sm-9">
+				<div class="blog__five-title">
+					<span class="subtitle-one">Latest News</span>
+					<h2>Insights & Updates from KianvoSoft</h2>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Blog Five Area End -->
-
-	<!-- Subscribe Area End -->
-	<div class="subscribe__one three">
-		<img src="{% static 'assets/img/subscribe/subscribe-three-shape.png' %}" class="subscribe__three-shape" alt="image">
-		<div class="container">
-			<div class="row justify-content-center text-center subscribe__one-content"  style="background-image: url({% static 'assets/img/subscribe/subscribe-three-bg.png' %});">
-				<div class="col-xl-7 col-lg-8">
-					<div class="subscribe__one-title">
-						<h3>Join Our Newsletter</h3>
-						<p>Don't miss out on the essential IT news and updates - join our newsletter community today!</p>
+		<div class="row gy-4">
+			<div class="col-xl-4 col-lg-6">
+				<div class="blog__five-single-blog">
+					<div class="blog__five-single-blog-img">
+						<div class="blog__five-single-blog-date">
+							<span class="date">15</span>
+							<span class="month">Jan</span>
+						</div>
+						<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="AI in Business">
 					</div>
-					<form action="#" class="subscribe__one-form">
-						<input type="email" placeholder="Enter Your Email">
-						<button class="btn-two" type="submit">subscribe now</button>
-					</form>
+					<div class="blog__five-single-blog-content">
+						<div class="blog__five-single-blog-content-top">
+							<span>
+								<i class="far fa-user"></i>
+								by KianvoSoft
+							</span>
+							<span>
+								<i class="far fa-folder"></i>
+								Technology
+							</span>
+						</div>
+						<a href="{% url 'blog' %}" class="blog__five-single-blog-content-title">How AI is Transforming Business Operations in 2026</a>
+						<a href="{% url 'blog' %}" class="btn-three">Read More
+							<i class="fas fa-chevron-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-6">
+				<div class="blog__five-single-blog">
+					<div class="blog__five-single-blog-img">
+						<div class="blog__five-single-blog-date">
+							<span class="date">10</span>
+							<span class="month">Jan</span>
+						</div>
+						<img src="{% static 'assets/img/blog/blog-2.png' %}" alt="Web Development">
+					</div>
+					<div class="blog__five-single-blog-content">
+						<div class="blog__five-single-blog-content-top">
+							<span>
+								<i class="far fa-user"></i>
+								by KianvoSoft
+							</span>
+							<span>
+								<i class="far fa-folder"></i>
+								Development
+							</span>
+						</div>
+						<a href="{% url 'blog' %}" class="blog__five-single-blog-content-title">Best Practices for Modern Web Application Development</a>
+						<a href="{% url 'blog' %}" class="btn-three">Read More
+							<i class="fas fa-chevron-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-6">
+				<div class="blog__five-single-blog">
+					<div class="blog__five-single-blog-img">
+						<div class="blog__five-single-blog-date">
+							<span class="date">05</span>
+							<span class="month">Jan</span>
+						</div>
+						<img src="{% static 'assets/img/blog/blog-3.png' %}" alt="Mobile Apps">
+					</div>
+					<div class="blog__five-single-blog-content">
+						<div class="blog__five-single-blog-content-top">
+							<span>
+								<i class="far fa-user"></i>
+								by KianvoSoft
+							</span>
+							<span>
+								<i class="far fa-folder"></i>
+								Mobile
+							</span>
+						</div>
+						<a href="{% url 'blog' %}" class="blog__five-single-blog-content-title">The Rise of Cross-Platform Mobile Development</a>
+						<a href="{% url 'blog' %}" class="btn-three">Read More
+							<i class="fas fa-chevron-right"></i>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Subscribe Area End -->
+</div>
+<!-- Blog Area End -->
 
-	{% endblock content %}
+<!-- Subscribe Area Start -->
+<div class="subscribe__one three">
+	<img src="{% static 'assets/img/subscribe/subscribe-three-shape.png' %}" class="subscribe__three-shape" alt="">
+	<div class="container">
+		<div class="row justify-content-center text-center subscribe__one-content" style="background-image: url({% static 'assets/img/subscribe/subscribe-three-bg.png' %});">
+			<div class="col-xl-7 col-lg-8">
+				<div class="subscribe__one-title">
+					<h3>Stay Updated with KianvoSoft</h3>
+					<p>Subscribe to our newsletter for the latest tech insights, project updates, and industry news.</p>
+				</div>
+				<form action="#" class="subscribe__one-form">
+					<input type="email" placeholder="Enter Your Email">
+					<button class="btn-two" type="submit">Subscribe Now</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Subscribe Area End -->
+
+{% endblock content %}

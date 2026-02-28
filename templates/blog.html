@@ -1,0 +1,323 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Blog - KianvoSoft{% endblock title %}
+{% block content %}
+
+<!-- Banner Area Start -->
+<div class="page__banner">
+	<div class="page__banner-shape">
+		<img src="{% static 'assets/img/shape/page-banner-shape.png' %}" alt="">
+	</div>
+	<div class="container">
+		<div class="row justify-content-between align-items-center">
+			<div class="col-xl-6 col-lg-7">
+				<div class="page__banner-content">
+					<h2>Blog & News</h2>
+					<span><a href="{% url 'home' %}">Home</a>
+						<span>|</span>
+						Blog
+					</span>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-5">
+				<div class="page__banner-img">
+					<img src="{% static 'assets/img/banner/page-banner-img.png' %}" alt="KianvoSoft Blog">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Banner Area End -->
+
+<!-- Blog Intro Start -->
+<div class="about__one section-padding pb-0">
+	<div class="container">
+		<div class="row justify-content-center text-center">
+			<div class="col-xl-7 col-lg-8 col-md-10">
+				<span class="subtitle-one">Our Blog</span>
+				<h2>Insights, News & Technology Updates</h2>
+				<p>Stay informed with the latest technology trends, industry insights, and updates from the KianvoSoft team.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Blog Intro End -->
+
+<!-- Blog Posts Start -->
+<div class="blog__five section-padding">
+	<div class="container">
+		<div class="row gy-4">
+			<!-- Blog Post 1 -->
+			<div class="col-xl-4 col-lg-6">
+				<div class="blog__five-single-blog">
+					<div class="blog__five-single-blog-img">
+						<div class="blog__five-single-blog-date">
+							<span class="date">20</span>
+							<span class="month">Jan</span>
+						</div>
+						<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="AI in Business">
+					</div>
+					<div class="blog__five-single-blog-content">
+						<div class="blog__five-single-blog-content-top">
+							<span>
+								<i class="far fa-user"></i>
+								by KianvoSoft
+							</span>
+							<span>
+								<i class="far fa-folder"></i>
+								AI & Technology
+							</span>
+						</div>
+						<a href="#" class="blog__five-single-blog-content-title">How AI is Revolutionizing Business Operations in 2026</a>
+						<p>Discover how artificial intelligence is transforming the way businesses operate, from automation to decision-making...</p>
+						<a href="#" class="btn-three">Read More
+							<i class="fas fa-chevron-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- Blog Post 2 -->
+			<div class="col-xl-4 col-lg-6">
+				<div class="blog__five-single-blog">
+					<div class="blog__five-single-blog-img">
+						<div class="blog__five-single-blog-date">
+							<span class="date">15</span>
+							<span class="month">Jan</span>
+						</div>
+						<img src="{% static 'assets/img/blog/blog-2.png' %}" alt="Web Development Trends">
+					</div>
+					<div class="blog__five-single-blog-content">
+						<div class="blog__five-single-blog-content-top">
+							<span>
+								<i class="far fa-user"></i>
+								by KianvoSoft
+							</span>
+							<span>
+								<i class="far fa-folder"></i>
+								Web Development
+							</span>
+						</div>
+						<a href="#" class="blog__five-single-blog-content-title">Top Web Development Trends to Watch in 2026</a>
+						<p>From Progressive Web Apps to AI-powered interfaces, explore the trends shaping modern web development...</p>
+						<a href="#" class="btn-three">Read More
+							<i class="fas fa-chevron-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- Blog Post 3 -->
+			<div class="col-xl-4 col-lg-6">
+				<div class="blog__five-single-blog">
+					<div class="blog__five-single-blog-img">
+						<div class="blog__five-single-blog-date">
+							<span class="date">10</span>
+							<span class="month">Jan</span>
+						</div>
+						<img src="{% static 'assets/img/blog/blog-3.png' %}" alt="Mobile App Development">
+					</div>
+					<div class="blog__five-single-blog-content">
+						<div class="blog__five-single-blog-content-top">
+							<span>
+								<i class="far fa-user"></i>
+								by KianvoSoft
+							</span>
+							<span>
+								<i class="far fa-folder"></i>
+								Mobile Development
+							</span>
+						</div>
+						<a href="#" class="blog__five-single-blog-content-title">Flutter vs React Native: Which to Choose in 2026?</a>
+						<p>A comprehensive comparison of the two leading cross-platform mobile development frameworks...</p>
+						<a href="#" class="btn-three">Read More
+							<i class="fas fa-chevron-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- Blog Post 4 -->
+			<div class="col-xl-4 col-lg-6">
+				<div class="blog__five-single-blog">
+					<div class="blog__five-single-blog-img">
+						<div class="blog__five-single-blog-date">
+							<span class="date">05</span>
+							<span class="month">Jan</span>
+						</div>
+						<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="Cybersecurity">
+					</div>
+					<div class="blog__five-single-blog-content">
+						<div class="blog__five-single-blog-content-top">
+							<span>
+								<i class="far fa-user"></i>
+								by KianvoSoft
+							</span>
+							<span>
+								<i class="far fa-folder"></i>
+								Security
+							</span>
+						</div>
+						<a href="#" class="blog__five-single-blog-content-title">Essential Cybersecurity Practices for Small Businesses</a>
+						<p>Protect your business from cyber threats with these essential security measures and best practices...</p>
+						<a href="#" class="btn-three">Read More
+							<i class="fas fa-chevron-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- Blog Post 5 -->
+			<div class="col-xl-4 col-lg-6">
+				<div class="blog__five-single-blog">
+					<div class="blog__five-single-blog-img">
+						<div class="blog__five-single-blog-date">
+							<span class="date">28</span>
+							<span class="month">Dec</span>
+						</div>
+						<img src="{% static 'assets/img/blog/blog-2.png' %}" alt="Cloud Computing">
+					</div>
+					<div class="blog__five-single-blog-content">
+						<div class="blog__five-single-blog-content-top">
+							<span>
+								<i class="far fa-user"></i>
+								by KianvoSoft
+							</span>
+							<span>
+								<i class="far fa-folder"></i>
+								Cloud & DevOps
+							</span>
+						</div>
+						<a href="#" class="blog__five-single-blog-content-title">Cloud Migration: A Step-by-Step Guide for Businesses</a>
+						<p>Learn how to successfully migrate your infrastructure to the cloud with our comprehensive guide...</p>
+						<a href="#" class="btn-three">Read More
+							<i class="fas fa-chevron-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- Blog Post 6 -->
+			<div class="col-xl-4 col-lg-6">
+				<div class="blog__five-single-blog">
+					<div class="blog__five-single-blog-img">
+						<div class="blog__five-single-blog-date">
+							<span class="date">20</span>
+							<span class="month">Dec</span>
+						</div>
+						<img src="{% static 'assets/img/blog/blog-3.png' %}" alt="Data Analytics">
+					</div>
+					<div class="blog__five-single-blog-content">
+						<div class="blog__five-single-blog-content-top">
+							<span>
+								<i class="far fa-user"></i>
+								by KianvoSoft
+							</span>
+							<span>
+								<i class="far fa-folder"></i>
+								Data Analytics
+							</span>
+						</div>
+						<a href="#" class="blog__five-single-blog-content-title">Turning Data into Business Intelligence: A Practical Guide</a>
+						<p>Discover how to leverage your business data for actionable insights and better decision-making...</p>
+						<a href="#" class="btn-three">Read More
+							<i class="fas fa-chevron-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Blog Posts End -->
+
+<!-- Categories Section Start -->
+<div class="services__five section-padding pt-0">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-6 col-lg-7 col-md-9">
+				<span class="subtitle-one">Categories</span>
+				<h2>Explore By Topic</h2>
+			</div>
+		</div>
+		<div class="row gy-4 justify-content-center">
+			<div class="col-xl-2 col-lg-3 col-md-4 col-6">
+				<div class="services__five-single-service text-center">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-data-scientist"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>AI & ML</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-2 col-lg-3 col-md-4 col-6">
+				<div class="services__five-single-service text-center">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-web-research"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Web Dev</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-2 col-lg-3 col-md-4 col-6">
+				<div class="services__five-single-service text-center">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-mobile-phone-1"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Mobile</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-2 col-lg-3 col-md-4 col-6">
+				<div class="services__five-single-service text-center">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-cyber-security"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Security</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-2 col-lg-3 col-md-4 col-6">
+				<div class="services__five-single-service text-center">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-cloud-computing"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Cloud</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-2 col-lg-3 col-md-4 col-6">
+				<div class="services__five-single-service text-center">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-consultant"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Insights</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Categories Section End -->
+
+<!-- Newsletter Section Start -->
+<div class="subscribe__one">
+	<div class="container">
+		<div class="row justify-content-center text-center subscribe__one-content" style="background-image: url({% static 'assets/img/subscribe/subscribe-one-shape-1.png' %});">
+			<div class="col-xl-7 col-lg-8">
+				<div class="subscribe__one-title">
+					<h3>Subscribe to Our Newsletter</h3>
+					<p>Get the latest articles, tech insights, and company news delivered straight to your inbox.</p>
+				</div>
+				<form action="#" class="subscribe__one-form">
+					<input type="email" placeholder="Enter Your Email">
+					<button class="btn-two" type="submit">Subscribe Now</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Newsletter Section End -->
+
+{% endblock content %}

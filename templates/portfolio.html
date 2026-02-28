@@ -1,0 +1,370 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Our Portfolio - KianvoSoft{% endblock title %}
+{% block content %}
+
+<!-- Banner Area Start -->
+<div class="page__banner">
+	<div class="page__banner-shape">
+		<img src="{% static 'assets/img/shape/page-banner-shape.png' %}" alt="">
+	</div>
+	<div class="container">
+		<div class="row justify-content-between align-items-center">
+			<div class="col-xl-6 col-lg-7">
+				<div class="page__banner-content">
+					<h2>Our Portfolio</h2>
+					<span><a href="{% url 'home' %}">Home</a>
+						<span>|</span>
+						Portfolio
+					</span>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-5">
+				<div class="page__banner-img">
+					<img src="{% static 'assets/img/banner/page-banner-img.png' %}" alt="KianvoSoft Portfolio">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Banner Area End -->
+
+<!-- Portfolio Intro Start -->
+<div class="about__one section-padding">
+	<div class="container">
+		<div class="row align-items-center gy-4">
+			<div class="col-xl-6 col-lg-7 col-md-9">
+				<div class="about__one-content">
+					<span class="subtitle-one">Our Work</span>
+					<h2>Projects That Showcase Our Expertise</h2>
+					<p>Explore our portfolio of successful projects across various industries. Each project demonstrates our commitment to quality, innovation, and client satisfaction.</p>
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-5">
+				<div class="about__one-image">
+					<div class="about__one-image-wrapper">
+						<img src="{% static 'assets/img/portfolio/portfolio-1.png' %}" alt="Portfolio" class="image-1">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Portfolio Intro End -->
+
+<!-- Category Filter Start -->
+{% if categories %}
+<div class="container mb-4">
+	<div class="row justify-content-center">
+		<div class="col-xl-8">
+			<div class="d-flex flex-wrap justify-content-center gap-2">
+				<a href="{% url 'portfolio' %}" class="btn {% if not current_category %}btn-primary{% else %}btn-outline-primary{% endif %}">
+					All Projects
+				</a>
+				{% for category in categories %}
+				<a href="{% url 'portfolio' %}?category={{ category.slug }}"
+				   class="btn {% if current_category == category.slug %}btn-primary{% else %}btn-outline-primary{% endif %}">
+					{{ category.name }}
+				</a>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+<!-- Category Filter End -->
+
+<!-- Portfolio Gallery Start -->
+<div class="services__five section-padding pt-0">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-6 col-lg-7 col-md-9">
+				<span class="subtitle-one">Featured Projects</span>
+				<h2>Our Software Solutions</h2>
+			</div>
+		</div>
+		<div class="row gy-4 justify-content-center">
+			{% if projects %}
+				{% for project in projects %}
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="services__five-single-service">
+						<div class="services__five-single-service-icon">
+							<i class="{{ project.icon_class }}"></i>
+						</div>
+						<div class="services__five-single-service-content">
+							{% if project.category %}
+							<span class="badge bg-primary mb-2">{{ project.category.name }}</span>
+							{% endif %}
+							<h4>{{ project.name }}</h4>
+							<p>{{ project.tagline }}</p>
+							<p class="mt-2"><small><strong>Technologies:</strong> {{ project.technologies }}</small></p>
+							{% if project.status == 'completed' %}
+							<span class="badge bg-success mb-2">Completed</span>
+							{% elif project.status == 'in_progress' %}
+							<span class="badge bg-warning mb-2">In Progress</span>
+							{% elif project.status == 'maintenance' %}
+							<span class="badge bg-info mb-2">Maintenance</span>
+							{% endif %}
+							<div class="mt-3">
+								<a href="{% url 'project_detail' project.slug %}" class="btn-three">View Details
+									<i class="fas fa-arrow-right"></i>
+								</a>
+								{% if project.demo_url %}
+								<a href="{{ project.demo_url }}" target="_blank" class="btn-three ms-2">Live Demo
+									<i class="fas fa-external-link-alt"></i>
+								</a>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			{% else %}
+				<!-- Fallback Static Projects if no database entries -->
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="services__five-single-service">
+						<div class="services__five-single-service-icon">
+							<i class="flaticon-consultant"></i>
+						</div>
+						<div class="services__five-single-service-content">
+							<span class="badge bg-primary mb-2">Healthcare</span>
+							<h4>Imforia</h4>
+							<p>Pharmacy Management System - Complete solution for pharmacy inventory, sales, and prescription management.</p>
+							<p class="mt-2"><small><strong>Technologies:</strong> Django, React, PostgreSQL</small></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="services__five-single-service">
+						<div class="services__five-single-service-icon">
+							<i class="flaticon-software-development"></i>
+						</div>
+						<div class="services__five-single-service-content">
+							<span class="badge bg-success mb-2">Retail</span>
+							<h4>MjenziPOS</h4>
+							<p>Hardware Shop Management System - POS, inventory tracking, and sales analytics for hardware stores.</p>
+							<p class="mt-2"><small><strong>Technologies:</strong> Django, Vue.js, MySQL</small></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="services__five-single-service">
+						<div class="services__five-single-service-icon">
+							<i class="flaticon-mobile-phone-1"></i>
+						</div>
+						<div class="services__five-single-service-content">
+							<span class="badge bg-info mb-2">Transport</span>
+							<h4>Transit</h4>
+							<p>Transit Company Operations System - Fleet management, maintenance scheduling, and route optimization.</p>
+							<p class="mt-2"><small><strong>Technologies:</strong> Python, Flutter, Firebase</small></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="services__five-single-service">
+						<div class="services__five-single-service-icon">
+							<i class="flaticon-web-research"></i>
+						</div>
+						<div class="services__five-single-service-content">
+							<span class="badge bg-warning mb-2">Agriculture</span>
+							<h4>Land Allocation System</h4>
+							<p>Track land plots and manage farmer/applicant data for agricultural departments.</p>
+							<p class="mt-2"><small><strong>Technologies:</strong> Django, React, PostGIS</small></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="services__five-single-service">
+						<div class="services__five-single-service-icon">
+							<i class="flaticon-database"></i>
+						</div>
+						<div class="services__five-single-service-content">
+							<span class="badge bg-secondary mb-2">Education</span>
+							<h4>Asset Management System</h4>
+							<p>Manage university indoor assets - tracking, maintenance, and inventory control.</p>
+							<p class="mt-2"><small><strong>Technologies:</strong> Django, Bootstrap, SQLite</small></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="services__five-single-service">
+						<div class="services__five-single-service-icon">
+							<i class="flaticon-cyber-security"></i>
+						</div>
+						<div class="services__five-single-service-content">
+							<span class="badge bg-danger mb-2">Hospitality</span>
+							<h4>Mashfly</h4>
+							<p>Restaurant Management System - Orders, kitchen display, inventory, and reporting.</p>
+							<p class="mt-2"><small><strong>Technologies:</strong> Node.js, React, MongoDB</small></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="services__five-single-service">
+						<div class="services__five-single-service-icon">
+							<i class="flaticon-computer-mouse"></i>
+						</div>
+						<div class="services__five-single-service-content">
+							<span class="badge bg-primary mb-2">Real Estate</span>
+							<h4>NyumbaYangu</h4>
+							<p>Tenant and landlord linking & management system for property rentals.</p>
+							<p class="mt-2"><small><strong>Technologies:</strong> Django, React Native, PostgreSQL</small></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="services__five-single-service">
+						<div class="services__five-single-service-icon">
+							<i class="flaticon-data-scientist"></i>
+						</div>
+						<div class="services__five-single-service-content">
+							<span class="badge bg-success mb-2">Education</span>
+							<h4>SPARKS</h4>
+							<p>Student Progress and Academic Records System for universities and colleges.</p>
+							<p class="mt-2"><small><strong>Technologies:</strong> Django, Vue.js, PostgreSQL</small></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="services__five-single-service">
+						<div class="services__five-single-service-icon">
+							<i class="flaticon-cloud-computing"></i>
+						</div>
+						<div class="services__five-single-service-content">
+							<span class="badge bg-info mb-2">Education</span>
+							<h4>eLearning</h4>
+							<p>University Virtual Learning System - Online courses, assessments, and student engagement.</p>
+							<p class="mt-2"><small><strong>Technologies:</strong> Django, React, AWS</small></p>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<!-- Portfolio Gallery End -->
+
+<!-- Statistics Section Start -->
+<div class="technology-solution__one section-padding">
+	<div class="container">
+		<div class="row align-items-center gy-4">
+			<div class="col-xl-6 col-lg-6 col-md-9">
+				<div class="technology-solution__one-content">
+					<span class="subtitle-one">Our Impact</span>
+					<h2>Delivering Excellence Across Industries</h2>
+					<p>We've had the privilege of working with businesses across various sectors, helping them achieve their digital transformation goals.</p>
+					<div class="row mt-4">
+						{% if stats %}
+							{% for stat in stats %}
+							<div class="col-6">
+								<div class="satisfied-customer-counter mb-4">
+									<div class="counter-wrapper">
+										<h3 class="counter">{{ stat.value }}</h3>
+										<h3>{{ stat.suffix }}</h3>
+									</div>
+									<span>{{ stat.name }}</span>
+								</div>
+							</div>
+							{% endfor %}
+						{% else %}
+							<div class="col-6">
+								<div class="satisfied-customer-counter mb-4">
+									<div class="counter-wrapper">
+										<h3 class="counter">50</h3>
+										<h3>+</h3>
+									</div>
+									<span>Projects Completed</span>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="satisfied-customer-counter mb-4">
+									<div class="counter-wrapper">
+										<h3 class="counter">30</h3>
+										<h3>+</h3>
+									</div>
+									<span>Happy Clients</span>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="satisfied-customer-counter">
+									<div class="counter-wrapper">
+										<h3 class="counter">95</h3>
+										<h3>%</h3>
+									</div>
+									<span>Client Satisfaction</span>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="satisfied-customer-counter">
+									<div class="counter-wrapper">
+										<h3 class="counter">5</h3>
+										<h3>+</h3>
+									</div>
+									<span>Years Experience</span>
+								</div>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6">
+				<div class="technology-solution__one-image">
+					<div class="technology-solution__one-image-wrapper">
+						<img src="{% static 'assets/img/technology-solution/tech-solution-one.png' %}" alt="Project Statistics">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Statistics Section End -->
+
+<!-- Industries Section Start -->
+<div class="work-process__three" style="background-image: url({% static 'assets/img/work-process/work-process-bg-2.png' %});">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-6 col-lg-7 col-md-9">
+				<span class="subtitle-one">Industries We Serve</span>
+				<h2>Diverse Sector Expertise</h2>
+			</div>
+		</div>
+		<div class="work-process__three-card">
+			<div class="work-process__three-card-single">
+				<h3><i class="flaticon-consultant"></i></h3>
+				<h5>Healthcare</h5>
+				<p>Pharmacy management, patient records, and healthcare analytics solutions.</p>
+			</div>
+			<div class="work-process__three-card-single middle">
+				<h3><i class="flaticon-software-development"></i></h3>
+				<h5>Education</h5>
+				<p>Learning management systems, student records, and e-learning platforms.</p>
+			</div>
+			<div class="work-process__three-card-single">
+				<h3><i class="flaticon-cyber-security"></i></h3>
+				<h5>Real Estate</h5>
+				<p>Property management, tenant portals, and rental management systems.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Industries Section End -->
+
+<!-- CTA Section Start -->
+<div class="subscribe__one">
+	<div class="container">
+		<div class="row justify-content-center text-center subscribe__one-content" style="background-image: url({% static 'assets/img/subscribe/subscribe-one-shape-1.png' %});">
+			<div class="col-xl-7 col-lg-8">
+				<div class="subscribe__one-title">
+					<h3>Have a Project in Mind?</h3>
+					<p>Let's discuss how KianvoSoft can help bring your vision to life with our expertise and experience.</p>
+				</div>
+				<a href="{% url 'contact' %}" class="btn-two">Start Your Project
+					<i class="fas fa-arrow-right"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- CTA Section End -->
+
+{% endblock content %}

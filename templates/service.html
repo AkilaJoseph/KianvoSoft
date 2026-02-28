@@ -1,466 +1,421 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Our Services - KianvoSoft{% endblock title %}
+{% block content %}
 
-<head>
-	<!-- Start Meta -->
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="Bantec - IT Service & Technology HTML5 Template">
-	<meta name="keywords" content="Creative, Digital, multipage, landing, freelancer template">
-	<meta name="author" content="ThemeOri">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Title of Site -->
-	<title>Bantec - IT Service & Technology HTML5 Template</title>
-	<!-- Favicons -->
-	<link rel="icon" type="image/png" href="assets/img/favicon-1.png">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-	<!-- Font Awesome CSS -->
-	<link rel="stylesheet" href="assets/css/all.css">
-	<!-- Flat Icon CSS -->
-	<link rel="stylesheet" href="assets/webfonts/flat-icon/flaticon_bantec.css">
-	<!-- Animate CSS -->
-	<link rel="stylesheet" href="assets/css/animate.css">
-	<!-- Swiper Bundle CSS -->
-	<link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
-	<!-- Slick CSS -->
-	<link rel="stylesheet" href="assets/css/slick.css">
-	<!-- Magnific Popup CSS -->
-	<link rel="stylesheet" href="assets/css/magnific-popup.css">
-	<!-- Mean Menu CSS -->
-	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
-	<!-- Custom CSS -->
-	<link rel="stylesheet" href="assets/sass/style.css"> 
-</head>
-
-<body>
-	<!-- Preloader Start -->
-	 <div class="loader">
-		 <span class="loader-container"></span>
-	 </div>
-	<!-- Preloader End -->
-
-	<!-- Top Bar Start -->
-	<div class="top__bar">
-		<div class="container">
-			<div class="row">
-				<div class="col-xl-7 col-md-7">
-					<div class="top__bar-left">
-						<a href="tel:(629)555-0129"><i class="fas fa-phone-alt"></i>(629) 555-0129</a>
-						<a href="mailto:info@example.com"><i class="fas fa-envelope"></i>info@example.com</a>
-					</div>
+<!-- Banner Area Start -->
+<div class="page__banner">
+	<div class="page__banner-shape">
+		<img src="{% static 'assets/img/shape/page-banner-shape.png' %}" alt="">
+	</div>
+	<div class="container">
+		<div class="row justify-content-between align-items-center">
+			<div class="col-xl-6 col-lg-7">
+				<div class="page__banner-content">
+					<h2>Our Services</h2>
+					<span><a href="{% url 'home' %}">Home</a>
+						<span>|</span>
+						Services
+					</span>
 				</div>
-				<div class="col-xl-5 col-md-5">
-					<div class="top__bar-right">
-						<a href="https://www.google.com/maps"><i class="fas fa-map-marker-alt"></i>6391 Elgin St. Celina, 10299</a>
+			</div>
+			<div class="col-xl-4 col-lg-5">
+				<div class="page__banner-img">
+					<img src="{% static 'assets/img/banner/page-banner-img.png' %}" alt="KianvoSoft Services">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Banner Area End -->
+
+<!-- Services Intro Start -->
+<div class="about__one section-padding">
+	<div class="container">
+		<div class="row align-items-center gy-4">
+			<div class="col-xl-6 col-lg-7 col-md-9">
+				<div class="about__one-content">
+					<span class="subtitle-one">What We Offer</span>
+					<h2>Comprehensive Technology Solutions for Every Business Need</h2>
+					<p>At KianvoSoft, we provide a full spectrum of technology services designed to help businesses transform, innovate, and grow. From custom software development to AI-powered solutions, we deliver excellence at every step.</p>
+					<a href="{% url 'contact' %}" class="btn-one">Request a Service
+						<i class="fas fa-arrow-right"></i>
+					</a>
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-5">
+				<div class="about__one-image">
+					<div class="about__one-image-wrapper">
+						<img src="{% static 'assets/img/about/about-1.png' %}" alt="KianvoSoft Services" class="image-1">
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Top Bar End -->
+</div>
+<!-- Services Intro End -->
 
-	<!-- Header Area Start -->
-	<div class="header__area header__sticky">
-		<div class="container">
-			<div class="header__area-menubar">
-				<div class="header__area-menubar-left">
-					<div class="header__area-menubar-left-logo">
-						<a href="index.html"><img class="dark-n" src="assets/img/logo-1.png" alt="image"></a>
+<!-- Custom Software Development -->
+<div class="services__five section-padding pt-0" id="software">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-7 col-lg-7 col-md-9">
+				<span class="subtitle-one">Service 01</span>
+				<h2>Custom Software Development</h2>
+				<p>We build tailored software solutions that address your unique business challenges and drive operational efficiency.</p>
+			</div>
+		</div>
+		<div class="row gy-4 justify-content-center">
+			<div class="col-xl-4 col-lg-4 col-md-6">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-software-development"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Enterprise Software</h4>
+						<p>Scalable enterprise solutions including ERP, CRM, and business management systems.</p>
 					</div>
 				</div>
-				<div class="header__area-menubar-center">
-					<div class="header__area-menubar-center-menu menu-responsive">						
-						<ul id="mobilemenu">
-                            <li class="menu-item-has-children">
-								<a href="#">Home<i class="fas fa-angle-down"></i></a>
-                                <ul class="sub-menu">
-                                    <li><a href="index.html">Home 01</a></li>
-                                    <li><a href="index-two.html">Home 02</a></li>								
-                                    <li><a href="index-three.html">Home 03</a></li>								
-                                    <li><a href="index-four.html">Home 04</a></li>								
-                                    <li><a href="index-five.html">Home 05</a></li>								
-                                </ul>
-                            </li>                            
-							<li class="menu-item-has-children"><a href="#">Pages <i class="fas fa-angle-down"></i></a>
-                                <ul class="sub-menu">
-									<li><a href="about.html">About Us</a></li>
-                                    <li><a href="testimonial.html">Testimonials</a></li>									
-                                    <li><a href="pricing-plan.html">Pricing Plan</a></li>								
-                                    <li><a href="faq.html">Faq</a></li>								
-                                    <li class="menu-item-has-children"><a href="#">Team<i class="fas fa-angle-right"></i></a>
-										<ul class="sub-menu">
-											<li><a href="team-one.html">Team 01</a></li>
-											<li><a href="team-two.html">Team 02</a></li>
-										</ul>
-									</li>
-                                    <li><a href="request-quote.html">Request Quote</a></li>
-                                    <li><a href="404.html">404</a></li>
-                                </ul>
-                            </li>
-							<li class="menu-item-has-children"><a href="#">Services <i class="fas fa-angle-down"></i></a>
-								<ul class="sub-menu">
-									<li><a href="service.html">Service 01</a></li>
-									<li><a href="service-two.html">Service 02</a></li>								
-									<li><a href="service-details.html">Service Details</a></li>						
-								</ul>
-							</li>
-                            <li class="menu-item-has-children"><a href="#">Portfolio <i class="fas fa-angle-down"></i></a>
-                                <ul class="sub-menu">
-									<li><a href="portfolio-slider.html">Slider Style</a></li>
-									<li><a href="portfolio-column-two.html">Column 2</a></li>
-									<li><a href="portfolio-column-three.html">Column 3</a></li>
-									<li><a href="project-details.html">Details</a></li>
-                                </ul>
-                            </li>
-							<li class="menu-item-has-children"><a href="#">Blog <i class="fas fa-angle-down"></i></a>
-                                <ul class="sub-menu">
-									<li class="menu-item-has-children"><a href="#">Blog Grid<i class="fas fa-angle-right"></i></a>
-										<ul class="sub-menu">
-											<li><a href="blog-grid-two.html">2 Columns</a></li>
-											<li><a href="blog-grid-three.html">3 Columns</a></li>
-										</ul>
-									</li>
-									<li><a href="blog-standard.html">Blog Standard</a></li>
-									<li><a href="blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><a href="#">Contact<i class="fas fa-angle-down"></i></a>
-                                <ul class="sub-menu">
-									<li><a href="contact.html">Contact Style 1</a></li>
-									<li><a href="contact-two.html">Contact Style 2</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+			</div>
+			<div class="col-xl-4 col-lg-4 col-md-6">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-computer-mouse"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Desktop Applications</h4>
+						<p>Cross-platform desktop applications for Windows, macOS, and Linux environments.</p>
 					</div>
 				</div>
-				<div class="header__area-menubar-right">
-					<div class="header__area-menubar-right-box">
-						<div class="header__area-menubar-right-box-search">
-							<div class="search">	
-								<span class="header__area-menubar-right-box-search-icon open"><i class="flaticon-loupe"></i></span>
-							</div>
-							<div class="header__area-menubar-right-box-search-box">
-								<form>
-									<input type="search" placeholder="Search Here.....">
-									<button type="submit"><i class="flaticon-loupe"></i>
-									</button>
-								</form> <span class="header__area-menubar-right-box-search-box-icon"><i class="fal fa-times"></i></span>
-							</div>
-						</div>
-						<div class="header__area-menubar-right-box-sidebar">
-							<div class="header__area-menubar-right-box-sidebar-popup-icon">
-								<span class="bar-1"></span>
-								<span class="bar-2"></span>
-								<span class="bar-3"></span>
-							</div>
-						</div>
-						<div class="header__area-menubar-right-box-btn">
-							<a class="btn-one" href="request-quote.html">Get Quote<i class="fas fa-arrow-right"></i></a>
-						</div>
-						<!-- sidebar Menu Start -->
-						<div class="header__area-menubar-right-sidebar-popup">
-							<div class="sidebar-close-btn"><i class="fal fa-times"></i></div>
-							<div class="header__area-menubar-right-sidebar-popup-logo">
-								<a href="index.html"> <img src="assets/img/logo-2.png" alt="image"> </a>
-							</div>
-							<p>Morbi et tellus imperdiet, aliquam nulla sed, dapibus erat. Aenean dapibus sem non purus venenatis vulputate. Donec accumsan eleifend blandit. Nullam auctor ligula</p>
-							<div class="header__area-menubar-right-sidebar-popup-contact">
-								<h4 class="mb-30">Get In Touch</h4>
-								<div class="header__area-menubar-right-sidebar-popup-contact-item">
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
-										<i class="fal fa-phone-alt icon-animation"></i>
-									</div>
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
-										<span>Call Now</span>
-										<h6><a href="tel:+125(895)658568">+125 (895) 658 568</a></h6>
-									</div>
-								</div>
-								<div class="header__area-menubar-right-sidebar-popup-contact-item">
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
-										<i class="fal fa-envelope"></i>
-									</div>
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
-										<span>Quick Email</span>
-										<h6><a href="mailto:info.help@gmail.com">info.help@gmail.com</a></h6>
-									</div>
-								</div>
-								<div class="header__area-menubar-right-sidebar-popup-contact-item">
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
-										<i class="fal fa-map-marker-alt"></i>
-									</div>
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
-										<span>Office Address</span>
-										<h6><a href="https://www.google.com/maps">PV3M+X68 Welshpool United Kingdom</a></h6>
-									</div>
-								</div>
-							</div>
-							<div class="header__area-menubar-right-sidebar-popup-social">
-								<ul>
-									<li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-									<li><a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a></li>
-									<li><a href="https://behance.net" target="_blank"><i class="fab fa-behance"></i></a></li>
-									<li><a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
-								</ul>							
-							</div>
-						</div>
-						<div class="sidebar-overlay"></div>
-						<!-- sidebar Menu Start -->
+			</div>
+			<div class="col-xl-4 col-lg-4 col-md-6">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-database"></i>
 					</div>
-					<div class="responsive-menu"></div>
+					<div class="services__five-single-service-content">
+						<h4>Database Solutions</h4>
+						<p>Robust database design, development, and optimization for efficient data management.</p>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>    
-	<!-- Header Area End -->	
-
-	<!-- Banner Area Start -->
-	<div class="page__banner">
-		<div class="page__banner-shape">
-			<img src="assets/img/shape/page-banner-shape.png" alt="image">
+		<div class="row mt-4">
+			<div class="col-12 text-center">
+				<a href="{% url 'contact' %}" class="btn-one">Request Custom Software
+					<i class="fas fa-arrow-right"></i>
+				</a>
+			</div>
 		</div>
-		<div class="container">
-			<div class="row justify-content-between align-items-center">
-				<div class="col-xl-6 col-lg-7">
-					<div class="page__banner-content">
-						<h2>Services</h2>
-						<span><a href="index.html">Home</a>
-							<span>|</span>
-							Services
-						</span>
+	</div>
+</div>
+<!-- Custom Software Development End -->
+
+<!-- Web Application Development -->
+<div class="work-process-area__one section-padding" style="background-image: url({% static 'assets/img/work-process/work-process-bg.png' %});" id="web">
+	<div class="container">
+		<div class="row align-items-end work-process-area__one-title">
+			<div class="col-xl-7 col-lg-7">
+				<div class="work-process-area__one-content-left">
+					<span class="subtitle-one">Service 02</span>
+					<h2>Web Application Development</h2>
+				</div>
+			</div>
+			<div class="col-xl-4 offset-xl-1 col-lg-4 offset-lg-1">
+				<div class="work-process-area__one-content-right">
+					<p>Modern, responsive, and high-performance web applications built with the latest technologies.</p>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center gy-4">
+			<div class="col-xl-6">
+				<div class="work-process-area__one-single-work">
+					<span><i class="flaticon-web-research"></i></span>
+					<div class="work-process-area__one-single-work-content">
+						<h4>Frontend Development</h4>
+						<p>Beautiful, responsive user interfaces using React, Next.js, Vue.js, and modern CSS frameworks.</p>
 					</div>
 				</div>
-				<div class="col-xl-4 col-lg-5">
-					<div class="page__banner-img">
-						<img src="assets/img/banner/page-banner-img.png" alt="image">
+				<div class="work-process-area__one-single-work">
+					<span><i class="flaticon-software-development"></i></span>
+					<div class="work-process-area__one-single-work-content">
+						<h4>Backend Development</h4>
+						<p>Robust server-side solutions with Django, Flask, Node.js, and secure API development.</p>
+					</div>
+				</div>
+				<div class="work-process-area__one-single-work">
+					<span><i class="flaticon-cyber-security"></i></span>
+					<div class="work-process-area__one-single-work-content">
+						<h4>E-commerce Solutions</h4>
+						<p>Full-featured online stores with payment integration, inventory management, and analytics.</p>
+					</div>
+				</div>
+				<div class="work-process-area__one-single-work">
+					<span><i class="flaticon-cloud-computing"></i></span>
+					<div class="work-process-area__one-single-work-content">
+						<h4>Progressive Web Apps</h4>
+						<p>Fast, reliable, and engaging web apps that work offline and feel like native applications.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-6">
+				<div class="work-process-area__one-right-img">
+					<img src="{% static 'assets/img/service/service-1.png' %}" alt="Web Development">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Web Application Development End -->
+
+<!-- Mobile App Development -->
+<div class="services__five section-padding" id="mobile">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-7 col-lg-7 col-md-9">
+				<span class="subtitle-one">Service 03</span>
+				<h2>Mobile App Development</h2>
+				<p>Native and cross-platform mobile applications for Android and iOS that deliver exceptional user experiences.</p>
+			</div>
+		</div>
+		<div class="row gy-4 justify-content-center">
+			<div class="col-xl-3 col-lg-4 col-md-6">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-mobile-phone-1"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Android Apps</h4>
+						<p>Native Android development using Kotlin and Java for optimal performance.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-phone-call-1"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>iOS Apps</h4>
+						<p>Native iOS development using Swift for iPhone and iPad applications.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-satellite-signal"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Cross-Platform</h4>
+						<p>React Native and Flutter for cost-effective multi-platform development.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-email"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>App Maintenance</h4>
+						<p>Ongoing support, updates, and performance optimization for your apps.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-12 text-center">
+				<a href="{% url 'contact' %}" class="btn-one">Request Mobile App
+					<i class="fas fa-arrow-right"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Mobile App Development End -->
+
+<!-- AI & Machine Learning -->
+<div class="technology-solution__one section-padding" id="ai">
+	<div class="container">
+		<div class="row align-items-center gy-4">
+			<div class="col-xl-6 col-lg-6 col-md-9">
+				<div class="technology-solution__one-content">
+					<span class="subtitle-one">Service 04</span>
+					<h2>AI & Machine Learning Solutions</h2>
+					<p>Leverage the power of artificial intelligence to automate processes, gain insights, and make data-driven decisions that transform your business.</p>
+					<ul class="mt-4">
+						<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Predictive Analytics & Forecasting</li>
+						<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Natural Language Processing (NLP)</li>
+						<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Computer Vision Solutions</li>
+						<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Recommendation Systems</li>
+						<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Chatbots & Virtual Assistants</li>
+						<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Process Automation with AI</li>
+					</ul>
+					<a href="{% url 'contact' %}" class="btn-one mt-3">Explore AI Solutions
+						<i class="fas fa-arrow-right"></i>
+					</a>
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6">
+				<div class="technology-solution__one-image">
+					<div class="technology-solution__one-image-wrapper">
+						<img src="{% static 'assets/img/technology-solution/tech-solution-one.png' %}" alt="AI Solutions">
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Banner Area End -->
-	
-	<!-- Services Two Area Start -->
-	<div class="services__two section-padding">
-		<div class="container"> 
-			<div class="row gy-4 justify-content-center">
-				<div class="col-xl-4 col-lg-4 col-md-6">
-					<div class="services__two-single-service">
-						<div class="services__two-single-service-icon">
-							<i class="flaticon-mobile-phone-1"></i>
-						</div>
-						<div class="services__two-single-service-content">
-							<h4>Creating a Foundation for thr main Success</h4>
-							<a href="#" class="btn-three">read more
-								<i class="fas fa-chevron-right"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-4 col-md-6">
-					<div class="services__two-single-service">
-						<div class="services__two-single-service-icon">
-							<i class="flaticon-phone-call-1"></i>
-						</div>
-						<div class="services__two-single-service-content">
-							<h4>Mobile App ServiceNetwor Infrastruct Solutions</h4>
-							<a href="#" class="btn-three">read more
-								<i class="fas fa-chevron-right"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-4 col-md-6">
-					<div class="services__two-single-service">
-						<div class="services__two-single-service-icon">
-							<i class="flaticon-email"></i>
-						</div>
-						<div class="services__two-single-service-content">
-							<h4>Enhance your productivity with IT expertise</h4>
-							<a href="#" class="btn-three">read more
-								<i class="fas fa-chevron-right"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-4 col-md-6">
-					<div class="services__two-single-service">
-						<div class="services__two-single-service-icon">
-							<i class="flaticon-web-research"></i>
-						</div>
-						<div class="services__two-single-service-content">
-							<h4>Igniting Curiosity and Imagination</h4>
-							<a href="#" class="btn-three">read more
-								<i class="fas fa-chevron-right"></i>
-							</a>
-						</div>    
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-4 col-md-6">
-					<div class="services__two-single-service">
-						<div class="services__two-single-service-icon">
-							<i class="flaticon-computer-mouse"></i>
-						</div>
-						<div class="services__two-single-service-content">
-							<h4>Technology-driven success, guaranteed</h4>
-							<a href="#" class="btn-three">read more
-								<i class="fas fa-chevron-right"></i>
-							</a>
-						</div>    
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-4 col-md-6">
-					<div class="services__two-single-service">
-						<div class="services__two-single-service-icon">
-							<i class="flaticon-satellite-signal"></i>
-						</div>
-						<div class="services__two-single-service-content">
-							<h4>Mobile App ServiceNetwor Infrastruct Solutions</h4>
-							<a href="#" class="btn-three">read more
-								<i class="fas fa-chevron-right"></i>
-							</a>
-						</div>    
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Services Two Area End -->
+</div>
+<!-- AI & Machine Learning End -->
 
-	<!-- Subscribe Area End -->
-	<div class="subscribe__one">
-		<div class="container">
-			<div class="row justify-content-center text-center subscribe__one-content" style="background-image: url(assets/img/subscribe/subscribe-one-shape-1.png);">
-				<div class="col-xl-7 col-lg-8">
-					<div class="subscribe__one-title">
-						<h3>Subscribe Our newsletter </h3>
+<!-- Automation Systems -->
+<div class="why-choose-us__four section-padding" id="automation">
+	<div class="container">
+		<div class="row gy-4 align-items-center">
+			<div class="col-xl-6 col-lg-6 col-md-10">
+				<div class="why-choose-us__four-image">
+					<img src="{% static 'assets/img/why-choose-us/why-choose-us-four-2.png' %}" alt="" class="why-choose-us__four-floating-image animate-y-axis-slider">
+					<img src="{% static 'assets/img/why-choose-us/why-choose-us-four.png' %}" alt="Automation Systems">
+				</div>
+			</div>
+			<div class="col-xl-5 col-lg-7 col-md-9">
+				<div class="why-choose-us__four-left">
+					<div class="why-choose-us__four-title">
+						<span class="subtitle-one">Service 05</span>
+						<h2>Automation Systems</h2>
+						<p>Streamline your operations and boost productivity with intelligent automation solutions that reduce manual work and minimize errors.</p>
+						<ul class="mt-4">
+							<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Business Process Automation</li>
+							<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Workflow Optimization</li>
+							<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Robotic Process Automation (RPA)</li>
+							<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Integration Solutions</li>
+							<li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Report Generation Automation</li>
+						</ul>
+						<a href="{% url 'contact' %}" class="btn-one mt-3">Automate Your Business
+							<i class="fas fa-arrow-right"></i>
+						</a>
 					</div>
-					<form action="#" class="subscribe__one-form">
-						<input type="email" placeholder="Enter Your Email">
-						<button class="btn-two" type="submit">subscribe now</button>
-					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Subscribe Area End -->
+</div>
+<!-- Automation Systems End -->
 
-	<!-- Footer Two Area Start -->
-	<div class="footer__two">
-		<img class="footer__two-shape" src="assets/img/shape/footer-two-bg.png" alt="image">
-		<div class="container">
-			<div class="row gy-4 justify-content-between">
-				<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-					<div class="footer__two-widget">
-						<div class="footer__two-widget-about">
-							<a href="#"><img src="assets/img/logo-2.png" alt="image"></a>
-							<p>Financial planners help people to gain knowledge aboutw</p>
-							<div class="footer__two-widget-about-location">
-								<div class="footer__two-widget-about-location-item">
-									<div class="footer__two-widget-about-location-item-icon">
-										<i class="flaticon-telephone-call"></i>
-									</div>
-									<div class="footer__two-widget-about-location-item-info">
-										<span>Phone Number</span>
-										<a href="tel:(307)555-0133">(307) 555-0133</a>
-									</div>
-								</div>
-							</div>
-						</div>
+<!-- Data Analytics -->
+<div class="services__five section-padding" id="analytics">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-7 col-lg-7 col-md-9">
+				<span class="subtitle-one">Service 06</span>
+				<h2>Data Analytics & Visualization</h2>
+				<p>Transform your data into actionable insights with powerful analytics and stunning visualizations.</p>
+			</div>
+		</div>
+		<div class="row gy-4 justify-content-center">
+			<div class="col-xl-4 col-lg-4 col-md-6">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-data-scientist"></i>
 					</div>
-				</div>
-				<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-					<div class="footer__two-widget ml-85">
-						<h4>Quick Link</h4>
-						<div class="footer__two-widget-solution">
-							<ul>
-<li><a href="service.html"><i class="far fa-chevron-double-right"></i>Service</a></li>
-								<li><a href="faq.html"><i class="far fa-chevron-double-right"></i>FAQ</a></li>
-								<li><a href="testimonial.html"><i class="far fa-chevron-double-right"></i>Testimonial</a></li>
-								<li><a href="about.html"><i class="far fa-chevron-double-right"></i>About Us</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-					<div class="footer__two-widget">
-						<h4>Our Services</h4>
-						<div class="footer__two-widget-solution">
-							<ul>
-								<li><a href="services-right-sidebar.html"><i class="far fa-chevron-double-right"></i>Hosting Solution</a></li>
-								<li><a href="services-right-sidebar.html"><i class="far fa-chevron-double-right"></i>Cyber Security</a></li>
-								<li><a href="services-right-sidebar.html"><i class="far fa-chevron-double-right"></i>Network Analysis</a></li>
-								<li><a href="services-right-sidebar.html"><i class="far fa-chevron-double-right"></i>Data Recovery</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-					<div class="footer__two-widget">
-						<h4>Follow Us</h4>
-						<div class="footer__two-widget-subscribe">
-							<p>The latest news, articles, sent to your inbox weekly.</p>
-							 <div class="footer__two-widget-social">	
-								<ul>
-									<li><a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a></li>
-									<li><a href="https://www.twitter.com"><i class="fab fa-twitter"></i></a></li>
-									<li><a href="https://www.linkedin.com"><i class="fab fa-linkedin"></i></a></li>
-									<li><a href="https://www.pinterest.com"><i class="fab fa-pinterest-p"></i></a></li>
-								</ul>
-							</div>
-						</div>
+					<div class="services__five-single-service-content">
+						<h4>Business Intelligence</h4>
+						<p>Comprehensive BI solutions with dashboards, reports, and KPI tracking.</p>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="copyright__one">
-			<div class="container">
-				<div class="row justify-content-between copyright__one-container-area">
-					<div class="col-xl-5 col-lg-6"> 
-						<div class="copyright__one-left">
-							<p>© ThemeOri  2026 | All Rights Reserved</p>
-						</div>
+			<div class="col-xl-4 col-lg-4 col-md-6">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-database"></i>
 					</div>
-					<div class="col-xl-5 col-lg-6">
-						<div class="copyright__one-right">
-							<a href="about.html">Privacy Policy</a>
-							<a href="contact.html">Contact Us</a>
-						</div>
+					<div class="services__five-single-service-content">
+						<h4>Data Warehousing</h4>
+						<p>Centralized data storage solutions for efficient data management and analysis.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-4 col-md-6">
+				<div class="services__five-single-service">
+					<div class="services__five-single-service-icon">
+						<i class="flaticon-web-research"></i>
+					</div>
+					<div class="services__five-single-service-content">
+						<h4>Interactive Dashboards</h4>
+						<p>Real-time, interactive visualizations that make complex data easy to understand.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Footer Two Area End -->
+</div>
+<!-- Data Analytics End -->
 
-	<!-- Scroll Btn Start -->
-	<div class="scroll-up">
-		<svg class="scroll-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102"><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" /> </svg>
+<!-- IT Consulting -->
+<div class="work-process__three" style="background-image: url({% static 'assets/img/work-process/work-process-bg-2.png' %});" id="consulting">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-6 col-lg-7 col-md-9">
+				<span class="subtitle-one">Service 07</span>
+				<h2>IT Consulting & Technical Support</h2>
+				<p>Expert guidance and ongoing support to help you make the most of your technology investments.</p>
+			</div>
+		</div>
+		<div class="work-process__three-card">
+			<div class="work-process__three-card-arrows">
+				<img src="{% static 'assets/img/work-process/work-process-arrow-1.png' %}" alt="" class="arrow-1">
+				<img src="{% static 'assets/img/work-process/work-process-arrow-2.png' %}" alt="" class="arrow-2">
+				<img src="{% static 'assets/img/work-process/work-process-arrow-1.png' %}" alt="" class="arrow-3">
+			</div>
+			<div class="work-process__three-card-single">
+				<h3><i class="flaticon-consultant"></i></h3>
+				<h5>Technology Strategy</h5>
+				<p>Strategic planning and roadmaps aligned with your business goals and growth plans.</p>
+			</div>
+			<div class="work-process__three-card-single middle">
+				<h3><i class="flaticon-cyber-security"></i></h3>
+				<h5>Security Assessment</h5>
+				<p>Comprehensive security audits and recommendations to protect your digital assets.</p>
+			</div>
+			<div class="work-process__three-card-single">
+				<h3><i class="flaticon-telephone-call"></i></h3>
+				<h5>Technical Support</h5>
+				<p>Responsive support services to keep your systems running smoothly 24/7.</p>
+			</div>
+		</div>
+		<div class="row mt-50">
+			<div class="col-12 text-center">
+				<a href="{% url 'contact' %}" class="btn-two">Schedule a Consultation
+					<i class="fas fa-arrow-right"></i>
+				</a>
+			</div>
+		</div>
 	</div>
-	<!-- Scroll Btn End -->
-	<!-- Main JS -->
-	<script src="assets/js/jquery-3.6.0.min.js"></script>
-	<!-- Bootstrap JS -->
-	<script src="assets/js/bootstrap.min.js"></script>
-	<!-- Counter Up JS -->
-	<script src="assets/js/jquery.counterup.min.js"></script>
-	<!-- Popper JS -->
-	<script src="assets/js/popper.min.js"></script>
-	<!-- Progressbar JS -->
-	<script src="assets/js/progressbar.min.js"></script>
-	<!-- Magnific Popup JS -->
-	<script src="assets/js/jquery.magnific-popup.min.js"></script>
-	<!-- Swiper Bundle JS -->
-	<script src="assets/js/swiper-bundle.min.js"></script>
-	<!-- Slick JS -->
-	<script src="assets/js/slick.min.js"></script>
-    <!-- Isotope JS -->
-	<script src="assets/js/isotope.pkgd.min.js"></script>
-	<!-- Waypoints JS -->
-	<script src="assets/js/jquery.waypoints.min.js"></script>
-	<!-- Mean Menu JS -->
-	<script src="assets/js/jquery.meanmenu.min.js"></script>
-	<!-- Custom JS -->
-	<script src="assets/js/custom.js"></script>
-</body>
-</html>
+</div>
+<!-- IT Consulting End -->
+
+<!-- CTA Section -->
+<div class="subscribe__one">
+	<div class="container">
+		<div class="row justify-content-center text-center subscribe__one-content" style="background-image: url({% static 'assets/img/subscribe/subscribe-one-shape-1.png' %});">
+			<div class="col-xl-7 col-lg-8">
+				<div class="subscribe__one-title">
+					<h3>Ready to Get Started?</h3>
+					<p>Let's discuss your project requirements and how KianvoSoft can help bring your vision to life.</p>
+				</div>
+				<div class="d-flex justify-content-center gap-3 flex-wrap">
+					<a href="{% url 'contact' %}" class="btn-two">Get a Free Quote
+						<i class="fas fa-arrow-right"></i>
+					</a>
+					<a href="https://wa.me/255687445294" target="_blank" class="btn-one">
+						<i class="fab fa-whatsapp me-2"></i>WhatsApp Us
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- CTA Section End -->
+
+{% endblock content %}

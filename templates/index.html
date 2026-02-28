@@ -105,66 +105,45 @@
 			</div>
 		</div>
 		<div class="row gy-4 justify-content-center">
+			{% if services %}
+			{% for service in services %}
 			<div class="col-xl-3 col-lg-6 col-md-6">
-				<div class="services__five-single-service ks-reveal ks-reveal-delay-1" style="min-height: 280px;">
-					<div class="services__five-single-service-icon">
-						<i class="flaticon-software-development"></i>
+				<div class="ks-project-card ks-reveal ks-reveal-delay-1"
+					style="height: 100%; display: flex; flex-direction: column;">
+					<div class="ks-project-image"
+						style="background-image: url('{% if service.image %}{{ service.image.url }}{% else %}{% static 'assets/img/portfolio/portfolio-1.png' %}{% endif %}');">
+						<span class="ks-project-category"
+							style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);"><i
+								class="{{ service.icon_class }}"></i></span>
 					</div>
-					<div class="services__five-single-service-content">
-						<h4>Custom Software Development</h4>
-						<p>Web and mobile applications, management systems, e-commerce platforms, and automation tools
-							for businesses and institutions.</p>
-						<a href="{% url 'services' %}#software" class="btn-three">Learn More
-							<i class="fas fa-arrow-right"></i>
-						</a>
+					<div class="ks-project-content" style="flex-grow: 1; display: flex; flex-direction: column;">
+						<h4>{{ service.name }}</h4>
+						<p>{{ service.short_description }}</p>
+
+						{% if service.technologies %}
+						<div class="ks-project-tech mt-auto mb-3">
+							{% for tech in service.get_technologies_list|slice:":3" %}
+							<span class="ks-tech-pill">{{ tech }}</span>
+							{% endfor %}
+						</div>
+						{% else %}
+						<div class="mt-auto mb-3"></div>
+						{% endif %}
+
+						<div class="ks-project-footer border-top border-secondary pt-3">
+							<a href="{% url 'services' %}#{{ service.slug }}" class="ks-project-link">Learn More <i
+									class="fas fa-arrow-right"></i></a>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-3 col-lg-6 col-md-6">
-				<div class="services__five-single-service ks-reveal ks-reveal-delay-2" style="min-height: 280px;">
-					<div class="services__five-single-service-icon">
-						<i class="flaticon-satellite-signal"></i>
-					</div>
-					<div class="services__five-single-service-content">
-						<h4>Network Infrastructure</h4>
-						<p>Planning, installation, and maintenance of LANs, fibre connections, and wireless systems for
-							offices and schools in Mbeya.</p>
-						<a href="{% url 'services' %}#network" class="btn-three">Learn More
-							<i class="fas fa-arrow-right"></i>
-						</a>
-					</div>
-				</div>
+			{% endfor %}
+			{% else %}
+			<!-- Fallback static services -->
+			<div class="col-12 text-center">
+				<p class="text-white-50">No services configured yet.</p>
 			</div>
-			<div class="col-xl-3 col-lg-6 col-md-6">
-				<div class="services__five-single-service ks-reveal ks-reveal-delay-3" style="min-height: 280px;">
-					<div class="services__five-single-service-icon">
-						<i class="flaticon-cyber-security"></i>
-					</div>
-					<div class="services__five-single-service-content">
-						<h4>CCTV & Security</h4>
-						<p>Supply, installation, and configuration of surveillance systems for homes, businesses, and
-							institutions across the region.</p>
-						<a href="{% url 'services' %}#cctv" class="btn-three">Learn More
-							<i class="fas fa-arrow-right"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-lg-6 col-md-6">
-				<div class="services__five-single-service ks-reveal ks-reveal-delay-4" style="min-height: 280px;">
-					<div class="services__five-single-service-icon">
-						<i class="flaticon-consultant"></i>
-					</div>
-					<div class="services__five-single-service-content">
-						<h4>Short Courses & Training</h4>
-						<p>Practical technology courses for students, young professionals, and employees — programming,
-							networking, and digital tools.</p>
-						<a href="{% url 'services' %}#training" class="btn-three">Learn More
-							<i class="fas fa-arrow-right"></i>
-						</a>
-					</div>
-				</div>
-			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>
@@ -174,34 +153,18 @@
 <div class="ks-stats-section">
 	<div class="container">
 		<div class="row gy-4 justify-content-center">
+			{% if stats %}
+			{% for stat in stats %}
 			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
-				<div class="ks-stat-card ks-reveal ks-reveal-delay-1">
-					<div class="ks-stat-icon"><i class="flaticon-software-development"></i></div>
-					<div class="ks-stat-number"><span class="counter">50</span>+</div>
-					<div class="ks-stat-label">Projects Delivered</div>
+				<div class="ks-stat-card ks-reveal ks-reveal-delay-1"
+					style="background: rgba(10, 14, 26, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(0, 240, 255, 0.15); border-top: 2px solid var(--ks-primary); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+					<div class="ks-stat-icon"><i class="{{ stat.icon_class|default:'flaticon-consultant' }}"></i></div>
+					<div class="ks-stat-number"><span class="counter">{{ stat.value }}</span>{{ stat.suffix }}</div>
+					<div class="ks-stat-label">{{ stat.name }}</div>
 				</div>
 			</div>
-			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
-				<div class="ks-stat-card ks-reveal ks-reveal-delay-2">
-					<div class="ks-stat-icon"><i class="flaticon-consultant"></i></div>
-					<div class="ks-stat-number"><span class="counter">40</span>+</div>
-					<div class="ks-stat-label">Students Trained</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
-				<div class="ks-stat-card ks-reveal ks-reveal-delay-3">
-					<div class="ks-stat-icon"><i class="flaticon-telephone-call"></i></div>
-					<div class="ks-stat-number"><span class="counter">10</span>+</div>
-					<div class="ks-stat-label">Active Clients</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
-				<div class="ks-stat-card ks-reveal ks-reveal-delay-4">
-					<div class="ks-stat-icon"><i class="flaticon-data-scientist"></i></div>
-					<div class="ks-stat-number"><span class="counter">3</span></div>
-					<div class="ks-stat-label">Co-Founders</div>
-				</div>
-			</div>
+			{% endfor %}
+			{% endif %}
 		</div>
 	</div>
 </div>
@@ -219,33 +182,36 @@
 			</div>
 		</div>
 		<div class="row gy-4 justify-content-center">
+			{% if future_visions %}
+			{% for vision in future_visions %}
 			<div class="col-xl-4 col-lg-4 col-md-6">
-				<div class="ks-vision-card ks-reveal ks-reveal-delay-1">
-					<div class="ks-vision-icon"><i class="flaticon-consultant"></i></div>
-					<span class="ks-badge ks-badge-upcoming">2026–2027</span>
-					<h4>KianvoSoft Academy</h4>
-					<p>A structured coding and technology academy offering courses in software development, networking,
-						data science, and digital business — in Swahili and English.</p>
+				<div class="ks-project-card ks-reveal ks-reveal-delay-1"
+					style="height: 100%; display: flex; flex-direction: column;">
+					<div class="ks-project-image"
+						style="background-image: url('{% if vision.image %}{{ vision.image.url }}{% else %}{% static 'assets/img/portfolio/portfolio-2.png' %}{% endif %}'); height: 180px;">
+						{% if vision.timeline_text %}
+						<span class="ks-project-category"
+							style="background: rgba(139, 92, 246, 0.2); border-color: var(--ks-accent);">{{
+							vision.timeline_text }}</span>
+						{% endif %}
+						<div
+							style="position: absolute; bottom: -24px; right: 24px; width: 48px; height: 48px; background: var(--ks-bg-card); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(139, 92, 246, 0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+							<i class="{{ vision.icon_class }}" style="color: var(--ks-accent); font-size: 20px;"></i>
+						</div>
+					</div>
+					<div class="ks-project-content pt-4" style="flex-grow: 1; display: flex; flex-direction: column;">
+						<h4>{{ vision.name }}</h4>
+						<p>{{ vision.description }}</p>
+					</div>
 				</div>
 			</div>
-			<div class="col-xl-4 col-lg-4 col-md-6">
-				<div class="ks-vision-card ks-reveal ks-reveal-delay-2">
-					<div class="ks-vision-icon"><i class="flaticon-cloud-computing"></i></div>
-					<span class="ks-badge ks-badge-upcoming">2026–2028</span>
-					<h4>SaaS Products</h4>
-					<p>Software-as-a-Service products designed for Tanzanian markets — school management systems,
-						farmers' market platforms, and micro-business accounting tools.</p>
-				</div>
+			{% endfor %}
+			{% else %}
+			<!-- Fallback static vision -->
+			<div class="col-12 text-center">
+				<p class="text-white-50">Future vision plans coming soon.</p>
 			</div>
-			<div class="col-xl-4 col-lg-4 col-md-6">
-				<div class="ks-vision-card ks-reveal ks-reveal-delay-3">
-					<div class="ks-vision-icon"><i class="flaticon-data-scientist"></i></div>
-					<span class="ks-badge ks-badge-upcoming">2026–2030</span>
-					<h4>AI Research Unit</h4>
-					<p>Applied AI research in collaboration with universities — Swahili NLP, agricultural AI, and
-						health-tech tools for rural communities.</p>
-				</div>
-			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>
@@ -357,26 +323,40 @@
 				<h2 class="ks-reveal ks-reveal-delay-1">Client Testimonials</h2>
 			</div>
 		</div>
-		<div class="row justify-content-center">
-			<div class="col-xl-8">
-				<div class="testimonial__four-card ks-reveal" style="padding: 40px; text-align: center;">
+		<div class="row gy-4 justify-content-center">
+			{% if testimonials %}
+			{% for testimonial in testimonials %}
+			<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="testimonial__four-card ks-reveal"
+					style="padding: 40px; text-align: center; height: 100%; display: flex; flex-direction: column; background: rgba(10, 14, 26, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
 					<div class="testimonial__four-card-profile" style="margin-bottom: 20px;">
-						<img src="{% static 'assets/img/testimonial/user-pic-2.png' %}" alt="Client Testimonial"
-							style="width: 80px; border-radius: 50%; border: 2px solid var(--ks-cyan);">
+						<img src="{% if testimonial.client_image %}{{ testimonial.client_image.url }}{% else %}{% static 'assets/img/testimonial/user-pic-2.png' %}{% endif %}"
+							alt="{{ testimonial.client_name }}"
+							style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 2px solid var(--ks-cyan); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);">
 					</div>
-					<h3 style="margin-bottom: 15px;">Happy Client</h3>
-					<p style="font-size: 1.1rem; line-height: 1.8;">"KianvoSoft transformed our business operations with
-						their innovative software solutions. Their team's expertise and dedication to quality exceeded
-						our expectations. We highly recommend their services to any business in Tanzania."</p>
-					<div class="testimonial__four-card-rating" style="margin-top: 15px;">
-						<i class="fas fa-star"></i>
-						<i class="fas fa-star"></i>
-						<i class="fas fa-star"></i>
-						<i class="fas fa-star"></i>
-						<i class="fas fa-star"></i>
+					<h3 style="margin-bottom: 5px; font-size: 1.2rem; color: white;">{{ testimonial.client_name }}</h3>
+					<span style="display: block; color: var(--ks-cyan); font-size: 0.9rem; margin-bottom: 15px;">{{
+						testimonial.client_position }}{% if testimonial.client_company %}, {{ testimonial.client_company
+						}}{% endif %}</span>
+					<p style="font-size: 1.05rem; line-height: 1.8; flex-grow: 1; font-style: italic; color: #d1d5db;">
+						"{{ testimonial.content }}"</p>
+					<div class="testimonial__four-card-rating" style="margin-top: 15px; color: #fbbf24;">
+						{% for i in "12345" %}
+						{% if forloop.counter <= testimonial.rating %} <i class="fas fa-star"
+							title="Rating: {{ testimonial.rating }} stars"></i>
+							{% else %}
+							<i class="far fa-star"></i>
+							{% endif %}
+							{% endfor %}
 					</div>
 				</div>
 			</div>
+			{% endfor %}
+			{% else %}
+			<div class="col-12 text-center">
+				<p class="text-white-50">No testimonials added yet.</p>
+			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>

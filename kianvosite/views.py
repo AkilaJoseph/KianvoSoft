@@ -4,7 +4,8 @@ from django.http import JsonResponse
 from .models import (
     ProjectCategory, Project, Service, Testimonial,
     BlogCategory, BlogPost, ContactInquiry,
-    NewsletterSubscriber, CompanyStat, Partner
+    NewsletterSubscriber, CompanyStat, Partner,
+    RoadmapMilestone
 )
 
 
@@ -12,7 +13,9 @@ from .models import (
 def home(request):
     context = {
         'featured_projects': Project.objects.filter(is_active=True, is_featured=True)[:6],
-        'services': Service.objects.filter(is_active=True)[:6],
+        'services': Service.objects.filter(is_active=True, service_type='current')[:4],
+        'future_visions': Service.objects.filter(is_active=True, service_type='future')[:3],
+        'roadmap_milestones': RoadmapMilestone.objects.filter(is_active=True),
         'testimonials': Testimonial.objects.filter(is_active=True, is_featured=True)[:3],
         'blog_posts': BlogPost.objects.filter(is_published=True)[:3],
         'partners': Partner.objects.filter(is_active=True),
@@ -33,7 +36,8 @@ def about(request):
 # Services Page
 def services(request):
     context = {
-        'services': Service.objects.filter(is_active=True),
+        'current_services': Service.objects.filter(is_active=True, service_type='current'),
+        'future_visions': Service.objects.filter(is_active=True, service_type='future'),
     }
     return render(request, 'service.html', context)
 

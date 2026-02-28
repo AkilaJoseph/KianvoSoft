@@ -86,11 +86,20 @@ class Project(models.Model):
 
 # Service Model
 class Service(models.Model):
+    SERVICE_TYPES = [
+        ('current', 'Current Service'),
+        ('future', 'Future Vision (Planned)'),
+    ]
+
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
+    service_type = models.CharField(max_length=20, choices=SERVICE_TYPES, default='current', help_text="Is this a current service or a future planned vision?")
     short_description = models.CharField(max_length=255)
     description = models.TextField()
     icon_class = models.CharField(max_length=100, default='flaticon-software-development')
+
+    # Specific to Future Vision
+    timeline_text = models.CharField(max_length=100, blank=True, help_text="E.g., '2026-2027' (only used for future vision services)")
 
     # Features for this service
     features = models.TextField(blank=True, help_text="Key features (one per line)")
@@ -270,3 +279,18 @@ class Partner(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# Roadmap / Timeline Milestone Model
+class RoadmapMilestone(models.Model):
+    year = models.CharField(max_length=50, help_text="E.g., '2025' or 'Q3 2026'")
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'year']
+
+    def __str__(self):
+        return f"{self.year} - {self.title}"

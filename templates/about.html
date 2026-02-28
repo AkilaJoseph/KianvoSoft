@@ -298,6 +298,80 @@
 </div>
 <!-- Market Opportunity End -->
 
+<!-- Company Stats Start -->
+<div class="ks-stats-section section-padding" style="background: var(--ks-bg-primary);">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-7 col-lg-8">
+				<span class="subtitle-one ks-reveal">Our Track Record</span>
+				<h2 class="ks-reveal ks-reveal-delay-1">KianvoSoft By The Numbers</h2>
+			</div>
+		</div>
+		<div class="row gy-4 justify-content-center">
+			{% if stats %}
+			{% for stat in stats %}
+			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
+				<div class="ks-stat-card ks-reveal ks-reveal-delay-1"
+					style="background: rgba(10, 14, 26, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(0, 240, 255, 0.15); border-top: 2px solid var(--ks-primary); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+					<div class="ks-stat-icon"><i class="{{ stat.icon_class|default:'flaticon-consultant' }}"></i></div>
+					<div class="ks-stat-number"><span class="counter">{{ stat.value }}</span>{{ stat.suffix }}</div>
+					<div class="ks-stat-label">{{ stat.name }}</div>
+				</div>
+			</div>
+			{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+</div>
+<!-- Company Stats End -->
+
+<!-- Testimonial Area Start -->
+<div class="testimonial__four section-padding" style="background: var(--ks-bg-secondary);">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-6 col-lg-7">
+				<span class="subtitle-one ks-reveal">What People Say</span>
+				<h2 class="ks-reveal ks-reveal-delay-1">Client Testimonials</h2>
+			</div>
+		</div>
+		<div class="row gy-4 justify-content-center">
+			{% if testimonials %}
+			{% for testimonial in testimonials %}
+			<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="testimonial__four-card ks-reveal"
+					style="padding: 40px; text-align: center; height: 100%; display: flex; flex-direction: column; background: rgba(10, 14, 26, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+					<div class="testimonial__four-card-profile" style="margin-bottom: 20px;">
+						<img src="{% if testimonial.client_image %}{{ testimonial.client_image.url }}{% else %}{% static 'assets/img/testimonial/user-pic-2.png' %}{% endif %}"
+							alt="{{ testimonial.client_name }}"
+							style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 2px solid var(--ks-cyan); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);">
+					</div>
+					<h3 style="margin-bottom: 5px; font-size: 1.2rem; color: white;">{{ testimonial.client_name }}</h3>
+					<span style="display: block; color: var(--ks-cyan); font-size: 0.9rem; margin-bottom: 15px;">{{
+						testimonial.client_position }}{% if testimonial.client_company %}, {{ testimonial.client_company
+						}}{% endif %}</span>
+					<p style="font-size: 1.05rem; line-height: 1.8; flex-grow: 1; font-style: italic; color: #d1d5db;">
+						"{{ testimonial.content }}"</p>
+					<div class="testimonial__four-card-rating" style="margin-top: 15px; color: #fbbf24;">
+						{% for i in "12345" %}
+						{% if forloop.counter <= testimonial.rating %} <i class="fas fa-star"></i>
+							{% else %}
+							<i class="far fa-star"></i>
+							{% endif %}
+							{% endfor %}
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+			{% else %}
+			<div class="col-12 text-center">
+				<p class="text-white-50">No testimonials added yet.</p>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<!-- Testimonial Area End -->
+
 <!-- CTA Section Start -->
 <div class="subscribe__one" style="background: var(--ks-bg-primary);">
 	<div class="container">

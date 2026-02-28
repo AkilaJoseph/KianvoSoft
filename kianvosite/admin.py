@@ -3,7 +3,8 @@ from django.utils.html import format_html
 from .models import (
     ProjectCategory, Project, Service, Testimonial,
     BlogCategory, BlogPost, ContactInquiry,
-    NewsletterSubscriber, CompanyStat, Partner
+    NewsletterSubscriber, CompanyStat, Partner,
+    RoadmapMilestone
 )
 
 
@@ -62,8 +63,8 @@ class ProjectAdmin(admin.ModelAdmin):
 # Service Admin
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'short_description', 'is_featured', 'is_active', 'order']
-    list_filter = ['is_featured', 'is_active']
+    list_display = ['name', 'service_type', 'is_featured', 'is_active', 'order']
+    list_filter = ['service_type', 'is_featured', 'is_active']
     search_fields = ['name', 'description', 'technologies']
     prepopulated_fields = {'slug': ('name',)}
     list_editable = ['is_featured', 'is_active', 'order']
@@ -71,7 +72,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Basic Information', {
-            'fields': ('name', 'slug', 'short_description', 'description', 'icon_class')
+            'fields': ('name', 'slug', 'service_type', 'timeline_text', 'short_description', 'description', 'icon_class')
         }),
         ('Details', {
             'fields': ('features', 'technologies', 'image')
@@ -207,3 +208,13 @@ class PartnerAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" style="max-height: 40px;"/>', obj.logo.url)
         return "No logo"
     logo_preview.short_description = 'Logo'
+
+
+# Roadmap Milestone Admin
+@admin.register(RoadmapMilestone)
+class RoadmapMilestoneAdmin(admin.ModelAdmin):
+    list_display = ['year', 'title', 'is_active', 'order']
+    list_filter = ['is_active']
+    search_fields = ['year', 'title', 'description']
+    list_editable = ['is_active', 'order']
+    ordering = ['order', 'year']

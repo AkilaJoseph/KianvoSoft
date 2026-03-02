@@ -3,360 +3,219 @@
 {% block title %}{{ post.title }} - KianvoSoft{% endblock title %}
 {% block content %}
 
-<!-- Banner Area Start -->
-<div class="page__banner">
-	<div class="page__banner-shape">
-		<img src="{% static 'assets/img/shape/page-banner-shape.png' %}" alt="">
+<!-- Reading Progress Bar -->
+<div class="kv-progress-bar" id="kvProgressBar"></div>
+
+<!-- Hero Section Start -->
+<div class="kv-article-hero">
+	<div class="kv-article-hero-img">
+		{% if post.featured_image %}
+			<img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+		{% else %}
+			<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="{{ post.title }}">
+		{% endif %}
+		<div class="kv-article-hero-overlay"></div>
 	</div>
 	<div class="container">
-		<div class="row justify-content-between align-items-center">
-			<div class="col-xl-6 col-lg-7">
-				<div class="page__banner-content">
-					<h2>Blog Details</h2>
-					<span>
-						<a href="{% url 'home' %}">Home</a>
-						<span>|</span>
-						<a href="{% url 'blog' %}">Blog</a>
-						<span>|</span>
-						{{ post.title|truncatechars:45 }}
-					</span>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-5">
-				<div class="page__banner-img">
-					<img src="{% static 'assets/img/banner/page-banner-img.png' %}" alt="Blog">
-				</div>
+		<div class="kv-article-hero-content">
+			<!-- Breadcrumb -->
+			<nav class="kv-breadcrumb">
+				<a href="{% url 'home' %}">Home</a>
+				<i class="fas fa-chevron-right"></i>
+				<a href="{% url 'blog' %}">Blog</a>
+				<i class="fas fa-chevron-right"></i>
+				{% if post.category %}
+				<a href="{% url 'blog' %}?category={{ post.category.slug }}">{{ post.category.name }}</a>
+				<i class="fas fa-chevron-right"></i>
+				{% endif %}
+				<span>Article</span>
+			</nav>
+
+			<!-- Category Badge -->
+			{% if post.category %}
+			<a href="{% url 'blog' %}?category={{ post.category.slug }}" class="kv-hero-badge">
+				<i class="far fa-folder"></i> {{ post.category.name }}
+			</a>
+			{% endif %}
+
+			<!-- Title -->
+			<h1 class="kv-hero-title">{{ post.title }}</h1>
+
+			<!-- Meta strip -->
+			<div class="kv-hero-meta">
+				<span><i class="fas fa-user-circle"></i> {{ post.author }}</span>
+				<span><i class="far fa-calendar-alt"></i> {{ post.published_date|date:"F d, Y" }}</span>
+				<span><i class="far fa-clock"></i> {{ reading_time }} min read</span>
+				<span><i class="fas fa-align-left"></i> {{ word_count }} words</span>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- Banner Area End -->
+<!-- Hero Section End -->
 
-<style>
-/* ============================================
-   Blog Article Body Styling
-   ============================================ */
-.kv-article-body h2 {
-	font-size: 1.65rem;
-	font-weight: 700;
-	margin-top: 2.2rem;
-	margin-bottom: 0.9rem;
-	color: #1a1a2e;
-	padding-bottom: 0.4rem;
-	border-bottom: 2px solid #f0f0f0;
-}
-.kv-article-body h3 {
-	font-size: 1.3rem;
-	font-weight: 700;
-	margin-top: 1.8rem;
-	margin-bottom: 0.7rem;
-	color: #1a1a2e;
-}
-.kv-article-body h4 {
-	font-size: 1.1rem;
-	font-weight: 700;
-	margin-top: 1.4rem;
-	margin-bottom: 0.5rem;
-	color: #333;
-}
-.kv-article-body p {
-	font-size: 1.05rem;
-	line-height: 1.9;
-	color: #444;
-	margin-bottom: 1.1rem;
-}
-.kv-article-body ul,
-.kv-article-body ol {
-	margin-bottom: 1.2rem;
-	padding-left: 1.6rem;
-}
-.kv-article-body ul li,
-.kv-article-body ol li {
-	font-size: 1.02rem;
-	line-height: 1.75;
-	color: #444;
-	margin-bottom: 0.45rem;
-}
-.kv-article-body ul li::marker {
-	color: var(--color-primary, #0d6efd);
-}
-.kv-article-body blockquote {
-	border-left: 4px solid var(--color-primary, #0d6efd);
-	background: #f8f9ff;
-	padding: 18px 24px;
-	margin: 1.6rem 0;
-	border-radius: 0 8px 8px 0;
-	font-size: 1.05rem;
-	color: #555;
-	font-style: italic;
-}
-.kv-article-body table {
-	width: 100%;
-	border-collapse: collapse;
-	margin: 1.5rem 0;
-	font-size: 0.97rem;
-}
-.kv-article-body table th {
-	background: #f0f4ff;
-	color: #1a1a2e;
-	font-weight: 700;
-	padding: 10px 14px;
-	border: 1px solid #dde;
-	text-align: left;
-}
-.kv-article-body table td {
-	padding: 9px 14px;
-	border: 1px solid #e8e8f0;
-	color: #444;
-}
-.kv-article-body table tr:nth-child(even) td {
-	background: #fafbff;
-}
-.kv-article-body strong, .kv-article-body b {
-	color: #1a1a2e;
-	font-weight: 700;
-}
-.kv-article-body a {
-	color: var(--color-primary, #0d6efd);
-	text-decoration: underline;
-}
-.kv-article-body a:hover {
-	text-decoration: none;
-}
-.kv-article-body img {
-	max-width: 100%;
-	border-radius: 10px;
-	margin: 1rem 0;
-}
-.kv-article-body hr {
-	border: none;
-	border-top: 2px solid #f0f0f0;
-	margin: 2rem 0;
-}
-.kv-article-body pre,
-.kv-article-body code {
-	background: #1e1e2e;
-	color: #cdd6f4;
-	padding: 2px 6px;
-	border-radius: 4px;
-	font-size: 0.92rem;
-	font-family: 'Courier New', Courier, monospace;
-}
-.kv-article-body pre {
-	padding: 18px 22px;
-	overflow-x: auto;
-	margin: 1.2rem 0;
-	line-height: 1.6;
-}
-
-/* Meta row chips */
-.kv-meta-row {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 18px;
-	align-items: center;
-	margin-bottom: 1.4rem;
-	font-size: 0.92rem;
-	color: #777;
-}
-.kv-meta-row span { display: flex; align-items: center; gap: 6px; }
-.kv-meta-row i { color: var(--color-primary, #0d6efd); font-size: 0.95rem; }
-.kv-meta-row a { color: inherit; }
-.kv-meta-row a:hover { color: var(--color-primary, #0d6efd); }
-
-/* Excerpt pull-quote */
-.kv-excerpt {
-	font-size: 1.12rem;
-	color: #555;
-	line-height: 1.75;
-	border-left: 4px solid var(--color-primary, #0d6efd);
-	padding: 14px 20px;
-	background: #f8f9ff;
-	border-radius: 0 8px 8px 0;
-	margin-bottom: 2rem;
-}
-
-/* Sidebar cards */
-.kv-sidebar-card {
-	background: #fff;
-	border: 1px solid #eef0f8;
-	border-radius: 12px;
-	padding: 24px;
-	margin-bottom: 24px;
-	box-shadow: 0 2px 16px rgba(0,0,0,0.04);
-}
-.kv-sidebar-card h5 {
-	font-size: 1rem;
-	font-weight: 700;
-	color: #1a1a2e;
-	margin-bottom: 14px;
-	padding-bottom: 10px;
-	border-bottom: 2px solid #f0f0f0;
-}
-
-/* Related post mini card */
-.kv-related-mini {
-	display: flex;
-	gap: 12px;
-	align-items: flex-start;
-	padding-bottom: 14px;
-	margin-bottom: 14px;
-	border-bottom: 1px solid #f0f0f0;
-}
-.kv-related-mini:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-.kv-related-mini img {
-	width: 68px;
-	height: 68px;
-	object-fit: cover;
-	border-radius: 8px;
-	flex-shrink: 0;
-}
-.kv-related-mini .kv-related-text { flex: 1; }
-.kv-related-mini .kv-related-text small { color: #999; font-size: 0.8rem; }
-.kv-related-mini .kv-related-text a {
-	display: block;
-	font-size: 0.88rem;
-	font-weight: 600;
-	color: #222;
-	margin-top: 3px;
-	line-height: 1.4;
-	text-decoration: none;
-}
-.kv-related-mini .kv-related-text a:hover { color: var(--color-primary, #0d6efd); }
-</style>
-
-<!-- Blog Detail Content Start -->
-<div class="section-padding">
+<!-- Main Content Start -->
+<div class="kv-course-layout section-padding">
 	<div class="container">
 		<div class="row gy-5 align-items-start">
 
-			<!-- ===== Main Article ===== -->
+			<!-- ===== Article Column ===== -->
 			<div class="col-xl-8 col-lg-8">
 
-				<!-- Featured Image -->
-				<div style="border-radius:14px; overflow:hidden; margin-bottom:32px; box-shadow:0 4px 24px rgba(0,0,0,0.08);">
-					{% if post.featured_image %}
-						<img src="{{ post.featured_image.url }}" alt="{{ post.title }}"
-						     style="width:100%; height:420px; object-fit:cover; display:block;">
-					{% else %}
-						<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="{{ post.title }}"
-						     style="width:100%; height:420px; object-fit:cover; display:block;">
-					{% endif %}
-				</div>
-
-				<!-- Meta Row -->
-				<div class="kv-meta-row">
-					<span><i class="far fa-user"></i> {{ post.author }}</span>
-					{% if post.category %}
-					<span>
-						<i class="far fa-folder"></i>
-						<a href="{% url 'blog' %}?category={{ post.category.slug }}">{{ post.category.name }}</a>
-					</span>
-					{% endif %}
-					<span><i class="far fa-calendar-alt"></i> {{ post.published_date|date:"F d, Y" }}</span>
-				</div>
-
-				<!-- Title -->
-				<h1 style="font-size:2.1rem; font-weight:800; line-height:1.3; color:#1a1a2e; margin-bottom:20px;">
-					{{ post.title }}
-				</h1>
-
-				<!-- Excerpt -->
+				<!-- Excerpt Lead -->
 				{% if post.excerpt %}
-				<p class="kv-excerpt">{{ post.excerpt }}</p>
+				<div class="kv-article-lead">
+					<i class="fas fa-quote-left kv-quote-icon"></i>
+					<p>{{ post.excerpt }}</p>
+				</div>
 				{% endif %}
 
-				<!-- Article Content (CKEditor HTML output) -->
-				<div class="kv-article-body">
+				<!-- Article Body -->
+				<article class="kv-article-body" id="kvArticleBody">
 					{{ post.content|safe }}
+				</article>
+
+				<!-- Tag / Share Footer -->
+				<div class="kv-article-share-bar">
+					<div class="kv-share-left">
+						{% if post.category %}
+						<a href="{% url 'blog' %}?category={{ post.category.slug }}" class="kv-tag-pill">
+							<i class="far fa-folder"></i> {{ post.category.name }}
+						</a>
+						{% endif %}
+					</div>
+					<div class="kv-share-right">
+						<span class="kv-share-label">Share:</span>
+						<a href="https://twitter.com/intent/tweet?text={{ post.title|urlencode }}&url={{ request.build_absolute_uri }}"
+						   target="_blank" class="kv-share-btn kv-share-twitter" title="Share on X (Twitter)">
+							<i class="fab fa-twitter"></i>
+						</a>
+						<a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}"
+						   target="_blank" class="kv-share-btn kv-share-linkedin" title="Share on LinkedIn">
+							<i class="fab fa-linkedin-in"></i>
+						</a>
+						<a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ request.build_absolute_uri }}"
+						   target="_blank" class="kv-share-btn kv-share-whatsapp" title="Share on WhatsApp">
+							<i class="fab fa-whatsapp"></i>
+						</a>
+					</div>
 				</div>
 
-				<!-- Tags / Back -->
-				<div style="margin-top:40px; padding-top:24px; border-top:2px solid #f0f0f0; display:flex; align-items:center; flex-wrap:wrap; gap:12px;">
-					{% if post.category %}
-					<a href="{% url 'blog' %}?category={{ post.category.slug %}"
-					   class="btn btn-sm btn-outline-primary">
-						<i class="far fa-folder me-1"></i>{{ post.category.name }}
+				<!-- Prev / Next Navigation -->
+				<div class="kv-post-nav">
+					{% if prev_post %}
+					<a href="{% url 'blog_detail' prev_post.slug %}" class="kv-post-nav-item kv-post-nav-prev">
+						<span class="kv-post-nav-dir"><i class="fas fa-arrow-left"></i> Previous Article</span>
+						<span class="kv-post-nav-title">{{ prev_post.title|truncatechars:65 }}</span>
+					</a>
+					{% else %}
+					<div></div>
+					{% endif %}
+
+					{% if next_post %}
+					<a href="{% url 'blog_detail' next_post.slug %}" class="kv-post-nav-item kv-post-nav-next">
+						<span class="kv-post-nav-dir">Next Article <i class="fas fa-arrow-right"></i></span>
+						<span class="kv-post-nav-title">{{ next_post.title|truncatechars:65 }}</span>
 					</a>
 					{% endif %}
-					<a href="{% url 'blog' %}" class="btn-three" style="margin-left:auto;">
-						<i class="fas fa-chevron-left me-1"></i> Back to Blog
-					</a>
 				</div>
 
 			</div>
 
-			<!-- ===== Sidebar ===== -->
+			<!-- ===== Sticky Sidebar ===== -->
 			<div class="col-xl-4 col-lg-4">
+				<div class="kv-sticky-sidebar">
 
-				<!-- Author Card -->
-				<div class="kv-sidebar-card">
-					<h5>About the Author</h5>
-					<div style="display:flex; align-items:center; gap:14px; margin-bottom:12px;">
-						<div style="width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,#0d6efd,#6f42c1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-							<i class="fas fa-user" style="color:#fff; font-size:1.2rem;"></i>
+					<!-- Table of Contents -->
+					<div class="kv-sidebar-card kv-toc-card">
+						<div class="kv-toc-header">
+							<i class="fas fa-list-ul"></i>
+							<h5>Table of Contents</h5>
 						</div>
-						<div>
-							<div style="font-weight:700; color:#1a1a2e;">{{ post.author }}</div>
-							<div style="font-size:0.82rem; color:#888;">Tech Writer & Consultant</div>
-						</div>
+						<nav class="kv-toc-nav" id="kvTocNav">
+							<p class="kv-toc-loading">Loading...</p>
+						</nav>
 					</div>
-					<p style="font-size:0.88rem; color:#666; margin:0; line-height:1.6;">
-						Sharing expert insights on software engineering, AI, cloud, and digital transformation from the KianvoSoft team.
-					</p>
-				</div>
 
-				<!-- Category -->
-				{% if post.category %}
-				<div class="kv-sidebar-card">
-					<h5>Category</h5>
-					<a href="{% url 'blog' %}?category={{ post.category.slug }}"
-					   style="display:inline-flex; align-items:center; gap:8px; background:#f0f4ff; color:#0d6efd; padding:9px 18px; border-radius:20px; font-size:0.9rem; font-weight:600; text-decoration:none;">
-						<i class="far fa-folder"></i>{{ post.category.name }}
-					</a>
-				</div>
-				{% endif %}
+					<!-- Author Card -->
+					<div class="kv-sidebar-card kv-author-card">
+						<div class="kv-author-top">
+							<div class="kv-author-avatar">
+								<i class="fas fa-user"></i>
+							</div>
+							<div class="kv-author-info">
+								<div class="kv-author-name">{{ post.author }}</div>
+								<div class="kv-author-role">Tech Writer &amp; Consultant</div>
+							</div>
+						</div>
+						<p class="kv-author-bio">Expert insights on software engineering, AI, cloud computing, and digital transformation from the KianvoSoft team.</p>
+						<a href="{% url 'contact' %}" class="kv-author-contact-btn">
+							<i class="fas fa-envelope"></i> Get in Touch
+						</a>
+					</div>
 
-				<!-- Related Posts -->
-				{% if related_posts %}
-				<div class="kv-sidebar-card">
-					<h5>Related Articles</h5>
-					{% for related in related_posts %}
-					<div class="kv-related-mini">
-						{% if related.featured_image %}
-							<img src="{{ related.featured_image.url }}" alt="{{ related.title }}">
-						{% else %}
-							<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="{{ related.title }}">
+					<!-- Article Stats -->
+					<div class="kv-sidebar-card kv-stats-card">
+						<h5>Article Info</h5>
+						<div class="kv-stat-row">
+							<span class="kv-stat-icon"><i class="far fa-clock"></i></span>
+							<span class="kv-stat-label">Reading Time</span>
+							<span class="kv-stat-value">{{ reading_time }} min</span>
+						</div>
+						<div class="kv-stat-row">
+							<span class="kv-stat-icon"><i class="fas fa-align-left"></i></span>
+							<span class="kv-stat-label">Word Count</span>
+							<span class="kv-stat-value">{{ word_count }}</span>
+						</div>
+						{% if post.category %}
+						<div class="kv-stat-row">
+							<span class="kv-stat-icon"><i class="far fa-folder"></i></span>
+							<span class="kv-stat-label">Category</span>
+							<a href="{% url 'blog' %}?category={{ post.category.slug }}" class="kv-stat-value kv-stat-link">{{ post.category.name }}</a>
+						</div>
 						{% endif %}
-						<div class="kv-related-text">
-							<small>{{ related.published_date|date:"M d, Y" }}</small>
-							<a href="{% url 'blog_detail' related.slug %}">{{ related.title|truncatechars:65 }}</a>
+						<div class="kv-stat-row">
+							<span class="kv-stat-icon"><i class="far fa-calendar-alt"></i></span>
+							<span class="kv-stat-label">Published</span>
+							<span class="kv-stat-value">{{ post.published_date|date:"M d, Y" }}</span>
 						</div>
 					</div>
-					{% endfor %}
-				</div>
-				{% endif %}
 
-				<!-- CTA -->
-				<div style="background:linear-gradient(135deg,#0d6efd,#6f42c1); border-radius:12px; padding:28px 24px; text-align:center; color:#fff;">
-					<i class="flaticon-software-development" style="font-size:2.5rem; margin-bottom:12px; display:block;"></i>
-					<h5 style="color:#fff; margin-bottom:10px;">Need a Custom Software Solution?</h5>
-					<p style="color:rgba(255,255,255,0.85); font-size:0.88rem; margin-bottom:18px;">
-						Let KianvoSoft build the right system for your business.
-					</p>
-					<a href="{% url 'contact' %}"
-					   style="display:inline-block; background:#fff; color:#0d6efd; font-weight:700; padding:10px 24px; border-radius:6px; text-decoration:none; font-size:0.9rem;">
-						Get a Free Quote <i class="fas fa-arrow-right ms-1"></i>
-					</a>
-				</div>
+					<!-- Related Posts -->
+					{% if related_posts %}
+					<div class="kv-sidebar-card">
+						<h5><i class="fas fa-book-open" style="color:var(--ks-cyan); margin-right:8px;"></i>Related Articles</h5>
+						{% for related in related_posts %}
+						<div class="kv-related-mini">
+							{% if related.featured_image %}
+								<img src="{{ related.featured_image.url }}" alt="{{ related.title }}">
+							{% else %}
+								<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="{{ related.title }}">
+							{% endif %}
+							<div>
+								<small>{{ related.published_date|date:"M d, Y" }}</small>
+								<a href="{% url 'blog_detail' related.slug %}">{{ related.title|truncatechars:60 }}</a>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %}
 
+					<!-- Sidebar CTA -->
+					<div class="kv-sidebar-cta">
+						<i class="flaticon-software-development"></i>
+						<h5>Need a Custom Software Solution?</h5>
+						<p>Let KianvoSoft build the right system for your business.</p>
+						<a href="{% url 'contact' %}">Get a Free Quote <i class="fas fa-arrow-right"></i></a>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- Blog Detail Content End -->
+<!-- Main Content End -->
 
-<!-- More Articles (related posts) Start -->
+<!-- More Articles Start -->
 {% if related_posts %}
 <div class="blog__five section-padding pt-0">
 	<div class="container">
@@ -408,22 +267,148 @@
 <!-- Newsletter Section Start -->
 <div class="subscribe__one">
 	<div class="container">
-		<div class="row justify-content-center text-center subscribe__one-content"
-		     style="background-image: url({% static 'assets/img/subscribe/subscribe-one-shape-1.png' %});">
+		<div class="row justify-content-center text-center subscribe__one-content">
 			<div class="col-xl-7 col-lg-8">
+				<div class="kv-subscribe-icon">
+					<i class="fas fa-envelope-open-text"></i>
+				</div>
 				<div class="subscribe__one-title">
 					<h3>Stay Updated with KianvoSoft</h3>
 					<p>Get the latest articles, tech insights, and company news delivered straight to your inbox.</p>
 				</div>
-				<form action="{% url 'subscribe_newsletter' %}" method="POST" class="subscribe__one-form">
+				<form id="kvSubscribeForm" action="{% url 'subscribe_newsletter' %}" method="POST" class="subscribe__one-form">
 					{% csrf_token %}
-					<input type="email" name="email" placeholder="Enter Your Email" required>
-					<button class="btn-two" type="submit">Subscribe Now</button>
+					<input type="email" name="email" id="kvSubEmail" placeholder="Enter your email address" required>
+					<button class="btn-two" type="submit" id="kvSubBtn">Subscribe Now</button>
 				</form>
+				<div id="kvSubscribeMsg" class="kv-subscribe-msg" aria-live="polite"></div>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- Newsletter Section End -->
+
+<script>
+(function () {
+  'use strict';
+  var form = document.getElementById('kvSubscribeForm');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email   = document.getElementById('kvSubEmail').value;
+    var csrf    = form.querySelector('[name=csrfmiddlewaretoken]').value;
+    var msgEl   = document.getElementById('kvSubscribeMsg');
+    var btn     = document.getElementById('kvSubBtn');
+    btn.disabled = true;
+    btn.textContent = 'Subscribing…';
+    msgEl.className = 'kv-subscribe-msg';
+    msgEl.innerHTML = '';
+    fetch(form.action, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: 'email=' + encodeURIComponent(email) + '&csrfmiddlewaretoken=' + encodeURIComponent(csrf)
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.success) {
+        msgEl.className = 'kv-subscribe-msg kv-subscribe-success';
+        msgEl.innerHTML = '<i class="fas fa-check-circle"></i> ' + data.message;
+        form.reset();
+      } else {
+        msgEl.className = 'kv-subscribe-msg kv-subscribe-error';
+        msgEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + data.message;
+      }
+    })
+    .catch(function () {
+      msgEl.className = 'kv-subscribe-msg kv-subscribe-error';
+      msgEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Something went wrong. Please try again.';
+    })
+    .finally(function () {
+      btn.disabled = false;
+      btn.textContent = 'Subscribe Now';
+    });
+  });
+}());
+</script>
+
+<!-- Scripts -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── Reading Progress Bar ── */
+  const progressBar = document.getElementById('kvProgressBar');
+  window.addEventListener('scroll', function () {
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  });
+
+  /* ── Auto Table of Contents ── */
+  function buildTOC () {
+    const body     = document.getElementById('kvArticleBody');
+    const tocNav   = document.getElementById('kvTocNav');
+    if (!body || !tocNav) return;
+
+    const headings = body.querySelectorAll('h2, h3');
+    if (!headings.length) {
+      tocNav.innerHTML = '<p class="kv-toc-empty">No sections found.</p>';
+      return;
+    }
+
+    let html = '<ol class="kv-toc-list">';
+    let h2Counter = 0;
+
+    headings.forEach(function (el, idx) {
+      const id   = 'kv-section-' + idx;
+      el.id      = id;
+      const tag  = el.tagName.toLowerCase();
+      const text = el.textContent.trim();
+
+      if (tag === 'h2') {
+        h2Counter++;
+        /* Add visual number prefix to the heading itself */
+        el.setAttribute('data-section', h2Counter);
+        html += '<li class="kv-toc-h2"><a href="#' + id + '" data-target="' + id + '">' + text + '</a></li>';
+      } else {
+        html += '<li class="kv-toc-h3"><a href="#' + id + '" data-target="' + id + '">' + text + '</a></li>';
+      }
+    });
+
+    html += '</ol>';
+    tocNav.innerHTML = html;
+
+    /* Smooth scroll on TOC link click */
+    tocNav.querySelectorAll('a[data-target]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.getElementById(link.getAttribute('data-target'));
+        if (target) {
+          const offset = 90;
+          window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+        }
+      });
+    });
+
+    /* Active TOC highlight on scroll */
+    const tocLinks = tocNav.querySelectorAll('a[data-target]');
+    window.addEventListener('scroll', function () {
+      let current = '';
+      headings.forEach(function (el) {
+        if (window.scrollY >= el.offsetTop - 120) current = el.id;
+      });
+      tocLinks.forEach(function (link) {
+        link.classList.remove('kv-toc-active');
+        if (link.getAttribute('data-target') === current) link.classList.add('kv-toc-active');
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', buildTOC);
+})();
+</script>
 
 {% endblock content %}

@@ -10,8 +10,27 @@ from .models import (
 )
 
 
+CONTENT_WRITING_GUIDE = """
+<div style="background:#f0f7ff;border-left:4px solid #1a73e8;padding:14px 18px;margin-bottom:12px;border-radius:0 8px 8px 0;font-size:13px;line-height:1.7;">
+  <strong style="color:#1a73e8;">&#128221; Content Writing Guide — Article Structure</strong><br>
+  Use the <strong>Format</strong> dropdown in the editor to structure your article:<br>
+  &bull; <strong>Section Heading (H2)</strong> — main sections (these become TOC entries + auto-numbered)<br>
+  &bull; <strong>Sub-heading (H3)</strong> — sub-sections inside an H2<br>
+  &bull; <strong>Minor Heading (H4)</strong> — minor emphasis headings<br>
+  &bull; <strong>Paragraph</strong> — regular body text<br>
+  &bull; <strong>Code Block (pre)</strong> — code snippets<br>
+  Use <strong>Numbered List</strong> / <strong>Bullet List</strong> for lists &nbsp;|&nbsp;
+  <strong>Table</strong> for comparison tables &nbsp;|&nbsp;
+  <strong>Blockquote</strong> for pull quotes.
+</div>
+"""
+
+
 class BlogPostAdminForm(forms.ModelForm):
-    content = forms.CharField(widget=CKEditorUploadingWidget(config_name='blog'))
+    content = forms.CharField(
+        widget=CKEditorUploadingWidget(config_name='blog'),
+        help_text=CONTENT_WRITING_GUIDE,
+    )
 
     class Meta:
         model = BlogPost
@@ -121,7 +140,7 @@ class BlogCategoryAdmin(admin.ModelAdmin):
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
     form = BlogPostAdminForm
-    list_display = ['title', 'category', 'author', 'is_featured', 'is_published', 'published_date']
+    list_display = ['title', 'category', 'author', 'is_featured', 'is_published', 'published_date', 'preview_link']
     list_filter = ['category', 'is_featured', 'is_published', 'published_date']
     search_fields = ['title', 'excerpt']
     prepopulated_fields = {'slug': ('title',)}
@@ -130,16 +149,27 @@ class BlogPostAdmin(admin.ModelAdmin):
     ordering = ['-published_date']
 
     fieldsets = (
-        ('Content', {
-            'fields': ('title', 'slug', 'excerpt', 'content', 'featured_image')
+        ('Article Details', {
+            'fields': ('title', 'slug', 'excerpt', 'featured_image'),
+            'description': 'The title auto-populates the slug. The excerpt is the short summary shown on the blog listing page.',
         }),
-        ('Meta', {
-            'fields': ('category', 'author', 'published_date')
+        ('Article Content', {
+            'fields': ('content',),
+            'description': 'Use the Format dropdown to structure your article with H2/H3 headings — these auto-generate the Table of Contents on the front end.',
         }),
-        ('Publishing', {
-            'fields': ('is_featured', 'is_published')
+        ('Classification & Publishing', {
+            'fields': ('category', 'author', 'published_date', 'is_featured', 'is_published'),
         }),
     )
+
+    def preview_link(self, obj):
+        if obj.slug and obj.is_published:
+            url = f'/blog/{obj.slug}/'
+            return format_html(
+                '<a href="{}" target="_blank" style="color:#1a73e8;font-weight:600;">&#128279; View</a>', url
+            )
+        return '—'
+    preview_link.short_description = 'Preview'
 
 
 # Contact Inquiry Admin

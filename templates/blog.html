@@ -268,21 +268,71 @@
 <!-- Newsletter Section Start -->
 <div class="subscribe__one">
 	<div class="container">
-		<div class="row justify-content-center text-center subscribe__one-content" style="background-image: url({% static 'assets/img/subscribe/subscribe-one-shape-1.png' %});">
+		<div class="row justify-content-center text-center subscribe__one-content">
 			<div class="col-xl-7 col-lg-8">
+				<div class="kv-subscribe-icon">
+					<i class="fas fa-envelope-open-text"></i>
+				</div>
 				<div class="subscribe__one-title">
-					<h3>Subscribe to Our Newsletter</h3>
+					<h3>Stay Updated with KianvoSoft</h3>
 					<p>Get the latest articles, tech insights, and company news delivered straight to your inbox.</p>
 				</div>
-				<form action="{% url 'subscribe_newsletter' %}" method="POST" class="subscribe__one-form">
+				<form id="kvSubscribeForm" action="{% url 'subscribe_newsletter' %}" method="POST" class="subscribe__one-form">
 					{% csrf_token %}
-					<input type="email" name="email" placeholder="Enter Your Email" required>
-					<button class="btn-two" type="submit">Subscribe Now</button>
+					<input type="email" name="email" id="kvSubEmail" placeholder="Enter your email address" required>
+					<button class="btn-two" type="submit" id="kvSubBtn">Subscribe Now</button>
 				</form>
+				<div id="kvSubscribeMsg" class="kv-subscribe-msg" aria-live="polite"></div>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- Newsletter Section End -->
+
+<script>
+(function () {
+  'use strict';
+  var form = document.getElementById('kvSubscribeForm');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email   = document.getElementById('kvSubEmail').value;
+    var csrf    = form.querySelector('[name=csrfmiddlewaretoken]').value;
+    var msgEl   = document.getElementById('kvSubscribeMsg');
+    var btn     = document.getElementById('kvSubBtn');
+    btn.disabled = true;
+    btn.textContent = 'Subscribing…';
+    msgEl.className = 'kv-subscribe-msg';
+    msgEl.innerHTML = '';
+    fetch(form.action, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: 'email=' + encodeURIComponent(email) + '&csrfmiddlewaretoken=' + encodeURIComponent(csrf)
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.success) {
+        msgEl.className = 'kv-subscribe-msg kv-subscribe-success';
+        msgEl.innerHTML = '<i class="fas fa-check-circle"></i> ' + data.message;
+        form.reset();
+      } else {
+        msgEl.className = 'kv-subscribe-msg kv-subscribe-error';
+        msgEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + data.message;
+      }
+    })
+    .catch(function () {
+      msgEl.className = 'kv-subscribe-msg kv-subscribe-error';
+      msgEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Something went wrong. Please try again.';
+    })
+    .finally(function () {
+      btn.disabled = false;
+      btn.textContent = 'Subscribe Now';
+    });
+  });
+}());
+</script>
 
 {% endblock content %}

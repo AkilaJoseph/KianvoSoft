@@ -149,24 +149,46 @@ CKEDITOR_CONFIGS = {
         ],
         'height': 500,
         'width': '100%',
-        'extraPlugins': ','.join(['image2']),
         'removePlugins': 'elementspath',
         'resize_enabled': True,
+        'format_tags': 'p;h2;h3;h4;pre',
     },
+    # Blog post editor — full-featured for structured article writing
     'blog': {
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Format', 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'],
-            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink'],
-            ['Image', 'Table', 'HorizontalRule'],
-            ['TextColor', 'BGColor'],
-            ['Source'],
+        'skin': 'moono-lisa',
+        'toolbar': 'BlogFull',
+        'toolbar_BlogFull': [
+            # Row 1: Format & text style
+            {'name': 'format',     'items': ['Format']},
+            {'name': 'basicstyle', 'items': ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat']},
+            {'name': 'color',      'items': ['TextColor', 'BGColor']},
+            '/',
+            # Row 2: Structure
+            {'name': 'paragraph', 'items': [
+                'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Blockquote', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+            ]},
+            {'name': 'links',  'items': ['Link', 'Unlink']},
+            {'name': 'insert', 'items': ['Image', 'Table', 'HorizontalRule']},
+            {'name': 'tools',  'items': ['Source', '-', 'Maximize']},
         ],
-        'height': 600,
+        'height': 650,
         'width': '100%',
         'removePlugins': 'elementspath',
+        # Only expose Paragraph, Heading 2, Heading 3, Heading 4, Preformatted
         'format_tags': 'p;h2;h3;h4;pre',
+        'format_h2': {'element': 'h2', 'name': 'Section Heading (H2)'},
+        'format_h3': {'element': 'h3', 'name': 'Sub-heading (H3)'},
+        'format_h4': {'element': 'h4', 'name': 'Minor Heading (H4)'},
+        'format_pre': {'element': 'pre', 'name': 'Code Block'},
+        # Enter key creates <p>, Shift+Enter creates <br>
+        'enterMode': 1,
+        'shiftEnterMode': 2,
+        # Allow the full set of HTML tags CKEditor outputs
+        'allowedContent': True,
+        'resize_enabled': True,
+        'extraPlugins': 'maximize',
     },
 }

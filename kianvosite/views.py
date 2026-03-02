@@ -103,9 +103,30 @@ def blog_detail(request, slug):
         category=post.category
     ).exclude(id=post.id)[:3]
 
+    # Prev / Next navigation
+    prev_post = BlogPost.objects.filter(
+        is_published=True,
+        published_date__lt=post.published_date
+    ).order_by('-published_date').first()
+
+    next_post = BlogPost.objects.filter(
+        is_published=True,
+        published_date__gt=post.published_date
+    ).order_by('published_date').first()
+
+    # Estimate reading time (avg 200 words/min)
+    import re
+    plain_text = re.sub(r'<[^>]+>', '', str(post.content))
+    word_count = len(plain_text.split())
+    reading_time = max(1, round(word_count / 200))
+
     context = {
         'post': post,
         'related_posts': related_posts,
+        'prev_post': prev_post,
+        'next_post': next_post,
+        'reading_time': reading_time,
+        'word_count': word_count,
     }
     return render(request, 'blog_detail.html', context)
 

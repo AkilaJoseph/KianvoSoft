@@ -1,11 +1,21 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django import forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from .models import (
     ProjectCategory, Project, Service, Testimonial,
     BlogCategory, BlogPost, ContactInquiry,
     NewsletterSubscriber, CompanyStat, Partner,
     RoadmapMilestone
 )
+
+
+class BlogPostAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorUploadingWidget(config_name='blog'))
+
+    class Meta:
+        model = BlogPost
+        fields = '__all__'
 
 
 # Customize Admin Site Header
@@ -110,9 +120,10 @@ class BlogCategoryAdmin(admin.ModelAdmin):
 # Blog Post Admin
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
+    form = BlogPostAdminForm
     list_display = ['title', 'category', 'author', 'is_featured', 'is_published', 'published_date']
     list_filter = ['category', 'is_featured', 'is_published', 'published_date']
-    search_fields = ['title', 'excerpt', 'content']
+    search_fields = ['title', 'excerpt']
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['is_featured', 'is_published']
     date_hierarchy = 'published_date'

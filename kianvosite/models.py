@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Project Category Model
 class ProjectCategory(models.Model):
@@ -174,7 +175,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=300)
     slug = models.SlugField(unique=True)
     excerpt = models.CharField(max_length=500, help_text="Short summary for listing pages")
-    content = models.TextField()
+    content = RichTextUploadingField(config_name='blog')
 
     category = models.ForeignKey(BlogCategory, on_delete=models.SET_NULL, null=True, related_name='posts')
     author = models.CharField(max_length=200, default='KianvoSoft')

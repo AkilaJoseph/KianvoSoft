@@ -48,6 +48,39 @@
 }
 
 /* ============================
+   Logo Styling
+   ============================ */
+
+/* ── Navbar logo ── */
+.header__area-menubar-left-logo img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  display: block;
+}
+
+/* ── Sidebar popup logo ── */
+.header__area-menubar-right-sidebar-popup-logo img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+/* ── Footer logo ── */
+.footer__five-widget-about > a > img {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  display: block;
+}
+
+/* ============================
    Global Reset / Base
    ============================ */
 body {

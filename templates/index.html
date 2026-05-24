@@ -8,7 +8,6 @@
 	style="background: var(--ks-gradient-hero); min-height: 92vh; display: flex; align-items: center;">
 	<canvas id="ks-particles-canvas"></canvas>
 	<div class="container">
-		{% if hero_slides %}
 		{% with slide=hero_slides.first %}
 		<div class="row align-items-center gy-4 justify-content-center">
 			<div class="col-xl-7 col-lg-8">
@@ -30,18 +29,23 @@
 					</div>
 				</div>
 			</div>
-			{% if slide.image %}
 			<div class="col-xl-5 col-lg-4 col-md-8">
-				<div class="banner__five-image ks-reveal ks-reveal-delay-2">
-					<div class="banner__five-image-wrapper">
-						<img src="{{ slide.image.url }}" alt="{{ slide.title }}">
+				<div class="ks-card-fan ks-reveal ks-reveal-delay-2">
+					{% for card_slide in hero_slides|slice:":5" %}
+					{% if card_slide.image %}
+					<div class="ks-fan-card">
+						<img src="{{ card_slide.image.url }}" alt="{{ card_slide.title }}">
 					</div>
+					{% endif %}
+					{% empty %}
+					<div class="ks-fan-card">
+						<img src="{% static 'assets/img/banner/banner-five.png' %}" alt="KianvoSoft">
+					</div>
+					{% endfor %}
 				</div>
 			</div>
-			{% endif %}
 		</div>
 		{% endwith %}
-		{% endif %}
 	</div>
 </div>
 <!-- Hero Banner End -->

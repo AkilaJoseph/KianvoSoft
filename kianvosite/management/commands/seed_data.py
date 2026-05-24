@@ -3,7 +3,8 @@ from django.utils import timezone
 from kianvosite.models import (
     ProjectCategory, Project, Service, CompanyStat,
     BlogCategory, BlogPost, Testimonial, TeamMember,
-    Announcement, GalleryCategory, Partner, RoadmapMilestone
+    Announcement, GalleryCategory, Partner, RoadmapMilestone,
+    SocialLink
 )
 
 
@@ -878,5 +879,22 @@ Long-term goal: Strengthen diagnostic capacity in rural health facilities where 
             if created:
                 created_milestones += 1
         self.stdout.write(self.style.SUCCESS(f'Created {created_milestones} roadmap milestones'))
+
+        # Create Company Social Links
+        social_links = [
+            {'platform': 'Facebook', 'icon_class': 'fab fa-facebook-f', 'url': 'https://facebook.com/kianvosoft', 'order': 1, 'is_active': True},
+            {'platform': 'Instagram', 'icon_class': 'fab fa-instagram', 'url': 'https://instagram.com/kianvosoft', 'order': 2, 'is_active': True},
+            {'platform': 'TikTok', 'icon_class': 'fab fa-tiktok', 'url': 'https://tiktok.com/@kianvosoft', 'order': 3, 'is_active': True},
+            {'platform': 'YouTube', 'icon_class': 'fab fa-youtube', 'url': 'https://youtube.com/@kianvosoft', 'order': 4, 'is_active': True},
+        ]
+        created_links = 0
+        for sl_data in social_links:
+            _, created = SocialLink.objects.get_or_create(
+                platform=sl_data['platform'],
+                defaults=sl_data
+            )
+            if created:
+                created_links += 1
+        self.stdout.write(self.style.SUCCESS(f'Created {created_links} social links'))
 
         self.stdout.write(self.style.SUCCESS('Database seeding completed successfully!'))

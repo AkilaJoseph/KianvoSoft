@@ -14,7 +14,7 @@ from .models import (
     BlogPost, BlogCategory, ContactInquiry, NewsletterSubscriber,
     CompanyStat, Partner, TeamMember, Announcement,
     AnnouncementApplication, GalleryImage, GalleryCategory,
-    RoadmapMilestone, ProductImage
+    RoadmapMilestone, ProductImage, SocialLink
 )
 
 # ---------------------------------------------------------------------------
@@ -160,6 +160,8 @@ def _stats():
         'total_milestones': RoadmapMilestone.objects.filter(is_active=True).count(),
         'total_categories': ProjectCategory.objects.filter(is_active=True).count(),
         'total_gallery_cats': GalleryCategory.objects.filter(is_active=True).count(),
+        'total_social_links': SocialLink.objects.filter(is_active=True).count(),
+        'total_stats': CompanyStat.objects.filter(is_active=True).count(),
     }
 
 SIDEBAR = [
@@ -184,6 +186,10 @@ SIDEBAR = [
     {'name':'Inbox', 'links':[
         ('Contact Inquiries','fas fa-envelope','inquiries','total_inquiries'),
         ('Subscribers','fas fa-paper-plane','subscribers','total_subscribers'),
+    ]},
+    {'name':'Settings', 'links':[
+        ('Social Links','fas fa-share-alt','sociallinks','total_social_links'),
+        ('Statistics','fas fa-chart-bar','stats','total_stats'),
     ]},
 ]
 
@@ -337,6 +343,12 @@ REGISTRY = {
         'model': CompanyStat, 'icon': 'fas fa-chart-bar', 'label': 'Statistic',
         'list': ['name','value','suffix','order','is_active'],
         'search': ['name'],
+        'order': ['order'],
+    },
+    'sociallinks': {
+        'model': SocialLink, 'icon': 'fas fa-share-alt', 'label': 'Social Link',
+        'list': ['platform','icon_class','url','order','is_active'],
+        'search': ['platform','url'],
         'order': ['order'],
     },
 }

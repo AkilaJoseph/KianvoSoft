@@ -313,7 +313,6 @@ class TeamMember(models.Model):
     linkedin_url = models.URLField(blank=True, null=True, help_text="LinkedIn profile URL")
     github_url = models.URLField(blank=True, null=True, help_text="GitHub profile URL")
     portfolio_url = models.URLField(blank=True, null=True, help_text="Personal portfolio or website URL")
-    twitter_url = models.URLField(blank=True, null=True, help_text="Twitter / X profile URL")
     order = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
 
@@ -323,6 +322,21 @@ class TeamMember(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# Company Social Links
+class SocialLink(models.Model):
+    platform = models.CharField(max_length=50, help_text="e.g., Facebook, Instagram, TikTok")
+    icon_class = models.CharField(max_length=100, help_text="FontAwesome icon class, e.g. 'fab fa-facebook-f'")
+    url = models.URLField(help_text="Full URL to the social media page")
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['order', 'platform']
+
+    def __str__(self):
+        return self.platform
 
 
 # Product Screenshot / Gallery Image for Projects

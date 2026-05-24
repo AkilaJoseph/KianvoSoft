@@ -3,6 +3,49 @@
 {% block title %}Partners - KianvoSoft{% endblock title %}
 {% block content %}
 
+<style>
+.ks-partner-grid {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 0; margin: 0 auto; max-width: 900px;
+}
+.ks-partner-card {
+  flex: 0 0 auto;
+  width: 170px; height: 110px;
+  margin: -8px -6px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: rgba(10,14,26,0.35);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 10px; gap: 8px;
+  position: relative; z-index: 1;
+  transition: all 0.35s ease; padding: 10px;
+}
+.ks-partner-card:hover {
+  z-index: 10; background: rgba(10,14,26,0.85);
+  border-color: rgba(0,240,255,0.2);
+  transform: scale(1.12);
+  box-shadow: 0 8px 30px rgba(0,240,255,0.1);
+}
+.ks-partner-card img {
+  max-height: 48px; max-width: 120px;
+  filter: grayscale(1) brightness(1.6); opacity: 0.4;
+  transition: all 0.35s ease;
+}
+.ks-partner-card:hover img {
+  filter: grayscale(0) brightness(1); opacity: 1;
+}
+.ks-partner-card h5 {
+  color: rgba(255,255,255,0.15); font-size: 0.75rem; margin: 0;
+  transition: color 0.3s; font-weight: 400;
+}
+.ks-partner-card:hover h5 { color: rgba(255,255,255,0.6); }
+.ks-partner-card a {
+  color: rgba(0,240,255,0); font-size: 0.7rem; text-decoration: none;
+  transition: color 0.3s;
+}
+.ks-partner-card:hover a { color: rgba(0,240,255,0.5); }
+.ks-partner-card a:hover { color: #00f0ff; }
+</style>
+
 <div class="page__banner">
   <div class="page__banner-shape">
     <img src="{% static 'assets/img/shape/page-banner-shape.png' %}" alt="">
@@ -33,28 +76,28 @@
         <p class="ks-reveal ks-reveal-delay-2">We work with academic institutions, industry partners, and community organizations to deliver impact at scale.</p>
       </div>
     </div>
-    <div class="row gy-5 justify-content-center align-items-center">
-      {% if partners %}
-      {% for partner in partners %}
-      <div class="col-6 col-md-4 col-lg-3 text-center">
-        <div class="ks-reveal ks-reveal-delay-{{ forloop.counter0 }}" style="padding: 30px 20px; background: rgba(10, 14, 26, 0.4); border: 1px solid rgba(0, 240, 255, 0.08); border-radius: 12px; transition: all 0.3s ease; height: 100%;" onmouseover="this.style.borderColor='rgba(0,240,255,0.25)';this.style.background='rgba(10,14,26,0.7)'" onmouseout="this.style.borderColor='rgba(0,240,255,0.08)';this.style.background='rgba(10,14,26,0.4)'">
+    <div class="text-center">
+      <div class="ks-partner-grid">
+        {% if partners %}
+        {% for partner in partners %}
+        <div class="ks-partner-card ks-reveal ks-reveal-delay-{{ forloop.counter0 }}">
           {% if partner.logo %}
-          <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" style="max-height: 70px; max-width: 160px; filter: grayscale(1) brightness(1.5); opacity: 0.5; transition: all 0.3s ease;" onmouseover="this.style.opacity='1';this.style.filter='grayscale(0) brightness(1)';" onmouseout="this.style.opacity='0.5';this.style.filter='grayscale(1) brightness(1.5)';">
+          <img src="{{ partner.logo.url }}" alt="{{ partner.name }}">
           {% endif %}
-          <h5 style="color: white; margin-top: 16px; font-size: 0.95rem;">{{ partner.name }}</h5>
+          <h5>{{ partner.name }}</h5>
           {% if partner.website_url %}
-          <a href="{{ partner.website_url }}" target="_blank" style="color: var(--ks-cyan); font-size: 0.8rem; text-decoration: none; opacity: 0.6; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
-            Visit Website <i class="fas fa-external-link-alt" style="font-size: 0.7rem;"></i>
+          <a href="{{ partner.website_url }}" target="_blank">
+            Visit Website <i class="fas fa-external-link-alt" style="font-size:0.65rem;"></i>
           </a>
           {% endif %}
         </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 text-center py-5">
+          <p class="text-white-50">No partners added yet. Check back soon!</p>
+        </div>
+        {% endif %}
       </div>
-      {% endfor %}
-      {% else %}
-      <div class="col-12 text-center">
-        <p class="text-white-50">No partners added yet. Check back soon!</p>
-      </div>
-      {% endif %}
     </div>
   </div>
 </section>

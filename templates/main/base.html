@@ -173,10 +173,9 @@
 							</div>
 							<div class="header__area-menubar-right-sidebar-popup-social">
 								<ul>
-									<li><a href="https://facebook.com/kianvosoft" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-									<li><a href="https://twitter.com/kianvosoft" target="_blank"><i class="fab fa-twitter"></i></a></li>
-									<li><a href="https://linkedin.com/company/kianvosoft" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
-									<li><a href="https://instagram.com/kianvosoft" target="_blank"><i class="fab fa-instagram"></i></a></li>
+									{% for link in social_links %}
+									<li><a href="{{ link.url }}" target="_blank"><i class="{{ link.icon_class }}"></i></a></li>
+									{% endfor %}
 								</ul>
 							</div>
 						</div>
@@ -205,10 +204,9 @@
 							<p>Innovating Africa's Digital Future. We build software products, deliver technical training, conduct applied AI research, and provide technology consultancy from Mbeya, Tanzania.</p>
 							<div class="footer__five-widget-about-social">
 								<ul>
-									<li><a href="https://facebook.com/kianvosoft" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-									<li><a href="https://twitter.com/kianvosoft" target="_blank"><i class="fab fa-twitter"></i></a></li>
-									<li><a href="https://linkedin.com/company/kianvosoft" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-									<li><a href="https://instagram.com/kianvosoft" target="_blank"><i class="fab fa-instagram"></i></a></li>
+									{% for link in social_links %}
+									<li><a href="{{ link.url }}" target="_blank"><i class="{{ link.icon_class }}"></i></a></li>
+									{% endfor %}
 								</ul>
 							</div>
 						</div>

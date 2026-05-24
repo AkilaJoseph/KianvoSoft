@@ -14,8 +14,10 @@ from .models import (
     BlogPost, BlogCategory, ContactInquiry, NewsletterSubscriber,
     CompanyStat, Partner, TeamMember, Announcement,
     AnnouncementApplication, GalleryImage, GalleryCategory,
-    RoadmapMilestone, ProductImage, SocialLink
+    RoadmapMilestone, ProductImage, SocialLink,
+    HeroSlide, ActiveProduct
 )
+from .utils import send_new_blog_notification, send_new_announcement_notification
 
 # ---------------------------------------------------------------------------
 #  Icon picker
@@ -161,6 +163,8 @@ def _stats():
         'total_categories': ProjectCategory.objects.filter(is_active=True).count(),
         'total_gallery_cats': GalleryCategory.objects.filter(is_active=True).count(),
         'total_social_links': SocialLink.objects.filter(is_active=True).count(),
+        'total_hero_slides': HeroSlide.objects.filter(is_active=True).count(),
+        'total_active_products': ActiveProduct.objects.filter(is_active=True).count(),
         'total_stats': CompanyStat.objects.filter(is_active=True).count(),
     }
 
@@ -188,6 +192,8 @@ SIDEBAR = [
         ('Subscribers','fas fa-paper-plane','subscribers','total_subscribers'),
     ]},
     {'name':'Settings', 'links':[
+        ('Hero Slides','fas fa-image','heroslides','total_hero_slides'),
+        ('Active Products','fas fa-cube','activeproducts','total_active_products'),
         ('Social Links','fas fa-share-alt','sociallinks','total_social_links'),
         ('Statistics','fas fa-chart-bar','stats','total_stats'),
     ]},
@@ -351,6 +357,21 @@ REGISTRY = {
         'search': ['platform','url'],
         'order': ['order'],
     },
+    'heroslides': {
+        'model': HeroSlide, 'icon': 'fas fa-image', 'label': 'Hero Slide',
+        'list': ['title','subtitle','is_active','order'],
+        'search': ['title','subtitle','description'],
+        'order': ['order'],
+        'img': ['image'],
+    },
+    'activeproducts': {
+        'model': ActiveProduct, 'icon': 'fas fa-cube', 'label': 'Active Product',
+        'list': ['name','category','is_featured','is_active','order'],
+        'search': ['name','short_description'],
+        'filter_map': {'category': None, 'is_active': None},
+        'order': ['category','order'],
+        'img': ['image'],
+    },
 }
 
 def _get_meta(model_name):
@@ -510,6 +531,12 @@ def portal_create(request, model_name):
                 obj.save(update_fields=['slug'])
 
             messages.success(request, f'{meta["label"]} created successfully.')
+
+            if model_name == 'blogposts' and hasattr(obj, 'is_published') and obj.is_published:
+                send_new_blog_notification(obj)
+            elif model_name == 'announcements':
+                send_new_announcement_notification(obj)
+
             return redirect('portal_list', model_name=model_name)
         else:
             messages.error(request, 'Please correct the errors below.')

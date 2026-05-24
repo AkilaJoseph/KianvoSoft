@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -137,6 +138,17 @@ LOGIN_REDIRECT_URL = '/portal/dashboard/'
 LOGOUT_REDIRECT_URL = '/portal/login/'
 
 SILENCED_SYSTEM_CHECKS = ['ckeditor.W001']
+
+# Email Configuration
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'KianvoSoft <noreply@kianvosoft.com>')
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'noreply@kianvosoft.com')
+ADMINS = [('Admin', os.environ.get('ADMIN_EMAIL', 'admin@kianvosoft.com'))]
 
 # CKEditor Configuration
 CKEDITOR_UPLOAD_PATH = 'uploads/'

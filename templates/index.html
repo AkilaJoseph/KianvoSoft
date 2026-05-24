@@ -8,33 +8,40 @@
 	style="background: var(--ks-gradient-hero); min-height: 92vh; display: flex; align-items: center;">
 	<canvas id="ks-particles-canvas"></canvas>
 	<div class="container">
+		{% if hero_slides %}
+		{% with slide=hero_slides.first %}
 		<div class="row align-items-center gy-4 justify-content-center">
 			<div class="col-xl-7 col-lg-8">
 				<div class="banner__five-content ks-reveal">
-					<span class="subtitle-one">🇹🇿 Tanzania's Homegrown Technology Venture</span>
-					<h2 style="font-size: 3.4rem; line-height: 1.12; margin-bottom: 20px;">
-						Innovating <span class="ks-gradient-text">Africa's Digital</span> Future
-					</h2>
-					<p style="font-size: 1.2rem; max-width: 560px; margin-bottom: 30px;">We build locally relevant software products, deliver technical training, conduct applied AI research, and provide technology consultancy — from Mbeya, for East Africa.</p>
+					{% if slide.subtitle %}
+					<span class="subtitle-one">{{ slide.subtitle }}</span>
+					{% endif %}
+					<h2 style="font-size: 3.4rem; line-height: 1.12; margin-bottom: 20px;">{{ slide.title|safe }}</h2>
+					{% if slide.description %}
+					<p style="font-size: 1.2rem; max-width: 560px; margin-bottom: 30px;">{{ slide.description }}</p>
+					{% endif %}
 					<div class="banner__five-content-bottom" style="display: flex; gap: 15px; flex-wrap: wrap;">
-						<a href="{% url 'services' %}" class="btn-one">Explore Our Work
+						<a href="{{ slide.cta_primary_url }}" class="btn-one">{{ slide.cta_primary_text }}
 							<i class="fas fa-arrow-right"></i>
 						</a>
-						<a href="{% url 'contact' %}" class="btn-two">Get in Touch
+						<a href="{{ slide.cta_secondary_url }}" class="btn-two">{{ slide.cta_secondary_text }}
 							<i class="fas fa-arrow-right"></i>
 						</a>
 					</div>
 				</div>
 			</div>
+			{% if slide.image %}
 			<div class="col-xl-5 col-lg-4 col-md-8">
 				<div class="banner__five-image ks-reveal ks-reveal-delay-2">
 					<div class="banner__five-image-wrapper">
-						<img src="{% static 'assets/img/banner/banner-five.png' %}"
-							alt="KianvoSoft Innovating Africa's Digital Future">
+						<img src="{{ slide.image.url }}" alt="{{ slide.title }}">
 					</div>
 				</div>
 			</div>
+			{% endif %}
 		</div>
+		{% endwith %}
+		{% endif %}
 	</div>
 </div>
 <!-- Hero Banner End -->
@@ -215,104 +222,33 @@
 			</div>
 		</div>
 		<div class="row gy-4 justify-content-center">
-			<!-- Education Technology -->
-			<div class="col-12 mb-20">
-				<h4 class="ks-reveal" style="color: var(--ks-cyan); margin-bottom: 20px;"><i class="fas fa-graduation-cap me-2"></i>Education Technology Platforms</h4>
+			{% regroup active_products by get_category_display as product_categories %}
+			{% for category in product_categories %}
+			<div class="col-12 mb-20{% if not forloop.first %} mt-30{% endif %}">
+				<h4 class="ks-reveal" style="color: var(--ks-cyan); margin-bottom: 20px;">
+					{% if category.grouper == "Education Technology" %}
+					<i class="fas fa-graduation-cap me-2"></i>
+					{% else %}
+					<i class="fas fa-briefcase me-2"></i>
+					{% endif %}
+					{{ category.grouper }}</h4>
 			</div>
+			{% for product in category.list %}
 			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="ks-project-card ks-reveal ks-reveal-delay-1" style="height: 100%; display: flex; flex-direction: column;">
-					<div class="ks-project-image" style="background-image: url('{% static 'assets/img/portfolio/portfolio-1.png' %}'); height: 160px;">
-						<span class="ks-project-category" style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);">EdTech</span>
+				<div class="ks-project-card ks-reveal" style="height: 100%; display: flex; flex-direction: column;">
+					<div class="ks-project-image" style="background-image: url('{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/img/portfolio/portfolio-1.png' %}{% endif %}'); height: 160px;">
+						<span class="ks-project-category" style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);">{{ product.short_description|truncatechars:30 }}</span>
 					</div>
 					<div class="ks-project-content" style="flex-grow: 1;">
-						<h4>Kianvo Meet</h4>
-						<p>A video conferencing platform purpose-built to support online learning, collaboration, and professional meetings within East African institutions.</p>
+						<h4>{{ product.name }}</h4>
+						<p>{{ product.short_description }}</p>
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="ks-project-card ks-reveal ks-reveal-delay-2" style="height: 100%; display: flex; flex-direction: column;">
-					<div class="ks-project-image" style="background-image: url('{% static 'assets/img/portfolio/portfolio-2.png' %}'); height: 160px;">
-						<span class="ks-project-category" style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);">EdTech</span>
-					</div>
-					<div class="ks-project-content" style="flex-grow: 1;">
-						<h4>Kianvo Classroom</h4>
-						<p>A Learning Management System for universities, enabling course delivery, student engagement, assignments, and online assessment.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="ks-project-card ks-reveal ks-reveal-delay-3" style="height: 100%; display: flex; flex-direction: column;">
-					<div class="ks-project-image" style="background-image: url('{% static 'assets/img/portfolio/portfolio-1.png' %}'); height: 160px;">
-						<span class="ks-project-category" style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);">EdTech</span>
-					</div>
-					<div class="ks-project-content" style="flex-grow: 1;">
-						<h4>HELP</h4>
-						<p>Health Education Learning Portal — an online platform widening access to quality health education and continuing professional development.</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Business & Operations -->
-			<div class="col-12 mb-20 mt-30">
-				<h4 class="ks-reveal" style="color: var(--ks-cyan); margin-bottom: 20px;"><i class="fas fa-briefcase me-2"></i>Business & Operations Systems</h4>
-			</div>
-			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="ks-project-card ks-reveal ks-reveal-delay-1" style="height: 100%; display: flex; flex-direction: column;">
-					<div class="ks-project-image" style="background-image: url('{% static 'assets/img/portfolio/portfolio-1.png' %}'); height: 160px;">
-						<span class="ks-project-category" style="background: rgba(139, 92, 246, 0.2); border-color: var(--ks-accent);">Healthcare</span>
-					</div>
-					<div class="ks-project-content" style="flex-grow: 1;">
-						<h4>Imforia</h4>
-						<p>Pharmacy management system designed to streamline stock, sales, and dispensing operations. Currently in live use by pharmacies in Tanzania.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="ks-project-card ks-reveal ks-reveal-delay-2" style="height: 100%; display: flex; flex-direction: column;">
-					<div class="ks-project-image" style="background-image: url('{% static 'assets/img/portfolio/portfolio-2.png' %}'); height: 160px;">
-						<span class="ks-project-category" style="background: rgba(139, 92, 246, 0.2); border-color: var(--ks-accent);">Retail</span>
-					</div>
-					<div class="ks-project-content" style="flex-grow: 1;">
-						<h4>Mjenzi</h4>
-						<p>Point-of-sale and inventory management system tailored for hardware and construction-supply retailers.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="ks-project-card ks-reveal ks-reveal-delay-3" style="height: 100%; display: flex; flex-direction: column;">
-					<div class="ks-project-image" style="background-image: url('{% static 'assets/img/portfolio/portfolio-1.png' %}'); height: 160px;">
-						<span class="ks-project-category" style="background: rgba(139, 92, 246, 0.2); border-color: var(--ks-accent);">SME</span>
-					</div>
-					<div class="ks-project-content" style="flex-grow: 1;">
-						<h4>ShopManagerPro</h4>
-						<p>Business management system tailored to the operational needs of small and medium-sized shops.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="ks-project-card ks-reveal ks-reveal-delay-4" style="height: 100%; display: flex; flex-direction: column;">
-					<div class="ks-project-image" style="background-image: url('{% static 'assets/img/portfolio/portfolio-2.png' %}'); height: 160px;">
-						<span class="ks-project-category" style="background: rgba(139, 92, 246, 0.2); border-color: var(--ks-accent);">Logistics</span>
-					</div>
-					<div class="ks-project-content" style="flex-grow: 1;">
-						<h4>FleetLink</h4>
-						<p>Cargo transport management system supporting logistics operators in coordinating fleets, consignments, and deliveries.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="ks-project-card ks-reveal ks-reveal-delay-5" style="height: 100%; display: flex; flex-direction: column;">
-					<div class="ks-project-image" style="background-image: url('{% static 'assets/img/portfolio/portfolio-1.png' %}'); height: 160px;">
-						<span class="ks-project-category" style="background: rgba(139, 92, 246, 0.2); border-color: var(--ks-accent);">Impact</span>
-					</div>
-					<div class="ks-project-content" style="flex-grow: 1;">
-						<h4>IMS</h4>
-						<p>Impact Management System — a platform that helps organisations plan, monitor, and report on the social and developmental impact of their work.</p>
-					</div>
-				</div>
-			</div>
-
+			{% endfor %}
+			{% empty %}
+			<div class="col-12 text-center"><p>No active products at this time.</p></div>
+			{% endfor %}
 			<div class="col-12 text-center mt-4">
 				<a href="{% url 'portfolio' %}" class="btn-one ks-reveal">View All Products <i class="fas fa-arrow-right"></i></a>
 			</div>

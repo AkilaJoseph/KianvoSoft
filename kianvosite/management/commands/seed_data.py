@@ -4,7 +4,7 @@ from kianvosite.models import (
     ProjectCategory, Project, Service, CompanyStat,
     BlogCategory, BlogPost, Testimonial, TeamMember,
     Announcement, GalleryCategory, Partner, RoadmapMilestone,
-    SocialLink
+    SocialLink, HeroSlide, ActiveProduct
 )
 
 
@@ -896,5 +896,50 @@ Long-term goal: Strengthen diagnostic capacity in rural health facilities where 
             if created:
                 created_links += 1
         self.stdout.write(self.style.SUCCESS(f'Created {created_links} social links'))
+
+        # Create Hero Slides
+        hero_slides = [
+            {
+                'title': 'Innovating <span class="ks-gradient-text">Africa\'s Digital</span> Future',
+                'subtitle': 'Tanzania\'s Homegrown Technology Venture',
+                'description': 'We build locally relevant software products, deliver technical training, conduct applied AI research, and provide technology consultancy — from Mbeya, for East Africa.',
+                'cta_primary_text': 'Explore Our Work',
+                'cta_primary_url': '/services/',
+                'cta_secondary_text': 'Get in Touch',
+                'cta_secondary_url': '/contact/',
+                'is_active': True,
+                'order': 0,
+            },
+        ]
+        created_slides = 0
+        for hs_data in hero_slides:
+            _, created = HeroSlide.objects.get_or_create(
+                title=hs_data['title'],
+                defaults=hs_data
+            )
+            if created:
+                created_slides += 1
+        self.stdout.write(self.style.SUCCESS(f'Created {created_slides} hero slides'))
+
+        # Create Active Products
+        active_products = [
+            {'name': 'Kianvo Meet', 'short_description': 'A video conferencing platform purpose-built to support online learning, collaboration, and professional meetings within East African institutions.', 'category': 'edtech', 'order': 1},
+            {'name': 'Kianvo Classroom', 'short_description': 'A Learning Management System for universities, enabling course delivery, student engagement, assignments, and online assessment.', 'category': 'edtech', 'order': 2},
+            {'name': 'HELP', 'short_description': 'Health Education Learning Portal — an online platform widening access to quality health education and continuing professional development.', 'category': 'edtech', 'order': 3},
+            {'name': 'Imforia', 'short_description': 'Pharmacy management system designed to streamline stock, sales, and dispensing operations. Currently in live use by pharmacies in Tanzania.', 'category': 'business', 'order': 4},
+            {'name': 'Mjenzi', 'short_description': 'Point-of-sale and inventory management system tailored for hardware and construction-supply retailers.', 'category': 'business', 'order': 5},
+            {'name': 'ShopManagerPro', 'short_description': 'Business management system tailored to the operational needs of small and medium-sized shops.', 'category': 'business', 'order': 6},
+            {'name': 'FleetLink', 'short_description': 'Cargo transport management system supporting logistics operators in coordinating fleets, consignments, and deliveries.', 'category': 'business', 'order': 7},
+            {'name': 'IMS', 'short_description': 'Impact Management System — a platform that helps organisations plan, monitor, and report on the social and developmental impact of their work.', 'category': 'business', 'order': 8},
+        ]
+        created_products = 0
+        for ap_data in active_products:
+            _, created = ActiveProduct.objects.get_or_create(
+                name=ap_data['name'],
+                defaults=ap_data
+            )
+            if created:
+                created_products += 1
+        self.stdout.write(self.style.SUCCESS(f'Created {created_products} active products'))
 
         self.stdout.write(self.style.SUCCESS('Database seeding completed successfully!'))

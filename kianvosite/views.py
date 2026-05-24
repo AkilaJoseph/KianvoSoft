@@ -8,8 +8,9 @@ from .models import (
     NewsletterSubscriber, CompanyStat, Partner,
     RoadmapMilestone, TeamMember, ProductImage,
     GalleryCategory, GalleryImage, Announcement,
-    AnnouncementApplication
+    AnnouncementApplication, HeroSlide, ActiveProduct
 )
+from .utils import send_contact_notification, send_application_notification
 
 
 # Home Page
@@ -24,6 +25,8 @@ def home(request):
         'partners': Partner.objects.filter(is_active=True),
         'stats': CompanyStat.objects.filter(is_active=True),
         'team_members': TeamMember.objects.filter(is_active=True),
+        'hero_slides': HeroSlide.objects.filter(is_active=True),
+        'active_products': ActiveProduct.objects.filter(is_active=True),
     }
     return render(request, 'index.html', context)
 
@@ -135,7 +138,7 @@ def announcement_detail(request, slug):
                             if field_value:
                                 extra_data[field_key] = field_value
 
-                AnnouncementApplication.objects.create(
+                application = AnnouncementApplication.objects.create(
                     announcement=announcement,
                     full_name=full_name,
                     email=email,
@@ -143,6 +146,7 @@ def announcement_detail(request, slug):
                     motivation=motivation,
                     extra_data=extra_data,
                 )
+                send_application_notification(application)
                 messages.success(
                     request,
                     f'Your application for "{announcement.title}" has been submitted successfully! We will contact you at {email}.'
@@ -289,7 +293,7 @@ def contact(request):
         message = request.POST.get('message', '')
 
         if name and email and message:
-            ContactInquiry.objects.create(
+            inquiry = ContactInquiry.objects.create(
                 name=name,
                 email=email,
                 phone=phone,
@@ -297,6 +301,7 @@ def contact(request):
                 subject=subject,
                 message=message
             )
+            send_contact_notification(inquiry)
             messages.success(request, 'Thank you for your message! We will get back to you soon.')
             return redirect('contact')
         else:

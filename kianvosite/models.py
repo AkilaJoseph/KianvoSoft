@@ -485,3 +485,46 @@ class AnnouncementApplication(models.Model):
 
     def __str__(self):
         return f"{self.full_name} - {self.announcement.title}"
+
+
+# Hero Slide (homepage banner)
+class HeroSlide(models.Model):
+    title = models.CharField(max_length=200, help_text="Main headline text")
+    subtitle = models.CharField(max_length=200, blank=True, help_text="Small label above title")
+    description = models.TextField(blank=True, help_text="Paragraph below title")
+    image = models.ImageField(upload_to='hero/', blank=True, null=True, help_text="Banner illustration")
+    cta_primary_text = models.CharField(max_length=100, default='Explore Our Work')
+    cta_primary_url = models.CharField(max_length=200, default='/services/')
+    cta_secondary_text = models.CharField(max_length=100, default='Get in Touch')
+    cta_secondary_url = models.CharField(max_length=200, default='/contact/')
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
+
+
+# Active Product (homepage "Software Products in Active Use")
+class ActiveProduct(models.Model):
+    CATEGORY_CHOICES = [
+        ('edtech', 'Education Technology'),
+        ('business', 'Business & Operations'),
+    ]
+    name = models.CharField(max_length=200)
+    short_description = models.CharField(max_length=300, help_text="Brief tagline")
+    description = models.TextField(blank=True, help_text="Full description (optional)")
+    image = models.ImageField(upload_to='active_products/', blank=True, null=True)
+    icon_class = models.CharField(max_length=100, blank=True, help_text="Icon class for fallback display")
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='edtech')
+    is_featured = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['category', 'order']
+
+    def __str__(self):
+        return self.name

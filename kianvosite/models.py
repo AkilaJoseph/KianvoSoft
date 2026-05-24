@@ -310,6 +310,10 @@ class TeamMember(models.Model):
     bio = models.TextField(blank=True, help_text="Short biography or description of their role")
     image = models.ImageField(upload_to='team/', blank=True, null=True)
     icon_class = models.CharField(max_length=100, blank=True, help_text="Fallback icon if no image (FontAwesome class)")
+    linkedin_url = models.URLField(blank=True, null=True, help_text="LinkedIn profile URL")
+    github_url = models.URLField(blank=True, null=True, help_text="GitHub profile URL")
+    portfolio_url = models.URLField(blank=True, null=True, help_text="Personal portfolio or website URL")
+    twitter_url = models.URLField(blank=True, null=True, help_text="Twitter / X profile URL")
     order = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
 

@@ -1,7 +1,9 @@
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 from kianvosite.models import (
     ProjectCategory, Project, Service, CompanyStat,
-    BlogCategory, BlogPost, Testimonial
+    BlogCategory, BlogPost, Testimonial, TeamMember,
+    Announcement, GalleryCategory
 )
 
 
@@ -20,13 +22,13 @@ class Command(BaseCommand):
 
         # Create Project Categories
         categories = [
-            {'name': 'Healthcare', 'slug': 'healthcare', 'icon_class': 'flaticon-consultant', 'order': 1},
-            {'name': 'Retail & POS', 'slug': 'retail-pos', 'icon_class': 'flaticon-software-development', 'order': 2},
-            {'name': 'Transport', 'slug': 'transport', 'icon_class': 'flaticon-mobile-phone-1', 'order': 3},
-            {'name': 'Agriculture', 'slug': 'agriculture', 'icon_class': 'flaticon-web-research', 'order': 4},
-            {'name': 'Education', 'slug': 'education', 'icon_class': 'flaticon-data-scientist', 'order': 5},
-            {'name': 'Hospitality', 'slug': 'hospitality', 'icon_class': 'flaticon-cyber-security', 'order': 6},
-            {'name': 'Real Estate', 'slug': 'real-estate', 'icon_class': 'flaticon-computer-mouse', 'order': 7},
+            {'name': 'Education Technology', 'slug': 'edtech', 'icon_class': 'flaticon-database', 'order': 1},
+            {'name': 'Healthcare', 'slug': 'healthcare', 'icon_class': 'flaticon-consultant', 'order': 2},
+            {'name': 'Retail & POS', 'slug': 'retail-pos', 'icon_class': 'flaticon-software-development', 'order': 3},
+            {'name': 'Transport & Logistics', 'slug': 'transport-logistics', 'icon_class': 'flaticon-mobile-phone-1', 'order': 4},
+            {'name': 'Business & SME', 'slug': 'business-sme', 'icon_class': 'flaticon-web-research', 'order': 5},
+            {'name': 'AI & Research', 'slug': 'ai-research', 'icon_class': 'flaticon-data-scientist', 'order': 6},
+            {'name': 'Social Impact', 'slug': 'social-impact', 'icon_class': 'flaticon-cyber-security', 'order': 7},
         ]
 
         for cat_data in categories:
@@ -36,14 +38,14 @@ class Command(BaseCommand):
             )
         self.stdout.write(self.style.SUCCESS(f'Created {len(categories)} project categories'))
 
-        # Create Projects
+        # Create Projects (actual KianvoSoft products from the company profile)
         projects = [
             {
                 'name': 'Imforia',
                 'slug': 'imforia',
-                'tagline': 'Pharmacy Management System',
-                'description': 'Complete solution for pharmacy inventory, sales, prescription management, and reporting. Streamlines pharmacy operations with automated stock tracking and sales analytics.',
-                'full_description': '''Imforia is a comprehensive Pharmacy Management System designed to streamline all aspects of pharmacy operations.
+                'tagline': 'Pharmacy Management System — Live in Tanzanian Pharmacies',
+                'description': 'A pharmacy management system designed to streamline stock, sales, and dispensing operations. Currently in live use by pharmacies in Tanzania.',
+                'full_description': '''Imforia is a comprehensive Pharmacy Management System designed to streamline all aspects of pharmacy operations. Currently deployed and in active use by pharmacies across Tanzania.
 
 Key capabilities include:
 - Complete inventory management with automated stock alerts
@@ -64,11 +66,11 @@ Key capabilities include:
                 'order': 1,
             },
             {
-                'name': 'MjenziPOS',
-                'slug': 'mjenzipos',
-                'tagline': 'Hardware Shop Management System',
-                'description': 'POS and inventory tracking system designed specifically for hardware stores. Manages sales, inventory, and provides detailed analytics for hardware retail businesses.',
-                'full_description': '''MjenziPOS is a specialized Point of Sale and inventory management system built for hardware shops and building material stores.
+                'name': 'Mjenzi',
+                'slug': 'mjenzi',
+                'tagline': 'POS & Inventory Management for Hardware Retailers',
+                'description': 'A point-of-sale and inventory management system tailored for hardware and construction-supply retailers.',
+                'full_description': '''Mjenzi is a specialized Point of Sale and inventory management system built for hardware shops and building material stores.
 
 Features include:
 - Quick product search and barcode scanning
@@ -89,181 +91,199 @@ Features include:
                 'order': 2,
             },
             {
-                'name': 'Transit',
-                'slug': 'transit',
-                'tagline': 'Transit Company Operations & Maintenance System',
-                'description': 'Fleet management and maintenance scheduling system for transit companies. Tracks vehicles, schedules maintenance, and optimizes routes for efficient operations.',
-                'full_description': '''Transit is a comprehensive fleet management system designed for bus companies and transit operators.
+                'name': 'ShopManagerPro',
+                'slug': 'shopmanagerpro',
+                'tagline': 'Business Management System for SMEs',
+                'description': 'A business management system tailored to the operational needs of small and medium-sized shops.',
+                'full_description': '''ShopManagerPro is a comprehensive business management system designed for small and medium-sized shops.
 
-System capabilities:
-- Vehicle fleet management
-- Driver management and scheduling
-- Route planning and optimization
-- Maintenance scheduling and tracking
-- Fuel consumption monitoring
-- Trip logging and reporting
-- Revenue tracking per route/vehicle
-- Real-time vehicle status
-- Accident and incident reporting''',
-                'category_slug': 'transport',
-                'technologies': 'Python, Flutter, Firebase, Google Maps API',
-                'features': '''Fleet Management\nDriver Scheduling\nRoute Optimization\nMaintenance Tracking\nFuel Monitoring\nTrip Logging\nRevenue Reports\nIncident Reporting''',
-                'icon_class': 'flaticon-mobile-phone-1',
+Features include:
+- Sales and purchase management
+- Inventory tracking and stock alerts
+- Customer management and loyalty
+- Supplier and purchase order management
+- Sales analytics and reports
+- Expense tracking
+- Multi-user access
+- Receipt printing and invoicing''',
+                'category_slug': 'business-sme',
+                'technologies': 'Django, React, PostgreSQL',
+                'features': '''Sales Management\nInventory Tracking\nCustomer Management\nSupplier Management\nSales Analytics\nExpense Tracking\nInvoicing\nMulti-user Access''',
+                'icon_class': 'flaticon-web-research',
                 'status': 'completed',
                 'is_featured': True,
                 'order': 3,
             },
             {
-                'name': 'Land Allocation System',
-                'slug': 'land-allocation-system',
-                'tagline': 'Land Plot & Farmer Data Management',
-                'description': 'Track land plots and manage farmer/applicant data for agricultural departments. Includes mapping, allocation tracking, and comprehensive reporting.',
-                'full_description': '''The Land Allocation System helps agricultural departments manage land distribution and farmer data efficiently.
+                'name': 'FleetLink',
+                'slug': 'fleetlink',
+                'tagline': 'Cargo Transport & Fleet Management System',
+                'description': 'A cargo transport management system that supports logistics operators in coordinating fleets, consignments, and deliveries.',
+                'full_description': '''FleetLink is a comprehensive cargo transport management system designed for logistics operators.
 
-Key features:
-- Land plot registration and mapping
-- Farmer/applicant registration
-- Application processing workflow
-- Land allocation tracking
-- Document management
-- GIS integration for plot visualization
-- Allocation history and audit trail
-- Comprehensive reporting
-- Multi-district support''',
-                'category_slug': 'agriculture',
-                'technologies': 'Django, React, PostGIS, Leaflet',
-                'features': '''Plot Registration\nFarmer Management\nApplication Workflow\nGIS Mapping\nDocument Storage\nAllocation Tracking\nAudit Trail\nReporting Dashboard''',
-                'icon_class': 'flaticon-web-research',
+System capabilities:
+- Fleet vehicle management
+- Consignment and shipment tracking
+- Driver management and scheduling
+- Route planning and optimization
+- Delivery confirmation and proof of delivery
+- Fuel consumption monitoring
+- Revenue tracking per vehicle/route
+- Customer portal for shipment tracking
+- Incident reporting''',
+                'category_slug': 'transport-logistics',
+                'technologies': 'Python, Flutter, Firebase, Google Maps API',
+                'features': '''Fleet Management\nConsignment Tracking\nDriver Scheduling\nRoute Optimization\nDelivery Confirmation\nFuel Monitoring\nRevenue Reports\nCustomer Portal''',
+                'icon_class': 'flaticon-mobile-phone-1',
                 'status': 'completed',
-                'is_featured': False,
+                'is_featured': True,
                 'order': 4,
             },
             {
-                'name': 'Asset Management System',
-                'slug': 'asset-management-system',
-                'tagline': 'University Indoor Asset Management',
-                'description': 'Manage university indoor assets including tracking, maintenance scheduling, and inventory control for educational institutions.',
-                'full_description': '''A comprehensive asset management system designed for universities to track and manage their indoor assets.
+                'name': 'Kianvo Meet',
+                'slug': 'kianvo-meet',
+                'tagline': 'Video Conferencing for East African Institutions',
+                'description': 'A video conferencing platform purpose-built to support online learning, collaboration, and professional meetings within East African institutions.',
+                'full_description': '''Kianvo Meet is a video conferencing platform purpose-built for the East African context.
 
-Capabilities include:
-- Asset registration and tagging
-- Location tracking by building/room
-- Maintenance scheduling
-- Asset condition monitoring
-- Depreciation calculation
-- Asset transfer between departments
-- Disposal management
-- Barcode/QR code integration
-- Audit and inventory reports''',
-                'category_slug': 'education',
-                'technologies': 'Django, Bootstrap, SQLite, jQuery',
-                'features': '''Asset Registration\nLocation Tracking\nMaintenance Scheduling\nCondition Monitoring\nDepreciation Tracking\nAsset Transfers\nBarcode Support\nInventory Reports''',
+Platform features:
+- HD video and audio conferencing
+- Virtual classrooms with screen sharing
+- Meeting recording and playback
+- Chat and collaboration tools
+- Breakout rooms for group work
+- Mobile-friendly interface
+- Optimized for lower bandwidth environments
+- Swahili language interface option
+- No credit card required for basic use''',
+                'category_slug': 'edtech',
+                'technologies': 'WebRTC, React, Python, Docker',
+                'features': '''HD Video Conferencing\nVirtual Classrooms\nScreen Sharing\nMeeting Recording\nBreakout Rooms\nChat Tools\nMobile Support\nLow Bandwidth Optimization''',
                 'icon_class': 'flaticon-database',
                 'status': 'completed',
-                'is_featured': False,
+                'is_featured': True,
                 'order': 5,
             },
             {
-                'name': 'Mashfly',
-                'slug': 'mashfly',
-                'tagline': 'Restaurant Management System',
-                'description': 'Complete restaurant management solution including orders, kitchen display, inventory control, and detailed business reporting.',
-                'full_description': '''Mashfly is an all-in-one restaurant management system that streamlines operations from order taking to kitchen management.
+                'name': 'Kianvo Classroom',
+                'slug': 'kianvo-classroom',
+                'tagline': 'Learning Management System for Universities',
+                'description': 'A Learning Management System designed for East African universities, enabling course delivery, student engagement, assignments, and online assessment.',
+                'full_description': '''Kianvo Classroom is a comprehensive Learning Management System built for East African higher education.
 
-Features:
-- Table management and reservations
-- Order management (dine-in, takeaway, delivery)
-- Kitchen Display System (KDS)
-- Inventory and recipe management
-- Menu management with modifiers
-- Split bills and payment processing
-- Staff management and shifts
-- Sales and inventory reports
-- Customer loyalty program''',
-                'category_slug': 'hospitality',
-                'technologies': 'Node.js, React, MongoDB, Socket.io',
-                'features': '''Table Management\nOrder System\nKitchen Display\nInventory Control\nMenu Management\nSplit Bills\nStaff Management\nLoyalty Program''',
-                'icon_class': 'flaticon-cyber-security',
+Platform capabilities:
+- Course creation and content management
+- Video lectures and multimedia support
+- Online assessments and quizzes
+- Assignment submission and grading
+- Discussion forums and messaging
+- Student progress tracking
+- Gradebook and reporting
+- Mobile-responsive design
+- Integration with Kianvo Meet for live classes''',
+                'category_slug': 'edtech',
+                'technologies': 'Django, React, PostgreSQL, AWS',
+                'features': '''Course Management\nVideo Lectures\nOnline Assessments\nAssignment Submission\nDiscussion Forums\nProgress Tracking\nGradebook\nMobile Responsive''',
+                'icon_class': 'flaticon-cloud-computing',
                 'status': 'completed',
                 'is_featured': True,
                 'order': 6,
             },
             {
-                'name': 'NyumbaYangu',
-                'slug': 'nyumbayangu',
-                'tagline': 'Tenant & Landlord Management System',
-                'description': 'Platform linking tenants and landlords for property rentals. Manages listings, applications, rent collection, and maintenance requests.',
-                'full_description': '''NyumbaYangu is a comprehensive property rental management platform connecting tenants and landlords.
+                'name': 'HELP',
+                'slug': 'help',
+                'tagline': 'Health Education Learning Portal',
+                'description': 'An online learning platform focused on widening access to quality health education and continuing professional development for healthcare workers.',
+                'full_description': '''HELP (Health Education Learning Portal) is an online learning platform designed for healthcare professionals.
 
-Platform features:
-- Property listing and search
-- Tenant application processing
-- Lease agreement management
-- Rent payment tracking and reminders
-- Maintenance request handling
-- Communication portal
-- Document storage
-- Payment history and receipts
-- Property inspection scheduling''',
-                'category_slug': 'real-estate',
-                'technologies': 'Django, React Native, PostgreSQL, Stripe',
-                'features': '''Property Listings\nTenant Applications\nLease Management\nRent Collection\nMaintenance Requests\nMessaging Portal\nPayment Tracking\nMobile Apps''',
-                'icon_class': 'flaticon-computer-mouse',
+Features:
+- CPD-accredited health education courses
+- Interactive learning modules
+- Video lectures from medical experts
+- Self-assessment quizzes
+- Progress tracking and certificates
+- Mobile-friendly access
+- Offline learning capability
+- Discussion forums for peer learning''',
+                'category_slug': 'edtech',
+                'technologies': 'Django, React, PostgreSQL, WebRTC',
+                'features': '''Health Education Courses\nCPD Accreditation\nInteractive Modules\nVideo Lectures\nSelf-assessment\nProgress Tracking\nCertificates\nMobile Access''',
+                'icon_class': 'flaticon-data-scientist',
                 'status': 'completed',
                 'is_featured': True,
                 'order': 7,
             },
             {
-                'name': 'SPARKS',
-                'slug': 'sparks',
-                'tagline': 'Student Progress & Academic Records System',
-                'description': 'Comprehensive academic management system for universities and colleges. Tracks student progress, grades, and academic records.',
-                'full_description': '''SPARKS (Student Progress and Academic Records Keeping System) is designed for higher education institutions.
+                'name': 'IMS',
+                'slug': 'ims',
+                'tagline': 'Impact Management System',
+                'description': 'A platform that helps organisations plan, monitor, and report on the social and developmental impact of their work.',
+                'full_description': '''IMS (Impact Management System) is a platform designed for organisations to manage their social impact.
 
-System modules:
-- Student registration and enrollment
-- Course management
-- Class scheduling
-- Grade entry and GPA calculation
-- Academic transcript generation
-- Attendance tracking
-- Fee management integration
-- Student portal
-- Faculty portal
-- Administrative dashboard''',
-                'category_slug': 'education',
-                'technologies': 'Django, Vue.js, PostgreSQL, Celery',
-                'features': '''Student Registration\nCourse Management\nGrade Tracking\nTranscript Generation\nAttendance System\nStudent Portal\nFaculty Portal\nFee Integration''',
-                'icon_class': 'flaticon-data-scientist',
+Platform capabilities:
+- Impact goal setting and planning
+- Indicator tracking and monitoring
+- Beneficiary data management
+- Survey and feedback collection
+- Impact reporting and dashboards
+- Grant and project management
+- Stakeholder engagement tools
+- Data visualization and export''',
+                'category_slug': 'social-impact',
+                'technologies': 'Django, Vue.js, PostgreSQL, Chart.js',
+                'features': '''Impact Planning\nIndicator Tracking\nBeneficiary Management\nSurvey Collection\nImpact Reporting\nGrant Management\nDashboards\nData Export''',
+                'icon_class': 'flaticon-cyber-security',
                 'status': 'completed',
                 'is_featured': True,
                 'order': 8,
             },
             {
-                'name': 'eLearning',
-                'slug': 'elearning',
-                'tagline': 'University Virtual Learning System',
-                'description': 'Online learning platform for universities featuring courses, assessments, virtual classrooms, and student engagement tools.',
-                'full_description': '''A comprehensive eLearning platform designed for university virtual education.
+                'name': 'Brain Stroke Lesion Detection',
+                'slug': 'brain-stroke-lesion-detection',
+                'tagline': 'AI-Powered Stroke Diagnosis from Medical Imaging',
+                'description': 'An active research project applying artificial intelligence to support faster and more accessible stroke diagnosis in low-resource hospital settings.',
+                'full_description': '''Brain Stroke Lesion Detection is an active applied research project that uses artificial intelligence to analyze medical imaging and support faster stroke diagnosis.
 
-Platform capabilities:
-- Course content management
-- Video lectures and live streaming
-- Online assessments and quizzes
-- Assignment submission and grading
-- Discussion forums
-- Virtual classroom integration
-- Progress tracking
-- Certificate generation
-- Mobile-responsive design
-- Analytics dashboard''',
-                'category_slug': 'education',
-                'technologies': 'Django, React, AWS, WebRTC',
-                'features': '''Course Management\nVideo Lectures\nOnline Assessments\nAssignment Submission\nDiscussion Forums\nVirtual Classrooms\nProgress Tracking\nCertificates''',
-                'icon_class': 'flaticon-cloud-computing',
-                'status': 'completed',
+Research focus:
+- Deep learning models for CT/MRI lesion segmentation
+- Automated detection of ischemic and hemorrhagic strokes
+- Low-resource hospital deployment strategy
+- Integration with existing medical imaging workflows
+- Collaboration with Tanzanian healthcare facilities
+- Published findings in peer-reviewed venues
+
+Long-term goal: Reduce diagnosis time and improve outcomes for stroke patients in rural and low-resource settings across East Africa.''',
+                'category_slug': 'ai-research',
+                'technologies': 'Python, TensorFlow, PyTorch, OpenCV, Medical Imaging',
+                'features': '''CT/MRI Analysis\nLesion Segmentation\nDeep Learning Models\nLow-resource Focus\nClinical Collaboration\nPeer-reviewed Publication''',
+                'icon_class': 'flaticon-web-research',
+                'status': 'in_progress',
                 'is_featured': True,
                 'order': 9,
+            },
+            {
+                'name': 'Automated Malaria Detection',
+                'slug': 'automated-malaria-detection',
+                'tagline': 'AI-Powered Malaria Parasite Identification',
+                'description': 'Applied research on the automated identification of malaria parasites in blood samples using AI-powered image analysis.',
+                'full_description': '''Automated Malaria Detection is an applied research project using computer vision and AI to identify malaria parasites in blood smear images.
+
+Research focus:
+- Computer vision models for parasite detection
+- Classification of malaria species and stages
+- Parasitemia quantification
+- Mobile microscopy integration
+- Deployment in rural health facilities
+- Partnership with Tanzanian health institutions
+
+Long-term goal: Strengthen diagnostic capacity in rural health facilities where access to trained microscopists is limited.''',
+                'category_slug': 'ai-research',
+                'technologies': 'Python, TensorFlow, PyTorch, OpenCV, Flask',
+                'features': '''Parasite Detection\nSpecies Classification\nParasitemia Quantification\nMobile Microscopy\nRural Health Focus\nResearch Partnership''',
+                'icon_class': 'flaticon-consultant',
+                'status': 'in_progress',
+                'is_featured': True,
+                'order': 10,
             },
         ]
 
@@ -277,73 +297,124 @@ Platform capabilities:
             )
         self.stdout.write(self.style.SUCCESS(f'Created {len(projects)} projects'))
 
-        # Create Services
-        services = [
+        # Future Vision Services
+        future_visions = [
             {
-                'name': 'Custom Software Development',
-                'slug': 'custom-software-development',
-                'short_description': 'Build scalable, secure software tailored to your business needs.',
-                'description': 'We develop custom software solutions that address your unique business challenges. From enterprise systems to desktop applications, we deliver high-quality, maintainable code.',
-                'icon_class': 'flaticon-software-development',
-                'features': 'Enterprise Software\nDesktop Applications\nDatabase Solutions\nAPI Development\nSystem Integration',
-                'technologies': 'Python, Django, .NET, Java, C++',
-                'is_featured': True,
-                'order': 1,
-            },
-            {
-                'name': 'Web Application Development',
-                'slug': 'web-application-development',
-                'short_description': 'Modern, responsive web applications using latest technologies.',
-                'description': 'We create powerful web applications with intuitive user interfaces. Our solutions are responsive, secure, and optimized for performance.',
-                'icon_class': 'flaticon-web-research',
-                'features': 'Frontend Development\nBackend Development\nE-commerce Solutions\nProgressive Web Apps\nCMS Development',
-                'technologies': 'React, Vue.js, Django, Node.js, PHP',
-                'is_featured': True,
-                'order': 2,
-            },
-            {
-                'name': 'Mobile App Development',
-                'slug': 'mobile-app-development',
-                'short_description': 'Native and cross-platform apps for Android and iOS.',
-                'description': 'We build mobile applications that deliver exceptional user experiences. Whether native or cross-platform, our apps are fast, reliable, and user-friendly.',
-                'icon_class': 'flaticon-mobile-phone-1',
-                'features': 'Android Apps\niOS Apps\nCross-Platform Apps\nApp Maintenance\nApp Store Optimization',
-                'technologies': 'Flutter, React Native, Kotlin, Swift',
-                'is_featured': True,
-                'order': 3,
-            },
-            {
-                'name': 'AI & Machine Learning',
-                'slug': 'ai-machine-learning',
-                'short_description': 'Intelligent solutions powered by AI and ML algorithms.',
-                'description': 'Leverage artificial intelligence to automate processes and gain insights. We develop custom AI solutions including predictive analytics, NLP, and computer vision.',
-                'icon_class': 'flaticon-data-scientist',
-                'features': 'Predictive Analytics\nNatural Language Processing\nComputer Vision\nRecommendation Systems\nChatbots',
-                'technologies': 'Python, TensorFlow, PyTorch, Scikit-learn',
-                'is_featured': True,
-                'order': 4,
-            },
-            {
-                'name': 'Automation Systems',
-                'slug': 'automation-systems',
-                'short_description': 'Streamline operations with intelligent automation.',
-                'description': 'We help businesses automate repetitive tasks and optimize workflows. Our automation solutions reduce manual work and minimize errors.',
-                'icon_class': 'flaticon-computer-mouse',
-                'features': 'Business Process Automation\nWorkflow Optimization\nRPA Solutions\nIntegration Services\nReport Automation',
-                'technologies': 'Python, Selenium, Power Automate, REST APIs',
+                'name': 'KianvoSoft Academy',
+                'slug': 'academy',
+                'service_type': 'future',
+                'short_description': 'A fully-fledged technology academy offering certified diploma programmes.',
+                'description': 'Our medium-term goal is to establish the KianvoSoft Academy — a fully-fledged technology training institution offering certified diploma programmes in software engineering, AI, and data science.',
+                'icon_class': 'flaticon-database',
+                'features': 'Certified Diploma Programmes\nSoftware Engineering Track\nAI & Data Science Track\nIndustry-aligned Curriculum\nInternship Placements\nSwahili & English Instruction',
+                'technologies': 'Comprehensive technology curriculum',
+                'timeline_text': '2027–2028',
                 'is_featured': True,
                 'order': 5,
             },
             {
-                'name': 'IT Consulting & Support',
-                'slug': 'it-consulting-support',
-                'short_description': 'Expert guidance for your technology decisions.',
-                'description': 'Our IT consulting services help you make informed technology decisions. We provide strategic planning, security assessments, and ongoing technical support.',
-                'icon_class': 'flaticon-consultant',
-                'features': 'Technology Strategy\nSecurity Assessment\nTechnical Support\nSystem Audits\nTraining',
-                'technologies': 'Various technologies based on client needs',
+                'name': 'SaaS Product Suite',
+                'slug': 'saas-products',
+                'service_type': 'future',
+                'short_description': 'Subscription-based software products for East African businesses.',
+                'description': 'We are building towards a suite of subscription-based SaaS products that will make enterprise-grade software accessible and affordable for East African SMEs.',
+                'icon_class': 'flaticon-cloud-computing',
+                'features': 'Subscription-based Pricing\nCloud-hosted Platforms\nAutomatic Updates\nCustomer Support Included\nScalable Infrastructure\nEast Africa Focus',
+                'technologies': 'Cloud infrastructure, scalable microservices',
+                'timeline_text': '2028–2029',
                 'is_featured': True,
                 'order': 6,
+            },
+        ]
+
+        for vision_data in future_visions:
+            Service.objects.get_or_create(
+                slug=vision_data['slug'],
+                defaults=vision_data
+            )
+        self.stdout.write(self.style.SUCCESS(f'Created {len(future_visions)} future vision services'))
+
+        # Create Team Members
+        team_members = [
+            {
+                'name': 'Datius Rweyemamu Daud',
+                'role': 'Director of Research & AI',
+                'bio': 'Leads applied AI research, academic partnerships with MUST and other institutions, publications, and training programme design. Also handles research ethics and data governance.',
+                'icon_class': 'fas fa-user-graduate',
+                'order': 1,
+            },
+            {
+                'name': 'Akila Body Joseph',
+                'role': 'Director of Product & Engineering',
+                'bio': 'Leads product management, software engineering, quality assurance, technical infrastructure, and client technical support. Oversees development of all KianvoSoft products.',
+                'icon_class': 'fas fa-laptop-code',
+                'order': 2,
+            },
+            {
+                'name': 'Aneth Alphonce Seleli',
+                'role': 'Director of Business & Operations',
+                'bio': 'Leads business development, finance, HR, marketing, legal and compliance, and institutional relationships with CITT, MUST, and government bodies.',
+                'icon_class': 'fas fa-chart-line',
+                'order': 3,
+            },
+        ]
+
+        for tm_data in team_members:
+            TeamMember.objects.get_or_create(
+                name=tm_data['name'],
+                defaults=tm_data
+            )
+        self.stdout.write(self.style.SUCCESS(f'Created {len(team_members)} team members'))
+
+        # Create Services (Four Pillars — Current)
+        services = [
+            {
+                'name': 'Software Product Development',
+                'slug': 'software',
+                'service_type': 'current',
+                'short_description': 'Designing and deploying software products for education, healthcare, and business.',
+                'description': 'We design and deploy software products that solve real problems for institutions, businesses, and communities. Our current focus includes education technology platforms (Kianvo Meet, Kianvo Classroom, HELP), healthcare systems (Imforia), and business tools (Mjenzi, ShopManagerPro, FleetLink, IMS).',
+                'icon_class': 'flaticon-software-development',
+                'features': 'Education Technology Platforms\nHealthcare Management Systems\nBusiness & Operations Software\nPOS & Inventory Solutions\nLogistics & Transport Systems\nImpact Management Platforms',
+                'technologies': 'React, Django, Flutter, Python, Node.js, PostgreSQL',
+                'is_featured': True,
+                'order': 1,
+            },
+            {
+                'name': 'Technical Training & Capacity Building',
+                'slug': 'training',
+                'service_type': 'current',
+                'short_description': 'Short courses, bootcamps, and coding camps in modern technologies.',
+                'description': 'We deliver short courses, bootcamps, and coding camps in modern programming languages, frameworks, and emerging technologies for students and working professionals. Training is delivered in Swahili and English.',
+                'icon_class': 'flaticon-consultant',
+                'features': 'Programming Fundamentals\nWeb & Mobile Development Bootcamps\nAI & Machine Learning Workshops\nShort Courses for Professionals\nSwahili & English Delivery\nProject-based Learning',
+                'technologies': 'Python, JavaScript, Dart, Flutter, React, Django',
+                'is_featured': True,
+                'order': 2,
+            },
+            {
+                'name': 'Applied AI Research',
+                'slug': 'research',
+                'service_type': 'current',
+                'short_description': 'Active research in AI for health, business, and the environment.',
+                'description': 'We conduct applied AI research with practical contributions to challenges in health, business, and the environment affecting the East African region. Active projects include brain stroke lesion detection and automated malaria detection.',
+                'icon_class': 'flaticon-data-scientist',
+                'features': 'Medical Imaging AI (Stroke Detection)\nComputer Vision (Malaria Detection)\nAcademic Research Partnerships\nPeer-reviewed Publications\nResearch Ethics & Data Governance',
+                'technologies': 'Python, TensorFlow, PyTorch, OpenCV, Medical Imaging',
+                'is_featured': True,
+                'order': 3,
+            },
+            {
+                'name': 'Technology Consultancy & Outreach',
+                'slug': 'consulting',
+                'service_type': 'current',
+                'short_description': 'Consultancy for SMEs, NGOs, and institutions undertaking digital transformation.',
+                'description': 'We offer consultancy services to SMEs, NGOs, and institutions undertaking digital transformation, and run outreach programmes to inspire the next generation of African technologists.',
+                'icon_class': 'flaticon-satellite-signal',
+                'features': 'Digital Transformation Strategy\nTechnology Needs Assessment\nSystem Integration & Modernisation\nIT Infrastructure Advisory\nCommunity Outreach Programmes\nUniversity & Innovation Partnerships',
+                'technologies': 'Various technologies based on client needs',
+                'is_featured': True,
+                'order': 4,
             },
         ]
 
@@ -385,318 +456,219 @@ Platform capabilities:
             )
         self.stdout.write(self.style.SUCCESS(f'Created {len(blog_categories)} blog categories'))
 
-        # Blog Posts — HTML content (CKEditor-compatible)
+        # Blog Posts — HTML content (CKEditor-compatible) — focused on KianvoSoft's mission
         blog_posts = [
             {
-                'title': 'How AI is Revolutionizing Business Operations in 2026',
-                'slug': 'how-ai-is-revolutionizing-business-operations-2026',
-                'excerpt': 'Discover how artificial intelligence is transforming the way businesses operate, from automation to decision-making.',
+                'title': 'How Tanzanian Startups Are Leading Africa\'s AI Revolution',
+                'slug': 'tanzanian-startups-ai-revolution',
+                'excerpt': 'Discover how Tanzanian technology ventures are driving AI innovation in health, agriculture, and business across East Africa.',
                 'category_slug': 'ai-technology',
-                'author': 'KianvoSoft',
+                'author': 'Datius Rweyemamu Daud',
                 'is_featured': True,
                 'is_published': True,
-                'content': """<p>Artificial Intelligence (AI) has moved from a buzzword to a business necessity. In 2026, companies that have embraced AI are operating more efficiently, making smarter decisions, and outpacing their competitors. Here&rsquo;s how AI is reshaping modern business operations.</p>
+                'content': """<p>Tanzania is emerging as a surprising hub for artificial intelligence innovation. While global attention focuses on Nairobi, Lagos, and Cape Town, a new generation of Tanzanian technologists is building AI solutions tailored to local challenges. Here&rsquo;s how Tanzanian startups are leading Africa&rsquo;s AI revolution.</p>
 
-<h2>1. Intelligent Process Automation</h2>
-<p>Gone are the days when automation simply meant running scripts. Today&rsquo;s AI-powered automation understands context, learns from patterns, and handles exceptions intelligently. From accounts payable processing to HR onboarding workflows, AI is eliminating repetitive work and freeing teams to focus on higher-value activities.</p>
-<p>At KianvoSoft, we&rsquo;ve implemented AI-driven automation for clients that reduced data entry errors by <strong>90%</strong> and processing time by <strong>75%</strong>.</p>
+<h2>AI for Healthcare in Low-Resource Settings</h2>
+<p>One of the most impactful areas of AI research in Tanzania is healthcare. With a doctor-to-patient ratio of less than 1:10,000 in rural areas, AI-powered diagnostic tools are not a luxury &mdash; they are a necessity.</p>
+<p>At KianvoSoft, our research projects in brain stroke lesion detection and automated malaria detection are examples of how AI can be applied to strengthen diagnostic capacity where it&rsquo;s needed most. By training deep learning models on medical imaging data, we aim to reduce diagnosis time and improve outcomes for patients in low-resource hospital settings.</p>
 
-<h2>2. Predictive Analytics &amp; Smarter Decision-Making</h2>
-<p>Businesses no longer need to rely purely on gut feeling. AI systems can process thousands of data points in seconds and surface actionable insights &mdash; whether it&rsquo;s forecasting demand, detecting fraud, or predicting when equipment will fail.</p>
-<p>Our custom analytics solutions help businesses move from reactive to proactive decision-making.</p>
+<h2>Agriculture AI for Smallholder Farmers</h2>
+<p>Agriculture employs over 65% of Tanzania&rsquo;s workforce. AI applications in this sector include crop disease detection using computer vision, weather prediction models for planting decisions, and market price optimization for smallholder farmers.</p>
 
-<h2>3. Natural Language Processing in Customer Service</h2>
-<p>AI chatbots and virtual assistants have matured significantly. Modern NLP models understand context, sentiment, and even regional dialects. Businesses are deploying these tools to handle <strong>70&ndash;80%</strong> of routine customer queries automatically, improving response time from hours to seconds.</p>
+<h2>Swahili Language AI</h2>
+<p>One of the most exciting frontiers is Swahili-language AI. With over 200 million speakers across East Africa, there is enormous potential for NLP models that understand Swahili. Tanzanian startups are beginning to build chatbots, voice assistants, and translation tools that work in Swahili &mdash; reaching populations that English-only technology cannot serve.</p>
 
-<h2>4. AI in Supply Chain &amp; Inventory</h2>
-<p>AI models optimize inventory levels by predicting demand based on historical data, seasonality, and external factors like weather or market events. This prevents overstocking and stockouts &mdash; both of which cost businesses money.</p>
+<h2>The University Pipeline</h2>
+<p>Institutions like the Mbeya University of Science and Technology (MUST) are producing a growing pipeline of AI talent. KianvoSoft itself was founded by MUST computer engineering students who identified the gap between academic research and real-world deployment.</p>
 
-<h2>5. Personalization at Scale</h2>
-<p>Whether it&rsquo;s e-commerce recommendations or personalized marketing messages, AI enables businesses to treat every customer as an individual &mdash; at scale. This drives higher conversion rates, better customer retention, and increased lifetime value.</p>
-
-<h2>Key Takeaways</h2>
+<h2>Challenges &amp; Opportunities</h2>
 <ul>
-    <li>AI is not just for large corporations &mdash; SMEs are benefiting enormously</li>
-    <li>Start small: identify one repetitive process and automate it</li>
-    <li>Data quality matters &mdash; AI is only as good as the data you feed it</li>
-    <li>Partner with experts to implement AI responsibly and effectively</li>
+    <li><strong>Data availability</strong> &mdash; Limited structured datasets for training AI models</li>
+    <li><strong>Computing infrastructure</strong> &mdash; Access to GPUs and cloud computing remains expensive</li>
+    <li><strong>Talent retention</strong> &mdash; Keeping skilled AI researchers in Tanzania</li>
+    <li><strong>Funding</strong> &mdash; Early-stage AI research needs more local investment</li>
 </ul>
 
-<p>At KianvoSoft, we specialize in building custom AI solutions tailored to your business. <a href="/contact/">Contact us</a> to explore how AI can transform your operations.</p>""",
+<h2>The Future</h2>
+<p>Tanzania&rsquo;s AI ecosystem is small but growing fast. With the right investment in data infrastructure, computing resources, and talent development, Tanzanian startups are well-positioned to lead Africa&rsquo;s next wave of AI innovation.</p>
+
+<p>At KianvoSoft, we&rsquo;re proud to contribute to this movement. <a href="/contact/">Contact us</a> to learn more about our AI research initiatives.</p>""",
             },
             {
-                'title': 'Top Web Development Trends to Watch in 2026',
-                'slug': 'top-web-development-trends-2026',
-                'excerpt': 'From Progressive Web Apps to AI-powered interfaces, explore the trends shaping modern web development.',
+                'title': 'Building EdTech for East Africa: Lessons from Mbeya',
+                'slug': 'building-edtech-east-africa-mbeya',
+                'excerpt': 'What we learned building Kianvo Classroom, Kianvo Meet, and HELP for East African educational institutions.',
                 'category_slug': 'web-development',
-                'author': 'KianvoSoft',
+                'author': 'Akila Body Joseph',
                 'is_featured': True,
                 'is_published': True,
-                'content': """<p>The web development landscape evolves rapidly. Staying ahead of these trends ensures you build products that are fast, secure, and user-friendly. Here are the top web development trends defining 2026.</p>
+                'content': """<p>When we set out to build education technology platforms at KianvoSoft, we quickly realised that importing solutions built for Western contexts simply doesn&rsquo;t work in East Africa. Here are the key lessons from building Kianvo Classroom, Kianvo Meet, and HELP from Mbeya, Tanzania.</p>
 
-<h2>1. Progressive Web Apps (PWAs) Are the New Standard</h2>
-<p>PWAs combine the best of web and mobile apps. They load instantly, work offline, send push notifications, and can be installed on any device without an app store. In 2026, PWAs are becoming the default choice for businesses that want broad reach without the cost of native app development.</p>
+<h2>Lesson 1: Bandwidth Is Still a Constraint</h2>
+<p>While internet penetration in Tanzania has grown significantly, many universities and students still face unreliable connectivity. Our platforms are designed to work with low bandwidth, including offline-capable features, compressed video streaming, and progressive loading. We optimise for 3G connections, not just fibre.</p>
 
-<h2>2. Server-Side Rendering (SSR) &amp; Next.js Dominance</h2>
-<p>Next.js continues to dominate the React ecosystem. With server-side rendering, static site generation, and incremental static regeneration, Next.js delivers exceptional performance and SEO. At KianvoSoft, it&rsquo;s our go-to framework for content-heavy and e-commerce web applications.</p>
+<h2>Lesson 2: Mobile-First Is Non-Negotiable</h2>
+<p>In East Africa, most users access the internet through smartphones. Our platforms are built mobile-first, with intuitive touch interfaces and data-light designs. We test on mid-range Android devices because that&rsquo;s what most students and teachers actually use.</p>
 
-<h2>3. AI-Powered User Interfaces</h2>
-<p>AI is entering the UI layer. From intelligent search with semantic understanding to personalized layouts that adapt to user behavior, the web is getting smarter. Tools like GitHub Copilot are accelerating development, while AI-driven design tools help prototype faster.</p>
+<h2>Lesson 3: Swahili Matters</h2>
+<p>While English is the official language of instruction in Tanzanian universities, many students and teachers are more comfortable in Swahili. Kianvo Classroom and Kianvo Meet offer Swahili-language interfaces, making technology more accessible to a wider population.</p>
 
-<h2>4. WebAssembly (WASM) for High-Performance Web Apps</h2>
-<p>WebAssembly allows code written in C, C++, or Rust to run in the browser at near-native speed. This is opening doors for complex applications &mdash; video editors, 3D engines, and data processing tools &mdash; that previously required desktop software.</p>
+<h2>Lesson 4: Assessment Needs to Work Offline</h2>
+<p>During exams, network congestion can be catastrophic. Our assessment modules allow students to download questions, complete answers offline, and sync when connectivity returns. This simple feature has been a game-changer for our university partners.</p>
 
-<h2>5. API-First &amp; Headless Architecture</h2>
-<p>Businesses are decoupling their frontend from the backend using headless CMS and API-first approaches. This gives teams the flexibility to deliver content to any channel &mdash; websites, mobile apps, smartwatches, or IoT devices &mdash; from a single backend.</p>
+<h2>Lesson 5: Local Support Is Essential</h2>
+<p>Having a support team that understands the local context, speaks the language, and can visit institutions in person is irreplaceable. Being based in Mbeya means we can provide hands-on support that international EdTech platforms cannot match.</p>
 
-<h2>6. Web Security &amp; Zero Trust Architecture</h2>
-<p>With cyber threats escalating, modern web development must bake security in from day one. Zero Trust principles, HTTPS everywhere, Content Security Policies, and OAuth 2.0 are now baseline requirements.</p>
+<h2>Our EdTech Portfolio</h2>
+<ul>
+    <li><strong>Kianvo Classroom</strong> &mdash; Learning Management System for universities</li>
+    <li><strong>Kianvo Meet</strong> &mdash; Video conferencing for education</li>
+    <li><strong>HELP</strong> &mdash; Health Education Learning Portal for CPD</li>
+</ul>
+<p>Each platform is built for East Africa, by East Africans.</p>
 
-<h2>7. Edge Computing &amp; CDNs</h2>
-<p>Deploying code to the edge &mdash; as close to the user as possible &mdash; dramatically reduces latency. Platforms like Vercel Edge, Cloudflare Workers, and AWS CloudFront are enabling sub-100ms response times globally.</p>
-
-<h2>Final Thoughts</h2>
-<p>The best web applications in 2026 are fast, secure, accessible, and AI-enhanced. At KianvoSoft, we build web applications that combine technical excellence with exceptional user experience. <a href="/contact/">Talk to our team</a> about your next web project.</p>""",
+<p>Interested in our EdTech solutions? <a href="/contact/">Get in touch</a> to discuss your institution&rsquo;s needs.</p>""",
             },
             {
-                'title': 'Flutter vs React Native: Which to Choose in 2026?',
-                'slug': 'flutter-vs-react-native-2026',
-                'excerpt': 'A comprehensive comparison of the two leading cross-platform mobile development frameworks to help you make the right choice.',
-                'category_slug': 'mobile-development',
-                'author': 'KianvoSoft',
-                'is_featured': False,
-                'is_published': True,
-                'content': """<p>Choosing between Flutter and React Native is one of the most common decisions teams face when starting a mobile project. Both are excellent frameworks &mdash; but they have different strengths. Here&rsquo;s our 2026 comparison to help you decide.</p>
-
-<h2>Overview</h2>
-<p><strong>Flutter</strong> is Google&rsquo;s UI toolkit for building natively compiled apps from a single codebase. It uses the Dart programming language and renders UI using its own engine (Skia / Impeller).</p>
-<p><strong>React Native</strong> is Meta&rsquo;s framework that uses JavaScript/TypeScript and React to build mobile apps. It bridges to native components, meaning UI looks and feels native on each platform.</p>
-
-<h2>Performance</h2>
-<p><strong>Flutter</strong> has an edge in raw performance because it doesn&rsquo;t rely on a JavaScript bridge. The Flutter engine renders directly to the canvas, resulting in consistent 60/120fps animations.</p>
-<p><strong>React Native</strong> has improved significantly with the new architecture (JSI + Fabric), removing the old bridge bottleneck. For most business apps, the performance difference is negligible.</p>
-<p><strong>Winner: Flutter</strong> (slightly, for graphically intensive apps)</p>
-
-<h2>Developer Experience</h2>
-<p><strong>Flutter</strong> uses Dart, which is relatively easy to learn. Hot reload is excellent, and the widget system is powerful and consistent. However, the Dart ecosystem is smaller than JavaScript&rsquo;s.</p>
-<p><strong>React Native</strong> uses JavaScript/TypeScript &mdash; the most widely known language. If your team already knows React, the learning curve is minimal. The npm ecosystem gives access to thousands of packages.</p>
-<p><strong>Winner: React Native</strong> (for teams with existing JavaScript knowledge)</p>
-
-<h2>UI Consistency vs. Native Feel</h2>
-<p><strong>Flutter</strong> gives you pixel-perfect UI that looks identical on Android and iOS. Ideal for brand consistency, but may feel slightly &ldquo;non-native&rdquo; to users.</p>
-<p><strong>React Native</strong> renders native components, so the app feels at home on each platform.</p>
-
-<h2>Our Recommendation</h2>
-<table>
-    <thead>
-        <tr><th>Use Case</th><th>Recommended Framework</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Highly visual / branded app</td><td>Flutter</td></tr>
-        <tr><td>Team knows JavaScript / React</td><td>React Native</td></tr>
-        <tr><td>Games &amp; animations</td><td>Flutter</td></tr>
-        <tr><td>Enterprise business app</td><td>Either (both excellent)</td></tr>
-        <tr><td>Tight deadline with JS team</td><td>React Native</td></tr>
-        <tr><td>Long-term cross-platform</td><td>Flutter</td></tr>
-    </tbody>
-</table>
-
-<p>At KianvoSoft, we build with both frameworks. <a href="/contact/">Contact us</a> to discuss which is right for your project.</p>""",
-            },
-            {
-                'title': 'Essential Cybersecurity Practices for Small Businesses',
-                'slug': 'essential-cybersecurity-practices-small-businesses',
-                'excerpt': 'Protect your business from cyber threats with these essential security measures and best practices every business must implement.',
-                'category_slug': 'security',
-                'author': 'KianvoSoft',
-                'is_featured': False,
-                'is_published': True,
-                'content': """<p>Small businesses are increasingly targeted by cybercriminals &mdash; often because they have weaker defenses than large corporations. Yet a single breach can be devastating. Here are the essential cybersecurity practices every small business must implement in 2026.</p>
-
-<h2>1. Use Strong, Unique Passwords &amp; a Password Manager</h2>
-<p>Weak and reused passwords remain the #1 cause of breaches. Every account should have a unique, complex password. Use a password manager like Bitwarden, 1Password, or Dashlane to generate and store them securely.</p>
-<p><strong>Action:</strong> Set a company policy requiring passwords of 16+ characters with mixed characters.</p>
-
-<h2>2. Enable Multi-Factor Authentication (MFA) Everywhere</h2>
-<p>MFA adds a second layer of protection. Even if a password is stolen, the attacker can&rsquo;t access the account without the second factor. Enable MFA on:</p>
-<ul>
-    <li>Email accounts (Gmail, Outlook)</li>
-    <li>Cloud services (AWS, DigitalOcean)</li>
-    <li>Social media business accounts</li>
-    <li>Financial accounts</li>
-</ul>
-
-<h2>3. Keep Software &amp; Systems Updated</h2>
-<p>Unpatched software is a goldmine for hackers. Enable automatic updates for operating systems, browsers, and applications. Schedule regular patching cycles for servers.</p>
-
-<h2>4. Train Your Team &mdash; Humans Are the Weakest Link</h2>
-<p>Phishing attacks trick employees into clicking malicious links or sharing credentials. Regular security awareness training dramatically reduces this risk. Topics to cover:</p>
-<ul>
-    <li>Recognizing phishing emails</li>
-    <li>Safe browsing habits</li>
-    <li>What to do if you suspect a breach</li>
-    <li>Social engineering attacks</li>
-</ul>
-
-<h2>5. Back Up Your Data &mdash; The 3-2-1 Rule</h2>
-<p>Follow the <strong>3-2-1 backup rule</strong>:</p>
-<ul>
-    <li><strong>3</strong> copies of your data</li>
-    <li><strong>2</strong> different storage types (local + cloud)</li>
-    <li><strong>1</strong> copy offsite or air-gapped</li>
-</ul>
-<p>Test your backups regularly. A backup you&rsquo;ve never tested is a backup you can&rsquo;t trust.</p>
-
-<h2>6. Secure Your Wi-Fi Network</h2>
-<ul>
-    <li>Use WPA3 encryption</li>
-    <li>Create a separate guest network for visitors</li>
-    <li>Hide your SSID</li>
-    <li>Change default router credentials</li>
-</ul>
-
-<h2>7. Have an Incident Response Plan</h2>
-<p>When (not if) a breach happens, having a clear plan reduces panic and damage. Your plan should include:</p>
-<ul>
-    <li>Who to contact (IT, legal, affected clients)</li>
-    <li>How to contain the breach</li>
-    <li>Steps to recover systems</li>
-    <li>Communication plan</li>
-</ul>
-
-<p>Cybersecurity doesn&rsquo;t have to be overwhelming. Start with the basics, build good habits, and layer your defenses over time. At KianvoSoft, we offer IT security assessments and consulting. <a href="/contact/">Get in touch</a> to learn more.</p>""",
-            },
-            {
-                'title': 'Cloud Migration: A Step-by-Step Guide for Businesses',
-                'slug': 'cloud-migration-step-by-step-guide',
-                'excerpt': 'Learn how to successfully migrate your infrastructure to the cloud with our comprehensive, actionable guide.',
-                'category_slug': 'cloud-devops',
-                'author': 'KianvoSoft',
-                'is_featured': False,
-                'is_published': True,
-                'content': """<p>Migrating to the cloud is one of the most impactful technology decisions a business can make. When done right, it reduces infrastructure costs, improves reliability, and enables your team to scale quickly. Here&rsquo;s a step-by-step guide to a successful cloud migration.</p>
-
-<h2>Phase 1: Assessment &amp; Planning</h2>
-<h3>Audit Your Current Infrastructure</h3>
-<p>Before moving anything, catalog what you have: applications and their dependencies, databases and data volumes, current hardware and licenses, and traffic patterns and peak loads.</p>
-
-<h3>Choose Your Cloud Provider</h3>
-<ul>
-    <li><strong>AWS</strong> &mdash; Most mature, largest feature set</li>
-    <li><strong>Google Cloud (GCP)</strong> &mdash; Strong in data/AI services</li>
-    <li><strong>DigitalOcean / Hetzner</strong> &mdash; Cost-effective for SMEs</li>
-    <li><strong>Azure</strong> &mdash; Best for Microsoft-heavy environments</li>
-</ul>
-
-<h2>Phase 2: Choose Your Migration Strategy (The 6 R&rsquo;s)</h2>
-<ol>
-    <li><strong>Rehost (Lift &amp; Shift)</strong> &mdash; Move as-is. Fastest, least optimization.</li>
-    <li><strong>Replatform</strong> &mdash; Minor tweaks to take advantage of cloud (e.g., managed DB).</li>
-    <li><strong>Refactor</strong> &mdash; Redesign the app for cloud-native architecture.</li>
-    <li><strong>Repurchase</strong> &mdash; Switch to a SaaS product instead.</li>
-    <li><strong>Retain</strong> &mdash; Keep on-premise (some systems don&rsquo;t need to move).</li>
-    <li><strong>Retire</strong> &mdash; Decommission unused systems.</li>
-</ol>
-
-<h2>Phase 3: Migrate in Stages</h2>
-<p>Never move everything at once. Use this order:</p>
-<ol>
-    <li><strong>Development/test environments first</strong> &mdash; Low risk, validates your process</li>
-    <li><strong>Non-critical production workloads</strong> &mdash; Build confidence</li>
-    <li><strong>Core production systems</strong> &mdash; With rollback plans ready</li>
-</ol>
-
-<h2>Phase 4: Optimize &amp; Secure</h2>
-<ul>
-    <li>Right-size your instances (don&rsquo;t over-provision)</li>
-    <li>Enable auto-scaling for variable workloads</li>
-    <li>Set up automated backups and snapshots</li>
-    <li>Implement cloud security best practices (encryption, access controls)</li>
-    <li>Review your bill &mdash; cloud waste is real</li>
-</ul>
-
-<h2>Common Pitfalls to Avoid</h2>
-<ul>
-    <li><strong>Migrating without a rollback plan</strong> &mdash; Always have one</li>
-    <li><strong>Ignoring data transfer costs</strong> &mdash; Egress fees add up</li>
-    <li><strong>Poor IAM configuration</strong> &mdash; Over-privileged accounts are a risk</li>
-    <li><strong>Skipping the test phase</strong> &mdash; Test everything before cutover</li>
-</ul>
-
-<p>KianvoSoft helps businesses plan and execute cloud migrations of all sizes. <a href="/contact/">Contact our team</a> for a free consultation.</p>""",
-            },
-            {
-                'title': 'Turning Data into Business Intelligence: A Practical Guide',
-                'slug': 'turning-data-into-business-intelligence',
-                'excerpt': 'Discover how to leverage your business data for actionable insights and better decision-making with this practical BI guide.',
+                'title': 'AI-Powered Malaria Detection: A Tanzanian Research Journey',
+                'slug': 'ai-malaria-detection-tanzania',
+                'excerpt': 'How we are applying computer vision to strengthen malaria diagnostic capacity in rural Tanzanian health facilities.',
                 'category_slug': 'ai-technology',
-                'author': 'KianvoSoft',
+                'author': 'Datius Rweyemamu Daud',
+                'is_featured': True,
+                'is_published': True,
+                'content': """<p>Malaria remains one of Tanzania&rsquo;s most persistent public health challenges, with over 10 million cases reported annually. While diagnosis traditionally relies on microscopy, many rural health facilities lack trained microscopists. Our applied AI research project aims to change that.</p>
+
+<h2>The Problem</h2>
+<p>In rural Tanzanian health facilities, malaria diagnosis typically relies on rapid diagnostic tests (RDTs) or microscopy. RDTs are quick but can miss low-density infections. Microscopy is more accurate but requires trained personnel who are often unavailable in rural areas. The result: misdiagnosis, delayed treatment, and poor patient outcomes.</p>
+
+<h2>Our Approach</h2>
+<p>We are developing a computer vision system that can automatically identify malaria parasites in blood smear images. Using deep learning models trained on thousands of labelled microscopy images, our system can:</p>
+<ul>
+    <li>Detect the presence of malaria parasites</li>
+    <li>Classify the species (P. falciparum, P. vivax, etc.)</li>
+    <li>Quantify parasitemia (parasite density)</li>
+    <li>Identify the stage of infection</li>
+</ul>
+
+<h2>Technical Challenges</h2>
+<ul>
+    <li><strong>Data acquisition</strong> &mdash; Collecting high-quality labelled microscopy images from Tanzanian health facilities</li>
+    <li><strong>Variable image quality</strong> &mdash; Models must work with images from basic microscopes and phone cameras</li>
+    <li><strong>Class imbalance</strong> &mdash; Negative samples vastly outnumber positive ones</li>
+    <li><strong>Deployment</strong> &mdash; Models must run on low-cost hardware available in rural settings</li>
+</ul>
+
+<h2>Progress So Far</h2>
+<p>Our initial models have achieved promising accuracy in detecting P. falciparum &mdash; the most common malaria species in Tanzania. We are now working on improving sensitivity for low-density infections and expanding our dataset with samples from multiple health facilities.</p>
+
+<h2>Partnerships</h2>
+<p>This research is conducted in collaboration with academic partners at Mbeya University of Science and Technology (MUST) and supported by the Centre for Innovation Technology Transfer (CITT). We welcome collaboration from health institutions and research partners.</p>
+
+<p>Interested in our AI for Health research? <a href="/contact/">Contact us</a> to learn more or collaborate.</p>""",
+            },
+            {
+                'title': 'Imforia: How We Built a Pharmacy System for Tanzanian Pharmacies',
+                'slug': 'imforia-pharmacy-system-tanzania',
+                'excerpt': 'The story behind Imforia, our pharmacy management system now in live use by pharmacies across Tanzania.',
+                'category_slug': 'web-development',
+                'author': 'Akila Body Joseph',
                 'is_featured': False,
                 'is_published': True,
-                'content': """<p>Every business generates data &mdash; transactions, customer interactions, website visits, inventory movements. But most of that data sits unused. Business Intelligence (BI) transforms raw data into meaningful insights that drive smarter decisions. Here&rsquo;s how to get started.</p>
+                'content': """<p>Imforia started with a simple observation: Tanzanian pharmacies were using paper ledgers, basic spreadsheets, or expensive imported software that didn&rsquo;t fit local workflows. We built a solution that works for Tanzania. Here&rsquo;s the story.</p>
 
-<h2>What is Business Intelligence?</h2>
-<p>Business Intelligence is the set of technologies, processes, and tools used to collect, integrate, analyze, and present business data. The goal is simple: turn data into actionable information that leaders can use to make better decisions faster.</p>
-
-<h2>Step 1: Identify the Questions You Need to Answer</h2>
-<p>BI starts with business questions, not data. Ask yourself:</p>
+<h2>Why Existing Systems Fail</h2>
+<p>Most pharmacy management systems are built for Western markets &mdash; they assume reliable internet, advanced hardware, and standardised regulatory environments. In Tanzania, pharmacies face:</p>
 <ul>
-    <li>Which products/services are most profitable?</li>
-    <li>What are our peak sales periods?</li>
-    <li>Which customers are at risk of churning?</li>
-    <li>Where are the bottlenecks in our operations?</li>
-    <li>What does our cash flow look like over the next 90 days?</li>
+    <li>Unreliable internet connectivity</li>
+    <li>Power interruptions</li>
+    <li>Tanzania FDA (TFDA) reporting requirements</li>
+    <li>Swahili-speaking staff and customers</li>
+    <li>Complex inventory with expiry tracking across multiple suppliers</li>
 </ul>
 
-<h2>Step 2: Audit Your Data Sources</h2>
-<p>Common data sources include:</p>
+<h2>Key Features Designed for Tanzania</h2>
 <ul>
-    <li><strong>Accounting software</strong> &mdash; Revenue, expenses, invoices</li>
-    <li><strong>POS / Sales systems</strong> &mdash; Transaction data, product performance</li>
-    <li><strong>CRM</strong> &mdash; Customer interactions, pipeline, churn</li>
-    <li><strong>Website analytics</strong> &mdash; Traffic, conversions, behavior</li>
-    <li><strong>Spreadsheets</strong> &mdash; Often contain critical data not in any system</li>
+    <li><strong>Offline-first architecture</strong> &mdash; Works without internet, syncs when connected</li>
+    <li><strong>Expiry date management</strong> &mdash; Automated alerts for soon-to-expire stock</li>
+    <li><strong>TFDA-compliant reporting</strong> &mdash; Generates regulatory reports automatically</li>
+    <li><strong>Swahili interface option</strong> &mdash; Staff can work in their preferred language</li>
+    <li><strong>Low-bandwidth operation</strong> &mdash; Optimised for 3G networks</li>
 </ul>
 
-<h2>Step 3: Build Your Data Pipeline</h2>
-<p>Data needs to flow from source systems to a central location where it can be analyzed. This typically involves:</p>
-<ol>
-    <li><strong>Extract</strong> &mdash; Pull data from source systems</li>
-    <li><strong>Transform</strong> &mdash; Clean, normalize, and structure it</li>
-    <li><strong>Load</strong> &mdash; Store it in a data warehouse or data lake</li>
-</ol>
-
-<h2>Step 4: Choose Your Visualization Tool</h2>
+<h2>Real-World Impact</h2>
+<p>Since deployment, pharmacies using Imforia have reported:</p>
 <ul>
-    <li><strong>Power BI</strong> &mdash; Best for Microsoft environments</li>
-    <li><strong>Tableau</strong> &mdash; Powerful, great for complex visualizations</li>
-    <li><strong>Metabase</strong> &mdash; Open-source, excellent for SMEs</li>
-    <li><strong>Google Looker Studio</strong> &mdash; Free, integrates with Google products</li>
+    <li>Reduced stockouts by over 60%</li>
+    <li>Improved expiry date management</li>
+    <li>Faster checkout and dispensing</li>
+    <li>Better financial visibility</li>
 </ul>
 
-<h2>Step 5: Build Your Key Dashboards</h2>
-<h3>Executive Dashboard</h3>
+<h2>What&rsquo;s Next</h2>
+<p>We&rsquo;re expanding Imforia with prescription management, multi-branch support, and integration with TFDA&rsquo;s digital systems. We&rsquo;re also building a mobile app for pharmacy assistants.</p>
+
+<p>Interested in Imforia for your pharmacy? <a href="/contact/">Contact us</a> for a demo.</p>""",
+            },
+            {
+                'title': 'Mjenzi: Building POS & Inventory for Tanzania\'s Hardware Retailers',
+                'slug': 'mjenzi-pos-hardware-tanzania',
+                'excerpt': 'How Mjenzi helps hardware and construction-supply retailers manage inventory, sales, and customer accounts efficiently.',
+                'category_slug': 'mobile-development',
+                'author': 'Akila Body Joseph',
+                'is_featured': False,
+                'is_published': True,
+                'content': """<p>Hardware retail in Tanzania is uniquely complex. With thousands of SKUs, unit conversions between kilograms, metres, pieces, and litres, and a mix of cash and credit sales, generic POS systems simply don&rsquo;t work. That&rsquo;s why we built Mjenzi.</p>
+
+<h2>The Hardware Challenge</h2>
+<p>Walking into a Tanzanian hardware store, you&rsquo;ll find cement sold by the bag, rebar by the kilogram, paint by the litre, and nails by the piece &mdash; each with different pricing and unit conversion rules. Managing this manually leads to errors, lost sales, and frustrated customers.</p>
+
+<h2>How Mjenzi Solves It</h2>
 <ul>
-    <li>Revenue vs. target</li>
-    <li>Key expense categories</li>
-    <li>Net profit margin</li>
-    <li>Customer acquisition cost</li>
-</ul>
-<h3>Operations Dashboard</h3>
-<ul>
-    <li>Order fulfillment rates</li>
-    <li>Inventory levels</li>
-    <li>Staff productivity metrics</li>
+    <li><strong>Multi-unit inventory</strong> &mdash; Track stock in any unit with automatic conversions</li>
+    <li><strong>Credit sales management</strong> &mdash; Many hardware sales are on credit to contractors</li>
+    <li><strong>Barcode scanning</strong> &mdash; Quick lookup for fast-moving items</li>
+    <li><strong>Supplier management</strong> &mdash; Track purchase orders and supplier performance</li>
+    <li><strong>Profit analytics</strong> &mdash; Know which products are actually making money</li>
 </ul>
 
-<h2>Common Mistakes to Avoid</h2>
-<ul>
-    <li><strong>Collecting everything</strong> &mdash; Focus on data that answers real questions</li>
-    <li><strong>Trusting dirty data</strong> &mdash; Invest in data quality upfront</li>
-    <li><strong>Building dashboards nobody uses</strong> &mdash; Involve end users in the design</li>
-</ul>
+<h2>Built for Local Conditions</h2>
+<p>Mjenzi runs smoothly on basic hardware, works with intermittent internet, and can be used in Swahili. It&rsquo;s POS software designed for Tanzania.</p>
 
-<p>We build custom BI solutions tailored to your industry and business model &mdash; from data pipelines and warehouses to interactive dashboards. <a href="/contact/">Contact us</a> to discuss your data analytics needs.</p>""",
+<p>Want to see Mjenzi in action? <a href="/contact/">Request a demo</a>.</p>""",
+            },
+            {
+                'title': 'From Campus to Company: The KianvoSoft Founding Story',
+                'slug': 'kianvosoft-founding-story',
+                'excerpt': 'How three Computer Engineering students at MUST turned their shared vision into a technology venture.',
+                'category_slug': 'security',
+                'author': 'Aneth Alphonce Seleli',
+                'is_featured': True,
+                'is_published': True,
+                'content': """<p>Every company has an origin story. KianvoSoft&rsquo;s begins in the lecture halls and computer labs of Mbeya University of Science and Technology (MUST), where three Computer Engineering students discovered a shared frustration &mdash; and a shared vision.</p>
+
+<h2>The Spark</h2>
+<p>As final-year students, Datius, Akila, and Aneth noticed something: most of the technology they studied was built elsewhere, for markets very different from their own. The software their professors demonstrated was expensive, English-only, and designed for workflows that didn&rsquo;t exist in Tanzania.</p>
+<p>Meanwhile, local businesses, pharmacies, schools, and government offices were struggling with paper-based systems or clunky imported software that didn&rsquo;t serve their needs. There was a gap &mdash; and no one was filling it.</p>
+
+<h2>The Decision</h2>
+<p>Rather than pursue separate careers after graduation, the three friends decided to build together. They pooled their skills &mdash; engineering, product thinking, and business strategy &mdash; and founded KianvoSoft in Mbeya.</p>
+
+<h2>The Name</h2>
+<p>&ldquo;Kianvo&rdquo; is derived from a concept of unity and shared purpose. The name reflects our belief that technology innovation in Africa requires collaboration &mdash; among founders, with universities, and within communities.</p>
+
+<h2>Early Days</h2>
+<p>Like most startups, our early days were lean. We built our first products while still completing coursework, using university computers and whatever resources we could find. Our first client was a local pharmacy that needed a better system &mdash; that became Imforia.</p>
+
+<h2>Today</h2>
+<p>We have designed, built, and deployed a portfolio of products spanning education technology, healthcare, retail, logistics, and social impact. We conduct applied AI research in partnership with MUST. And we train the next generation of Tanzanian developers through bootcamps and coding camps.</p>
+
+<h2>Our Governance</h2>
+<p>KianvoSoft is governed by three equal co-founders, each leading a Directorate: Datius leads Research &amp; AI, Akila leads Product &amp; Engineering, and Aneth leads Business &amp; Operations. Decisions are made collaboratively, with a clear framework for routine, joint, and strategic decisions.</p>
+
+<p>We are KianvoSoft &mdash; innovating Africa&rsquo;s digital future from Mbeya, Tanzania.</p>
+
+<p><a href="/about/">Learn more about us</a> or <a href="/contact/">get in touch</a>.</p>""",
             },
         ]
 
@@ -715,5 +687,96 @@ Platform capabilities:
             if created:
                 created_count += 1
         self.stdout.write(self.style.SUCCESS(f'Created {created_count} blog posts'))
+
+        # Create Gallery Categories
+        gallery_cats = [
+            {'name': 'Bootcamps', 'slug': 'bootcamps', 'description': 'Photos from our coding bootcamps and intensive training sessions.', 'icon_class': 'fas fa-laptop-code', 'order': 1},
+            {'name': 'Trainings', 'slug': 'trainings', 'description': 'Moments from our technical training programmes.', 'icon_class': 'fas fa-chalkboard-teacher', 'order': 2},
+            {'name': 'Community Outreach', 'slug': 'outreach', 'description': 'Community engagement and outreach events.', 'icon_class': 'fas fa-hands-helping', 'order': 3},
+        ]
+        for gc_data in gallery_cats:
+            GalleryCategory.objects.get_or_create(slug=gc_data['slug'], defaults=gc_data)
+        self.stdout.write(self.style.SUCCESS(f'Created {len(gallery_cats)} gallery categories'))
+
+        # Create Sample Announcements
+        today = timezone.now().date()
+        announcements_data = [
+            {
+                'title': 'Python Programming Bootcamp 2026',
+                'slug': 'python-bootcamp-2026',
+                'announcement_type': 'bootcamp',
+                'short_description': 'An intensive 4-week Python programming bootcamp for beginners. Learn Python from scratch and build real-world projects.',
+                'description': '<p>Join us for an intensive 4-week Python programming bootcamp designed for absolute beginners. You will go from zero to building real-world applications.</p><h2>What You Will Learn</h2><ul><li>Python fundamentals (variables, data types, control flow)</li><li>Functions and modules</li><li>Object-oriented programming</li><li>File handling and data processing</li><li>Introduction to web development with Django</li><li>Capstone project</li></ul><h2>Who Should Apply</h2><p>This bootcamp is ideal for university students, recent graduates, and professionals looking to start a career in software development. No prior programming experience is required.</p><h2>Why Join?</h2><p>All our instructors are experienced software engineers actively building products. You will learn by doing — building real projects that go into your portfolio.</p>',
+                'start_date': today + timezone.timedelta(days=30),
+                'end_date': today + timezone.timedelta(days=58),
+                'application_deadline': today + timezone.timedelta(days=25),
+                'venue': 'Mbeya, Tanzania (Hybrid: In-person & Online)',
+                'mode': 'Hybrid',
+                'fee': 'TZS 150,000',
+                'capacity': 30,
+                'prerequisites': 'No prior programming experience required. You need your own laptop and a willingness to learn.',
+                'contact_email': 'training@kianvosoft.com',
+                'contact_phone': '0749 909 819',
+                'collect_applications': True,
+                'application_fields': 'Current Occupation|text|required\nEducation Level|select:Secondary,Diploma,Bachelor,Masters,PhD|required\nHow did you hear about us?|text',
+                'status': 'open',
+                'is_featured': True,
+                'is_active': True,
+                'order': 1,
+            },
+            {
+                'title': 'Mobile App Development with Flutter',
+                'slug': 'flutter-development-training',
+                'announcement_type': 'training',
+                'short_description': 'A 6-week training programme on building cross-platform mobile applications using Flutter and Dart.',
+                'description': '<p>Learn to build beautiful, cross-platform mobile applications using Flutter and Dart. This 6-week programme covers everything from the basics to advanced app architecture.</p><h2>Curriculum</h2><ul><li>Introduction to Dart programming</li><li>Flutter widgets and layouts</li><li>State management (Provider, Riverpod)</li><li>Working with APIs and databases</li><li>Firebase integration</li><li>App deployment to Play Store</li></ul>',
+                'start_date': today + timezone.timedelta(days=45),
+                'end_date': today + timezone.timedelta(days=87),
+                'application_deadline': today + timezone.timedelta(days=40),
+                'venue': 'Online',
+                'mode': 'Online',
+                'fee': 'TZS 200,000',
+                'capacity': 25,
+                'prerequisites': 'Basic programming knowledge required. Familiarity with any programming language is sufficient.',
+                'contact_email': 'training@kianvosoft.com',
+                'contact_phone': '0753 177 709',
+                'collect_applications': True,
+                'application_fields': 'Programming Experience|select:None,Beginner,Intermediate,Advanced|required\nCurrent Occupation|text|required',
+                'status': 'open',
+                'is_featured': True,
+                'is_active': True,
+                'order': 2,
+            },
+            {
+                'title': 'Web Development with Django & React',
+                'slug': 'django-react-web-dev',
+                'announcement_type': 'training',
+                'short_description': 'Full-stack web development training covering Django REST Framework and React for building modern web applications.',
+                'description': '<p>Master full-stack web development with Django and React in this comprehensive training programme.</p><h2>What You Will Learn</h2><ul><li>Django models, views, and templates</li><li>Django REST Framework for APIs</li><li>React fundamentals and hooks</li><li>State management and routing</li><li>Authentication and authorization</li><li>Deployment and DevOps basics</li></ul>',
+                'start_date': today + timezone.timedelta(days=60),
+                'end_date': today + timezone.timedelta(days=102),
+                'application_deadline': today + timezone.timedelta(days=55),
+                'venue': 'Mbeya, Tanzania',
+                'mode': 'In-Person',
+                'fee': 'TZS 250,000',
+                'capacity': 20,
+                'prerequisites': 'Basic knowledge of Python and JavaScript. Some familiarity with web concepts (HTML, CSS) is expected.',
+                'contact_email': 'training@kianvosoft.com',
+                'contact_phone': '0749 909 819',
+                'collect_applications': True,
+                'application_fields': 'Python Experience|select:None,Beginner,Intermediate,Advanced|required\nJavaScript Experience|select:None,Beginner,Intermediate,Advanced|required',
+                'status': 'open',
+                'is_featured': False,
+                'is_active': True,
+                'order': 3,
+            },
+        ]
+
+        for ann_data in announcements_data:
+            Announcement.objects.get_or_create(
+                slug=ann_data['slug'],
+                defaults=ann_data
+            )
+        self.stdout.write(self.style.SUCCESS(f'Created {len(announcements_data)} announcements'))
 
         self.stdout.write(self.style.SUCCESS('Database seeding completed successfully!'))

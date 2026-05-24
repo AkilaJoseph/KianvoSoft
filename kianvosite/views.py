@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import JsonResponse
+from django.utils import timezone
 from .models import (
     ProjectCategory, Project, Service, Testimonial,
     BlogCategory, BlogPost, ContactInquiry,
     NewsletterSubscriber, CompanyStat, Partner,
-    RoadmapMilestone
+    RoadmapMilestone, TeamMember, ProductImage,
+    GalleryCategory, GalleryImage, Announcement,
+    AnnouncementApplication
 )
 
 
@@ -20,6 +23,7 @@ def home(request):
         'blog_posts': BlogPost.objects.filter(is_published=True)[:3],
         'partners': Partner.objects.filter(is_active=True),
         'stats': CompanyStat.objects.filter(is_active=True),
+        'team_members': TeamMember.objects.filter(is_active=True),
     }
     return render(request, 'index.html', context)
 
@@ -29,8 +33,117 @@ def about(request):
     context = {
         'stats': CompanyStat.objects.filter(is_active=True),
         'testimonials': Testimonial.objects.filter(is_active=True)[:4],
+        'team_members': TeamMember.objects.filter(is_active=True),
     }
     return render(request, 'about.html', context)
+
+
+# Products Showcase Page (animated carousel, demo credentials)
+def products(request):
+    context = {
+        'projects': Project.objects.filter(is_active=True),
+        'categories': ProjectCategory.objects.filter(is_active=True),
+        'featured_screenshots': ProductImage.objects.filter(is_featured=True)[:12],
+    }
+    return render(request, 'products.html', context)
+
+
+# Gallery Page (past classes, bootcamps, trainings)
+def gallery(request):
+    category_slug = request.GET.get('category', None)
+    images = GalleryImage.objects.filter(is_active=True)
+    categories = GalleryCategory.objects.filter(is_active=True)
+
+    if category_slug:
+        images = images.filter(category__slug=category_slug)
+
+    context = {
+        'images': images,
+        'categories': categories,
+        'current_category': category_slug,
+    }
+    return render(request, 'gallery.html', context)
+
+
+# Announcements Page
+def announcements(request):
+    context = {
+        'announcements': Announcement.objects.filter(is_active=True, status__in=['open', 'closed']),
+        'open_announcements': Announcement.objects.filter(is_active=True, status='open'),
+    }
+    return render(request, 'announcements.html', context)
+
+
+# Announcement Detail + Application Form
+def announcement_detail(request, slug):
+    announcement = get_object_or_404(Announcement, slug=slug, is_active=True)
+    already_applied = False
+
+    if request.method == 'POST' and announcement.is_accepting_applications():
+        full_name = request.POST.get('full_name', '')
+        email = request.POST.get('email', '')
+        phone = request.POST.get('phone', '')
+        motivation = request.POST.get('motivation', '')
+
+        if full_name and email and phone:
+            # Check for duplicate
+            if AnnouncementApplication.objects.filter(announcement=announcement, email=email).exists():
+                already_applied = True
+                messages.warning(request, 'You have already applied for this programme.')
+            else:
+                # Collect extra fields
+                extra_data = {}
+                if announcement.application_fields:
+                    for line in announcement.application_fields.strip().split('\n'):
+                        parts = line.split('|')
+                        if len(parts) >= 2:
+                            field_key = parts[0].strip().lower().replace(' ', '_')
+                            field_value = request.POST.get(field_key, '')
+                            if field_value:
+                                extra_data[field_key] = field_value
+
+                AnnouncementApplication.objects.create(
+                    announcement=announcement,
+                    full_name=full_name,
+                    email=email,
+                    phone=phone,
+                    motivation=motivation,
+                    extra_data=extra_data,
+                )
+                messages.success(
+                    request,
+                    f'Your application for "{announcement.title}" has been submitted successfully! We will contact you at {email}.'
+                )
+                return redirect('announcement_detail', slug=slug)
+        else:
+            messages.error(request, 'Please fill in all required fields.')
+
+    # Parse extra fields for the form
+    extra_form_fields = []
+    if announcement.application_fields:
+        for line in announcement.application_fields.strip().split('\n'):
+            parts = [p.strip() for p in line.split('|')]
+            if len(parts) >= 2:
+                label = parts[0]
+                field_type = parts[1]
+                required = len(parts) >= 3 and parts[2].lower() == 'required'
+                field_key = label.lower().replace(' ', '_')
+                extra_form_fields.append({
+                    'label': label,
+                    'key': field_key,
+                    'type': field_type,
+                    'required': required,
+                })
+
+    context = {
+        'announcement': announcement,
+        'extra_fields': extra_form_fields,
+        'already_applied': already_applied,
+        'related_announcements': Announcement.objects.filter(
+            is_active=True, announcement_type=announcement.announcement_type
+        ).exclude(id=announcement.id)[:3],
+    }
+    return render(request, 'announcement_detail.html', context)
 
 
 # Services Page

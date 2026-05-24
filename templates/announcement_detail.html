@@ -1,0 +1,318 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}{{ announcement.title }} - KianvoSoft{% endblock title %}
+{% block content %}
+
+<style>
+.ks-detail-header {
+  padding: 40px;
+  background: rgba(10, 14, 26, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  border-radius: 12px;
+}
+.ks-info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(0, 240, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 240, 255, 0.08);
+}
+.ks-info-item i {
+  width: 20px;
+  color: var(--ks-primary);
+}
+.ks-form-card {
+  background: rgba(10, 14, 26, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  border-radius: 12px;
+  padding: 35px;
+}
+.ks-form-card label {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  display: block;
+}
+.ks-form-card input,
+.ks-form-card textarea,
+.ks-form-card select {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease;
+}
+.ks-form-card input:focus,
+.ks-form-card textarea:focus,
+.ks-form-card select:focus {
+  outline: none;
+  border-color: var(--ks-primary);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+}
+.ks-form-card textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+</style>
+
+<div class="page__banner">
+  <div class="page__banner-shape">
+    <img src="{% static 'assets/img/shape/page-banner-shape.png' %}" alt="">
+  </div>
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-xl-6 col-lg-7">
+        <div class="page__banner-content">
+          <h2>{{ announcement.title|truncatechars:40 }}</h2>
+          <span><a href="{% url 'home' %}">Home</a><span>|</span><a href="{% url 'announcements' %}">Announcements</a><span>|</span>{{ announcement.title|truncatechars:20 }}</span>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-5">
+        <div class="page__banner-img">
+          <img src="{% static 'assets/img/banner/page-banner-img.png' %}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding" style="background: var(--ks-bg-primary);">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Main Content -->
+      <div class="col-xl-8">
+        <!-- Header Card -->
+        <div class="ks-detail-header ks-reveal mb-40">
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+            <span class="ks-announce-type ks-type-{{ announcement.announcement_type }}" style="display: inline-block; padding: 3px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; background: rgba(0,240,255,0.15); color: var(--ks-primary); border: 1px solid rgba(0,240,255,0.3);">
+              {{ announcement.get_announcement_type_display }}
+            </span>
+            <span style="display: inline-block; padding: 3px 12px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; background: {% if announcement.status == 'open' %}rgba(72,187,120,0.2); color: var(--ks-green); border: 1px solid rgba(72,187,120,0.3){% else %}rgba(255,255,255,0.1); color: var(--ks-text-muted); border: 1px solid rgba(255,255,255,0.15){% endif %};">
+              {{ announcement.get_status_display|upper }}
+            </span>
+          </div>
+          <h2 style="color: white; margin-bottom: 10px;">{{ announcement.title }}</h2>
+          <p style="color: var(--ks-text-muted); font-size: 1rem;">{{ announcement.short_description }}</p>
+        </div>
+
+        <!-- Info Grid -->
+        <div class="row g-3 mb-40 ks-reveal ks-reveal-delay-1">
+          <div class="col-md-4 col-6">
+            <div class="ks-info-item">
+              <i class="far fa-calendar-alt"></i>
+              <div>
+                <small style="color: var(--ks-text-muted); display: block;">Start Date</small>
+                <strong style="color: white; font-size: 0.85rem;">{{ announcement.start_date|date:"M j, Y" }}</strong>
+              </div>
+            </div>
+          </div>
+          {% if announcement.end_date %}
+          <div class="col-md-4 col-6">
+            <div class="ks-info-item">
+              <i class="far fa-calendar-check"></i>
+              <div>
+                <small style="color: var(--ks-text-muted); display: block;">End Date</small>
+                <strong style="color: white; font-size: 0.85rem;">{{ announcement.end_date|date:"M j, Y" }}</strong>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          <div class="col-md-4 col-6">
+            <div class="ks-info-item">
+              <i class="far fa-hourglass"></i>
+              <div>
+                <small style="color: var(--ks-text-muted); display: block;">Deadline</small>
+                <strong style="color: {% if announcement.is_accepting_applications %}#ff6b6b{% else %}var(--ks-text-muted){% endif %}; font-size: 0.85rem;">{{ announcement.application_deadline|date:"M j, Y" }}</strong>
+              </div>
+            </div>
+          </div>
+          {% if announcement.mode %}
+          <div class="col-md-4 col-6">
+            <div class="ks-info-item">
+              <i class="fas fa-users"></i>
+              <div>
+                <small style="color: var(--ks-text-muted); display: block;">Mode</small>
+                <strong style="color: white; font-size: 0.85rem;">{{ announcement.mode }}</strong>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% if announcement.venue %}
+          <div class="col-md-4 col-6">
+            <div class="ks-info-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <small style="color: var(--ks-text-muted); display: block;">Venue</small>
+                <strong style="color: white; font-size: 0.85rem;">{{ announcement.venue }}</strong>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% if announcement.fee %}
+          <div class="col-md-4 col-6">
+            <div class="ks-info-item">
+              <i class="fas fa-tag"></i>
+              <div>
+                <small style="color: var(--ks-text-muted); display: block;">Fee</small>
+                <strong style="color: white; font-size: 0.85rem;">{{ announcement.fee }}</strong>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Description -->
+        <div class="ks-reveal ks-reveal-delay-2" style="color: #ccc; line-height: 1.8;">
+          {% if announcement.cover_image %}
+          <img src="{{ announcement.cover_image.url }}" alt="{{ announcement.title }}" style="width: 100%; max-height: 350px; object-fit: cover; border-radius: 10px; margin-bottom: 25px;">
+          {% endif %}
+          {{ announcement.description|safe }}
+        </div>
+
+        <!-- Prerequisites -->
+        {% if announcement.prerequisites %}
+        <div class="ks-reveal ks-reveal-delay-2 mt-40" style="padding: 20px; background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.2); border-radius: 8px;">
+          <h4 style="color: var(--ks-accent); margin-bottom: 10px;"><i class="fas fa-check-circle me-2"></i>Prerequisites</h4>
+          <p style="color: #ccc; margin: 0; white-space: pre-line;">{{ announcement.prerequisites }}</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Sidebar: Application Form -->
+      <div class="col-xl-4">
+        <div class="ks-form-card ks-reveal ks-reveal-delay-1" style="position: sticky; top: 100px;">
+          {% if announcement.is_accepting_applications %}
+          <h4 style="color: white; margin-bottom: 5px;"><i class="fas fa-pen me-2" style="color: var(--ks-primary);"></i>Apply Now</h4>
+          <p style="color: var(--ks-text-muted); font-size: 0.85rem; margin-bottom: 20px;">Fill out the form to apply for this programme.</p>
+
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{% if message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% else %}danger{% endif %} alert-dismissible fade show" role="alert" style="font-size: 0.85rem;">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+          {% endfor %}
+          {% endif %}
+
+          {% if already_applied %}
+          <div style="text-align: center; padding: 20px 0;">
+            <i class="fas fa-check-circle" style="font-size: 40px; color: var(--ks-green); margin-bottom: 10px; display: block;"></i>
+            <p style="color: var(--ks-green);">You have already applied for this programme. We will contact you at your email.</p>
+          </div>
+          {% else %}
+          <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label>Full Name <span style="color: #ff6b6b;">*</span></label>
+              <input type="text" name="full_name" required placeholder="Your full name">
+            </div>
+            <div class="mb-3">
+              <label>Email <span style="color: #ff6b6b;">*</span></label>
+              <input type="email" name="email" required placeholder="your@email.com">
+            </div>
+            <div class="mb-3">
+              <label>Phone <span style="color: #ff6b6b;">*</span></label>
+              <input type="text" name="phone" required placeholder="+255 XXX XXX XXX">
+            </div>
+            <div class="mb-3">
+              <label>Why do you want to join? <span style="color: #ff6b6b;">*</span></label>
+              <textarea name="motivation" required placeholder="Tell us about yourself and why you're interested..."></textarea>
+            </div>
+            {% for field in extra_fields %}
+            <div class="mb-3">
+              <label>{{ field.label }}{% if field.required %} <span style="color: #ff6b6b;">*</span>{% endif %}</label>
+              {% if 'textarea' in field.type %}
+              <textarea name="{{ field.key }}" {% if field.required %}required{% endif %} placeholder="Enter {{ field.label|lower }}"></textarea>
+              {% elif 'select' in field.type %}
+              <select name="{{ field.key }}" {% if field.required %}required{% endif %}>
+                <option value="">Select {{ field.label }}</option>
+                {% for option in field.type|slice:"7:"|cut:"," %}
+                <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+              </select>
+              {% else %}
+              <input type="{{ field.type }}" name="{{ field.key }}" {% if field.required %}required{% endif %} placeholder="Enter {{ field.label|lower }}">
+              {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-one w-100" style="text-align: center;">
+              <i class="fas fa-paper-plane me-1"></i>Submit Application
+            </button>
+          </form>
+          {% endif %}
+
+          {% elif announcement.status == 'closed' %}
+          <div style="text-align: center; padding: 30px 0;">
+            <i class="fas fa-hourglass-end" style="font-size: 40px; color: var(--text-muted); opacity: 0.5; margin-bottom: 10px; display: block;"></i>
+            <h5 style="color: var(--ks-text-muted);">Applications Closed</h5>
+            <p style="color: var(--ks-text-muted); font-size: 0.85rem;">The application deadline for this programme has passed.</p>
+          </div>
+
+          {% elif announcement.status == 'completed' %}
+          <div style="text-align: center; padding: 30px 0;">
+            <i class="fas fa-check-double" style="font-size: 40px; color: var(--ks-green); opacity: 0.5; margin-bottom: 10px; display: block;"></i>
+            <h5 style="color: var(--ks-green);">Completed</h5>
+            <p style="color: var(--ks-text-muted); font-size: 0.85rem;">This programme has been completed. Check our announcements for new opportunities.</p>
+          </div>
+          {% endif %}
+
+          <!-- Contact for this announcement -->
+          {% if announcement.contact_email or announcement.contact_phone %}
+          <hr style="border-color: rgba(0,240,255,0.15); margin: 20px 0;">
+          <h5 style="color: white; font-size: 0.9rem; margin-bottom: 10px;">Questions?</h5>
+          {% if announcement.contact_email %}
+          <p style="font-size: 0.85rem; margin-bottom: 5px;">
+            <i class="fas fa-envelope me-1" style="color: var(--ks-primary);"></i>
+            <a href="mailto:{{ announcement.contact_email }}" style="color: var(--ks-primary);">{{ announcement.contact_email }}</a>
+          </p>
+          {% endif %}
+          {% if announcement.contact_phone %}
+          <p style="font-size: 0.85rem; margin-bottom: 5px;">
+            <i class="fas fa-phone me-1" style="color: var(--ks-primary);"></i>
+            <a href="tel:{{ announcement.contact_phone }}" style="color: var(--ks-primary);">{{ announcement.contact_phone }}</a>
+          </p>
+          {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Announcements -->
+{% if related_announcements %}
+<section class="section-padding" style="background: var(--ks-bg-secondary);">
+  <div class="container">
+    <div class="row justify-content-center text-center mb-40">
+      <div class="col-xl-7">
+        <h2 class="ks-reveal">More Opportunities</h2>
+        <p class="ks-reveal ks-reveal-delay-1" style="color: var(--ks-text-muted);">Check out our other programmes.</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      {% for related in related_announcements %}
+      <div class="col-md-4">
+        <div class="ks-announce-card ks-reveal" style="padding: 20px;">
+          <span style="display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 0.7rem; font-weight: 600; background: rgba(0,240,255,0.15); color: var(--ks-primary); border: 1px solid rgba(0,240,255,0.3); margin-bottom: 8px;">
+            {{ related.get_announcement_type_display }}
+          </span>
+          <h5 style="color: white; font-size: 0.95rem;">
+            <a href="{% url 'announcement_detail' related.slug %}" style="color: white; text-decoration: none;">{{ related.title }}</a>
+          </h5>
+          <p style="color: var(--ks-text-muted); font-size: 0.8rem; margin-bottom: 8px;">{{ related.short_description|truncatechars:80 }}</p>
+          <a href="{% url 'announcement_detail' related.slug %}" style="color: var(--ks-primary); font-size: 0.8rem;">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock content %}

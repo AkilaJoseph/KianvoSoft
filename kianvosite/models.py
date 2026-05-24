@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.validators import FileExtensionValidator
 from ckeditor_uploader.fields import RichTextUploadingField
 
 # Project Category Model
@@ -51,10 +52,14 @@ class Project(models.Model):
     screenshot_2 = models.ImageField(upload_to='projects/screenshots/', blank=True, null=True)
     screenshot_3 = models.ImageField(upload_to='projects/screenshots/', blank=True, null=True)
 
+    # Demo Credentials
+    demo_url = models.URLField(blank=True, null=True, help_text="Live demo link")
+    demo_username = models.CharField(max_length=100, blank=True, help_text="Demo login username")
+    demo_password = models.CharField(max_length=100, blank=True, help_text="Demo login password")
+    documentation_url = models.URLField(blank=True, null=True)
+
     # Status & Links
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='completed')
-    demo_url = models.URLField(blank=True, null=True, help_text="Live demo link")
-    documentation_url = models.URLField(blank=True, null=True)
 
     # Display Options
     is_featured = models.BooleanField(default=False, help_text="Show on homepage")
@@ -295,3 +300,169 @@ class RoadmapMilestone(models.Model):
 
     def __str__(self):
         return f"{self.year} - {self.title}"
+
+
+# Team Member / Leadership Model
+class TeamMember(models.Model):
+    name = models.CharField(max_length=200)
+    role = models.CharField(max_length=200, help_text="e.g., 'Director of Research & AI'")
+    bio = models.TextField(blank=True, help_text="Short biography or description of their role")
+    image = models.ImageField(upload_to='team/', blank=True, null=True)
+    icon_class = models.CharField(max_length=100, blank=True, help_text="Fallback icon if no image (FontAwesome class)")
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['order', 'name']
+        verbose_name_plural = "Team Members"
+
+    def __str__(self):
+        return self.name
+
+
+# Product Screenshot / Gallery Image for Projects
+class ProductImage(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='screenshots')
+    image = models.ImageField(upload_to='projects/screenshots/', validators=[FileExtensionValidator(['png', 'jpg', 'jpeg', 'webp'])])
+    caption = models.CharField(max_length=255, blank=True)
+    is_featured = models.BooleanField(default=False, help_text="Show as the main showcase image")
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['-is_featured', 'order']
+        verbose_name_plural = "Product Screenshots"
+
+    def __str__(self):
+        return f"{self.project.name} - {self.caption or 'Screenshot #' + str(self.order)}"
+
+
+# Gallery Category (for past classes/trainings)
+class GalleryCategory(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+    description = models.TextField(blank=True)
+    icon_class = models.CharField(max_length=100, blank=True, help_text="FontAwesome class")
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = "Gallery Categories"
+        ordering = ['order', 'name']
+
+    def __str__(self):
+        return self.name
+
+
+# Past Classes Gallery Image
+class GalleryImage(models.Model):
+    category = models.ForeignKey(GalleryCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='images')
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='gallery/', validators=[FileExtensionValidator(['png', 'jpg', 'jpeg', 'webp'])])
+    event_date = models.DateField(blank=True, null=True, help_text="Date the event/training took place")
+    is_featured = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-is_featured', 'order', '-event_date']
+        verbose_name_plural = "Gallery Images"
+
+    def __str__(self):
+        return self.title
+
+
+# Announcement (Bootcamps, Training, Programming Sessions)
+class Announcement(models.Model):
+    ANNOUNCEMENT_TYPES = [
+        ('bootcamp', 'Bootcamp'),
+        ('training', 'Training Program'),
+        ('session', 'Programming Session'),
+        ('workshop', 'Workshop'),
+        ('other', 'Other'),
+    ]
+
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('open', 'Open for Applications'),
+        ('closed', 'Closed'),
+        ('completed', 'Completed'),
+    ]
+
+    title = models.CharField(max_length=300)
+    slug = models.SlugField(unique=True)
+    announcement_type = models.CharField(max_length=20, choices=ANNOUNCEMENT_TYPES, default='bootcamp')
+    short_description = models.CharField(max_length=500, help_text="Brief summary for listing cards")
+    description = RichTextUploadingField(config_name='blog', help_text="Full details about the programme")
+    cover_image = models.ImageField(upload_to='announcements/', blank=True, null=True)
+
+    # Logistics
+    start_date = models.DateField(help_text="When the programme begins")
+    end_date = models.DateField(blank=True, null=True, help_text="When the programme ends")
+    application_deadline = models.DateField(help_text="Last date to accept applications")
+    venue = models.CharField(max_length=300, blank=True, help_text="Physical location or 'Online'")
+    mode = models.CharField(max_length=100, blank=True, help_text="e.g., 'In-Person', 'Online', 'Hybrid'")
+    fee = models.CharField(max_length=100, blank=True, help_text="e.g., 'Free', 'TZS 50,000', 'Contact us'")
+
+    # Capacity
+    capacity = models.IntegerField(default=0, help_text="0 for unlimited")
+    prerequisites = models.TextField(blank=True, help_text="Requirements for participants")
+
+    # Contact
+    contact_email = models.EmailField(blank=True, help_text="Contact for this specific announcement")
+    contact_phone = models.CharField(max_length=50, blank=True)
+
+    # Collect Applications
+    collect_applications = models.BooleanField(default=True, help_text="Show application form on the announcement page")
+    application_fields = models.TextField(blank=True, help_text="""Extra fields for application form (one per line, format: label|field_type|required). 
+Field types: text, email, phone, textarea, select:option1,option2. Default fields (name, email, phone, motivation) are always included.""")
+
+    # Display
+    is_featured = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
+    order = models.IntegerField(default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-is_featured', 'order', '-created_at']
+
+    def __str__(self):
+        return f"{self.get_announcement_type_display()}: {self.title}"
+
+    def is_accepting_applications(self):
+        return self.status == 'open' and self.is_active
+
+    def applications_count(self):
+        return self.applications.count()
+
+
+# Announcement Application
+class AnnouncementApplication(models.Model):
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name='applications')
+    full_name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone = models.CharField(max_length=50)
+    motivation = models.TextField(help_text="Why they want to join")
+    extra_data = models.JSONField(default=dict, blank=True, help_text="Extra application fields data")
+
+    STATUS_CHOICES = [
+        ('pending', 'Pending Review'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+        ('waitlisted', 'Waitlisted'),
+    ]
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    admin_notes = models.TextField(blank=True)
+
+    applied_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-applied_at']
+
+    def __str__(self):
+        return f"{self.full_name} - {self.announcement.title}"

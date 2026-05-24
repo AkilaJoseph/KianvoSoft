@@ -29,29 +29,28 @@
 </div>
 <!-- Banner Area End -->
 
-<!-- Portfolio Intro Start -->
-<div class="about__one section-padding">
-	<div class="container">
-		<div class="row align-items-center gy-4">
-			<div class="col-xl-6 col-lg-7 col-md-9">
-				<div class="about__one-content">
-					<span class="subtitle-one">Our Work</span>
-					<h2>Projects That Showcase Our Expertise</h2>
-					<p>Explore our portfolio of successful projects across various industries. Each project demonstrates
-						our commitment to quality, innovation, and client satisfaction.</p>
+		<!-- Portfolio Intro Start -->
+	<div class="about__one section-padding">
+		<div class="container">
+			<div class="row align-items-center gy-4">
+				<div class="col-xl-6 col-lg-7 col-md-9">
+					<div class="about__one-content">
+						<span class="subtitle-one">Our Work</span>
+						<h2>Software Products & Research Projects</h2>
+						<p>Explore our portfolio of products currently in active use across East Africa — from education technology platforms and healthcare systems to AI research projects and business management tools.</p>
+					</div>
 				</div>
-			</div>
-			<div class="col-xl-6 col-lg-5">
-				<div class="about__one-image">
-					<div class="about__one-image-wrapper">
-						<img src="{% static 'assets/img/portfolio/portfolio-1.png' %}" alt="Portfolio" class="image-1">
+				<div class="col-xl-6 col-lg-5">
+					<div class="about__one-image">
+						<div class="about__one-image-wrapper">
+							<img src="{% static 'assets/img/portfolio/portfolio-1.png' %}" alt="Portfolio" class="image-1">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<!-- Portfolio Intro End -->
+	<!-- Portfolio Intro End -->
 
 <!-- Category Filter Start -->
 {% if categories %}
@@ -135,15 +134,13 @@
 					</div>
 					<div class="ks-project-content">
 						<h4>Imforia</h4>
-						<p>Pharmacy Management System - Complete solution for pharmacy inventory, sales, and
-							prescription management.</p>
+						<p>Pharmacy management system — streamlining stock, sales, and dispensing operations. Currently in live use by pharmacies in Tanzania.</p>
 						<div class="ks-project-tech">
 							<span>Django</span><span>React</span><span>PostgreSQL</span>
 						</div>
 						<div class="ks-project-footer">
-							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i
-									class="fas fa-check-circle me-1"></i> Completed</span>
-							<a href="#" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
+							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Live</span>
+							<a href="{% url 'project_detail' 'imforia' %}" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -155,16 +152,14 @@
 						<span class="ks-project-category">Retail</span>
 					</div>
 					<div class="ks-project-content">
-						<h4>MjenziPOS</h4>
-						<p>Hardware Shop Management System - POS, inventory tracking, and sales analytics for hardware
-							stores.</p>
+						<h4>Mjenzi</h4>
+						<p>POS & inventory management system tailored for hardware and construction-supply retailers in Tanzania.</p>
 						<div class="ks-project-tech">
 							<span>Django</span><span>Vue.js</span><span>MySQL</span>
 						</div>
 						<div class="ks-project-footer">
-							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i
-									class="fas fa-check-circle me-1"></i> Completed</span>
-							<a href="#" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
+							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Live</span>
+							<a href="{% url 'project_detail' 'mjenzi' %}" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -173,19 +168,17 @@
 				<div class="ks-project-card ks-reveal ks-reveal-delay-3">
 					<div class="ks-project-image"
 						style="background-image: url('{% static 'assets/img/portfolio/portfolio-1.png' %}');">
-						<span class="ks-project-category">Transport</span>
+						<span class="ks-project-category">EdTech</span>
 					</div>
 					<div class="ks-project-content">
-						<h4>Transit</h4>
-						<p>Transit Company Operations System - Fleet management, maintenance scheduling, and route
-							optimization.</p>
+						<h4>Kianvo Classroom</h4>
+						<p>Learning Management System for East African universities — course delivery, assessments, and student engagement.</p>
 						<div class="ks-project-tech">
-							<span>Python</span><span>Flutter</span><span>Firebase</span>
+							<span>Django</span><span>React</span><span>PostgreSQL</span>
 						</div>
 						<div class="ks-project-footer">
-							<span style="color: var(--ks-orange); font-size: 0.85rem; font-weight: 600;"><i
-									class="fas fa-sync-alt fa-spin me-1"></i> In Progress</span>
-							<a href="#" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
+							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Completed</span>
+							<a href="{% url 'project_detail' 'kianvo-classroom' %}" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -194,18 +187,17 @@
 				<div class="ks-project-card ks-reveal ks-reveal-delay-4">
 					<div class="ks-project-image"
 						style="background-image: url('{% static 'assets/img/portfolio/portfolio-2.png' %}');">
-						<span class="ks-project-category">Agriculture</span>
+						<span class="ks-project-category">Logistics</span>
 					</div>
 					<div class="ks-project-content">
-						<h4>Land Allocation System</h4>
-						<p>Track land plots and manage farmer/applicant data for agricultural departments.</p>
+						<h4>FleetLink</h4>
+						<p>Cargo transport management system supporting logistics operators in coordinating fleets, consignments, and deliveries.</p>
 						<div class="ks-project-tech">
-							<span>Django</span><span>React</span><span>PostGIS</span>
+							<span>Python</span><span>Flutter</span><span>Firebase</span>
 						</div>
 						<div class="ks-project-footer">
-							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i
-									class="fas fa-check-circle me-1"></i> Completed</span>
-							<a href="#" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
+							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Completed</span>
+							<a href="{% url 'project_detail' 'fleetlink' %}" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -214,18 +206,17 @@
 				<div class="ks-project-card ks-reveal ks-reveal-delay-5">
 					<div class="ks-project-image"
 						style="background-image: url('{% static 'assets/img/portfolio/portfolio-1.png' %}');">
-						<span class="ks-project-category">Education</span>
+						<span class="ks-project-category">EdTech</span>
 					</div>
 					<div class="ks-project-content">
-						<h4>Asset Management System</h4>
-						<p>Manage university indoor assets - tracking, maintenance, and inventory control.</p>
+						<h4>Kianvo Meet</h4>
+						<p>Video conferencing platform purpose-built to support online learning and professional meetings in East African institutions.</p>
 						<div class="ks-project-tech">
-							<span>Django</span><span>Bootstrap</span><span>SQLite</span>
+							<span>WebRTC</span><span>React</span><span>Python</span>
 						</div>
 						<div class="ks-project-footer">
-							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i
-									class="fas fa-check-circle me-1"></i> Completed</span>
-							<a href="#" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
+							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Completed</span>
+							<a href="{% url 'project_detail' 'kianvo-meet' %}" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -234,18 +225,17 @@
 				<div class="ks-project-card ks-reveal ks-reveal-delay-6">
 					<div class="ks-project-image"
 						style="background-image: url('{% static 'assets/img/portfolio/portfolio-2.png' %}');">
-						<span class="ks-project-category">Hospitality</span>
+						<span class="ks-project-category">Social Impact</span>
 					</div>
 					<div class="ks-project-content">
-						<h4>Mashfly</h4>
-						<p>Restaurant Management System - Orders, kitchen display, inventory, and reporting.</p>
+						<h4>IMS</h4>
+						<p>Impact Management System — helping organisations plan, monitor, and report on the social impact of their work.</p>
 						<div class="ks-project-tech">
-							<span>Node.js</span><span>React</span><span>MongoDB</span>
+							<span>Django</span><span>Vue.js</span><span>PostgreSQL</span>
 						</div>
 						<div class="ks-project-footer">
-							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i
-									class="fas fa-check-circle me-1"></i> Completed</span>
-							<a href="#" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
+							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Completed</span>
+							<a href="{% url 'project_detail' 'ims' %}" class="ks-project-link">Details <i class="fas fa-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -345,19 +335,19 @@
 		</div>
 		<div class="work-process__three-card">
 			<div class="work-process__three-card-single">
-				<h3><i class="flaticon-consultant"></i></h3>
-				<h5>Healthcare</h5>
-				<p>Pharmacy management, patient records, and healthcare analytics solutions.</p>
+				<h3><i class="flaticon-database"></i></h3>
+				<h5>Education Technology</h5>
+				<p>Learning management systems, video conferencing, and health education portals for East Africa.</p>
 			</div>
 			<div class="work-process__three-card-single middle">
-				<h3><i class="flaticon-software-development"></i></h3>
-				<h5>Education</h5>
-				<p>Learning management systems, student records, and e-learning platforms.</p>
+				<h3><i class="flaticon-consultant"></i></h3>
+				<h5>Healthcare</h5>
+				<p>Pharmacy management systems and AI-powered diagnostic research for low-resource settings.</p>
 			</div>
 			<div class="work-process__three-card-single">
-				<h3><i class="flaticon-cyber-security"></i></h3>
-				<h5>Real Estate</h5>
-				<p>Property management, tenant portals, and rental management systems.</p>
+				<h3><i class="flaticon-software-development"></i></h3>
+				<h5>Business & SME</h5>
+				<p>POS, inventory, fleet management, and impact tracking systems for Tanzanian businesses.</p>
 			</div>
 		</div>
 	</div>

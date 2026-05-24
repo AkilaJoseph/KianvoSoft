@@ -7,12 +7,12 @@
 	<!-- Start Meta -->
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="KianvoSoft — Tanzania's homegrown technology company delivering software development, network infrastructure, CCTV systems, and tech education in Mbeya, Tanzania.">
-	<meta name="keywords" content="KianvoSoft, Software Development Tanzania, Network Infrastructure Mbeya, CCTV Installation, Tech Education Africa, SaaS Tanzania, AI Research East Africa">
+	<meta name="description" content="KianvoSoft — Innovating Africa's Digital Future. Tanzanian technology company delivering software products, technical training, applied AI research, and technology consultancy. Based in Mbeya, Tanzania.">
+	<meta name="keywords" content="KianvoSoft, Software Development Tanzania, AI Research, EdTech Tanzania, Imforia, Mjenzi, Kianvo Classroom, Kianvo Meet, Tech Training Mbeya, East Africa Software, MUST Startup">
 	<meta name="author" content="KianvoSoft">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Title of Site -->
-	<title>{% block title %}KianvoSoft — Technology & Software Solutions{% endblock title %}</title>
+	<title>{% block title %}KianvoSoft — Innovating Africa's Digital Future{% endblock title %}</title>
 	<!-- Favicons -->
 	<link rel="icon" type="image/png" href="{% static 'assets/img/favicon-1.png' %}">
 	<!-- Google Fonts: Outfit + Inter -->
@@ -54,13 +54,14 @@
 			<div class="row">
 				<div class="col-xl-7 col-md-7">
 					<div class="top__bar-left">
-						<a href="tel:+255687445294"><i class="fas fa-phone-alt"></i>+255 687 445 294</a>
-						<a href="mailto:info@kianvosoft.co.tz"><i class="fas fa-envelope"></i>info@kianvosoft.co.tz</a>
+						<a href="tel:+255749909819"><i class="fas fa-phone-alt"></i>0749 909 819</a>
+						<a href="tel:+255753177709"><i class="fas fa-phone-alt"></i>0753 177 709</a>
+						<a href="mailto:info@kianvosoft.com"><i class="fas fa-envelope"></i>info@kianvosoft.com</a>
 					</div>
 				</div>
 				<div class="col-xl-5 col-md-5">
 					<div class="top__bar-right">
-						<a href="https://wa.me/255687445294" target="_blank"><i class="fab fa-whatsapp"></i>WhatsApp Us</a>
+						<a href="https://wa.me/255749909819" target="_blank"><i class="fab fa-whatsapp"></i>WhatsApp Us</a>
 					</div>
 				</div>
 			</div>
@@ -82,18 +83,19 @@
 						<ul id="mobilemenu">
 							<li><a href="{% url 'home' %}">Home</a></li>
 							<li><a href="{% url 'about' %}">About Us</a></li>
-							<li class="menu-item-has-children"><a href="{% url 'services' %}">Services <i class="fas fa-angle-down"></i></a>
+							<li class="menu-item-has-children"><a href="{% url 'services' %}">What We Do <i class="fas fa-angle-down"></i></a>
 								<ul class="sub-menu">
 									<li><a href="{% url 'services' %}">All Services</a></li>
-									<li><a href="{% url 'services' %}#software">Software Development</a></li>
-									<li><a href="{% url 'services' %}#network">Network Infrastructure</a></li>
-									<li><a href="{% url 'services' %}#cctv">CCTV & Security</a></li>
-									<li><a href="{% url 'services' %}#training">Tech Training</a></li>
-									<li><a href="{% url 'services' %}#academy">KianvoSoft Academy</a></li>
-									<li><a href="{% url 'services' %}#saas">SaaS Products</a></li>
+									<li><a href="{% url 'services' %}#software">Software Product Development</a></li>
+									<li><a href="{% url 'services' %}#training">Tech Training & Capacity Building</a></li>
+									<li><a href="{% url 'services' %}#research">Applied AI Research</a></li>
+									<li><a href="{% url 'services' %}#consulting">Technology Consultancy</a></li>
+									<li><a href="{% url 'portfolio' %}">Our Products</a></li>
 								</ul>
 							</li>
-							<li><a href="{% url 'portfolio' %}">Portfolio</a></li>
+							<li><a href="{% url 'products' %}">Products</a></li>
+							<li><a href="{% url 'gallery' %}">Gallery</a></li>
+							<li><a href="{% url 'announcements' %}">Announcements</a></li>
 							<li><a href="{% url 'blog' %}">Blog</a></li>
 							<li><a href="{% url 'contact' %}">Contact</a></li>
 						</ul>
@@ -117,45 +119,45 @@
 							<div class="header__area-menubar-right-sidebar-popup-logo">
 								<a href="{% url 'home' %}"><img src="{% static 'assets/img/brand/logo.png' %}" alt="KianvoSoft"></a>
 							</div>
-							<p>KianvoSoft is a Tanzanian-born technology company headquartered in Mbeya. We develop modern software, provide ICT infrastructure services, and deliver quality technology education.</p>
+							<p>KianvoSoft is a Tanzanian-born technology company headquartered in Mbeya. We build software products, deliver technical training, conduct applied AI research, and provide technology consultancy — all focused on innovating Africa's digital future.</p>
 							<div class="header__area-menubar-right-sidebar-popup-contact">
 								<h4 class="mb-30">Get In Touch</h4>
-								<div class="header__area-menubar-right-sidebar-popup-contact-item">
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
-										<i class="fal fa-phone-alt icon-animation"></i>
+									<div class="header__area-menubar-right-sidebar-popup-contact-item">
+										<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
+											<i class="fal fa-phone-alt icon-animation"></i>
+										</div>
+										<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
+											<span>Call Us</span>
+											<h6><a href="tel:+255749909819">0749 909 819</a></h6>
+										</div>
 									</div>
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
-										<span>Call Now</span>
-										<h6><a href="tel:+255687445294">+255 687 445 294</a></h6>
+									<div class="header__area-menubar-right-sidebar-popup-contact-item">
+										<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
+											<i class="fal fa-phone-alt icon-animation"></i>
+										</div>
+										<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
+											<span>Alternative</span>
+											<h6><a href="tel:+255753177709">0753 177 709</a></h6>
+										</div>
 									</div>
-								</div>
-								<div class="header__area-menubar-right-sidebar-popup-contact-item">
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
-										<i class="fal fa-phone-alt icon-animation"></i>
+									<div class="header__area-menubar-right-sidebar-popup-contact-item">
+										<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
+											<i class="fal fa-envelope"></i>
+										</div>
+										<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
+											<span>Quick Email</span>
+											<h6><a href="mailto:info@kianvosoft.com">info@kianvosoft.com</a></h6>
+										</div>
 									</div>
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
-										<span>Alternative</span>
-										<h6><a href="tel:+255753177709">+255 753 177 709</a></h6>
+									<div class="header__area-menubar-right-sidebar-popup-contact-item">
+										<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
+											<i class="fab fa-whatsapp"></i>
+										</div>
+										<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
+											<span>WhatsApp</span>
+											<h6><a href="https://wa.me/255749909819" target="_blank">Chat with us</a></h6>
+										</div>
 									</div>
-								</div>
-								<div class="header__area-menubar-right-sidebar-popup-contact-item">
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
-										<i class="fal fa-envelope"></i>
-									</div>
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
-										<span>Quick Email</span>
-										<h6><a href="mailto:info@kianvosoft.co.tz">info@kianvosoft.co.tz</a></h6>
-									</div>
-								</div>
-								<div class="header__area-menubar-right-sidebar-popup-contact-item">
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-icon">
-										<i class="fab fa-whatsapp"></i>
-									</div>
-									<div class="header__area-menubar-right-sidebar-popup-contact-item-content">
-										<span>WhatsApp</span>
-										<h6><a href="https://wa.me/255687445294" target="_blank">Chat with us</a></h6>
-									</div>
-								</div>
 							</div>
 							<div class="header__area-menubar-right-sidebar-popup-social">
 								<ul>
@@ -188,7 +190,7 @@
 					<div class="footer__five-widget">
 						<div class="footer__five-widget-about">
 							<a href="{% url 'home' %}"><img src="{% static 'assets/img/brand/logo.png' %}" alt="KianvoSoft"></a>
-							<p>Developing modern software solutions and providing quality technology education for Tanzanian and African communities. Based in Mbeya, Tanzania.</p>
+							<p>Innovating Africa's Digital Future. We build software products, deliver technical training, conduct applied AI research, and provide technology consultancy from Mbeya, Tanzania.</p>
 							<div class="footer__five-widget-about-social">
 								<ul>
 									<li><a href="https://facebook.com/kianvosoft" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
@@ -209,6 +211,9 @@
 								<li><a href="{% url 'about' %}">About Us</a></li>
 								<li><a href="{% url 'services' %}">Services</a></li>
 								<li><a href="{% url 'portfolio' %}">Portfolio</a></li>
+								<li><a href="{% url 'products' %}">Products</a></li>
+								<li><a href="{% url 'gallery' %}">Gallery</a></li>
+								<li><a href="{% url 'announcements' %}">Announcements</a></li>
 								<li><a href="{% url 'blog' %}">Blog</a></li>
 								<li><a href="{% url 'contact' %}">Contact</a></li>
 							</ul>
@@ -217,15 +222,14 @@
 				</div>
 				<div class="col-xl-3 col-md-6 col-sm-5 sm-mb-30">
 					<div class="footer__five-widget border-one">
-						<h4>Our Services</h4>
+						<h4>What We Do</h4>
 						<div class="footer__five-widget-solution">
 							<ul>
-								<li><a href="{% url 'services' %}#software">Software Development</a></li>
-								<li><a href="{% url 'services' %}#network">Network Infrastructure</a></li>
-								<li><a href="{% url 'services' %}#cctv">CCTV & Security</a></li>
-								<li><a href="{% url 'services' %}#training">Tech Training</a></li>
-								<li><a href="{% url 'services' %}#academy">KianvoSoft Academy</a></li>
-								<li><a href="{% url 'services' %}#saas">SaaS Products</a></li>
+								<li><a href="{% url 'services' %}#software">Software Product Development</a></li>
+								<li><a href="{% url 'services' %}#training">Tech Training & Capacity Building</a></li>
+								<li><a href="{% url 'services' %}#research">Applied AI Research</a></li>
+								<li><a href="{% url 'services' %}#consulting">Technology Consultancy</a></li>
+								<li><a href="{% url 'portfolio' %}">Our Products</a></li>
 							</ul>
 						</div>
 					</div>
@@ -234,14 +238,14 @@
 					<div class="footer__five-widget border-one">
 						<h4>Contact Us</h4>
 						<div class="footer__five-widget-location">
-							<p>Mbeya Region, Tanzania — East Africa's rising tech hub.</p>
+							<p>Mbeya, Tanzania — Innovating Africa's Digital Future.</p>
 							<div class="footer__five-widget-location-item">
 								<div class="footer__five-widget-location-item-icon">
 									<i class="flaticon-telephone-call"></i>
 								</div>
 								<div class="footer__five-widget-location-item-info email">
 									<span>Call Us</span>
-									<a href="tel:+255687445294">+255 687 445 294</a>
+									<a href="tel:+255749909819">0749 909 819</a>
 								</div>
 							</div>
 							<div class="footer__five-widget-location-item">
@@ -250,7 +254,7 @@
 								</div>
 								<div class="footer__five-widget-location-item-info email">
 									<span>Alternative</span>
-									<a href="tel:+255753177709">+255 753 177 709</a>
+									<a href="tel:+255753177709">0753 177 709</a>
 								</div>
 							</div>
 							<div class="footer__five-widget-location-item">
@@ -259,7 +263,16 @@
 								</div>
 								<div class="footer__five-widget-location-item-info email">
 									<span>WhatsApp</span>
-									<a href="https://wa.me/255687445294" target="_blank">Chat Now</a>
+									<a href="https://wa.me/255749909819" target="_blank">Chat Now</a>
+								</div>
+							</div>
+							<div class="footer__five-widget-location-item">
+								<div class="footer__five-widget-location-item-icon">
+									<i class="flaticon-email"></i>
+								</div>
+								<div class="footer__five-widget-location-item-info email">
+									<span>Email</span>
+									<a href="mailto:info@kianvosoft.com">info@kianvosoft.com</a>
 								</div>
 							</div>
 						</div>

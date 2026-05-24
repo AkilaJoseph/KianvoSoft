@@ -6,7 +6,9 @@ from .models import (
     ProjectCategory, Project, Service, Testimonial,
     BlogCategory, BlogPost, ContactInquiry,
     NewsletterSubscriber, CompanyStat, Partner,
-    RoadmapMilestone
+    RoadmapMilestone, TeamMember, ProductImage,
+    GalleryCategory, GalleryImage, Announcement,
+    AnnouncementApplication
 )
 
 
@@ -58,9 +60,18 @@ class ProjectCategoryAdmin(admin.ModelAdmin):
     project_count.short_description = 'Projects'
 
 
+# Inline for Product Screenshots
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 1
+    fields = ['image', 'caption', 'is_featured', 'order']
+    ordering = ['-is_featured', 'order']
+
+
 # Project Admin
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
+    inlines = [ProductImageInline]
     list_display = ['name', 'category', 'status', 'is_featured', 'is_active', 'order', 'created_at']
     list_filter = ['status', 'category', 'is_featured', 'is_active']
     search_fields = ['name', 'tagline', 'description', 'technologies']
@@ -80,8 +91,13 @@ class ProjectAdmin(admin.ModelAdmin):
             'fields': ('thumbnail', 'banner_image', 'screenshot_1', 'screenshot_2', 'screenshot_3'),
             'classes': ('collapse',)
         }),
+        ('Demo Credentials', {
+            'fields': ('demo_url', 'demo_username', 'demo_password'),
+            'classes': ('collapse',),
+            'description': 'Provide demo credentials so users can test the product live.',
+        }),
         ('Status & Links', {
-            'fields': ('status', 'demo_url', 'documentation_url', 'completed_date')
+            'fields': ('status', 'documentation_url', 'completed_date')
         }),
         ('Display Options', {
             'fields': ('is_featured', 'is_active', 'order')
@@ -259,3 +275,116 @@ class RoadmapMilestoneAdmin(admin.ModelAdmin):
     search_fields = ['year', 'title', 'description']
     list_editable = ['is_active', 'order']
     ordering = ['order', 'year']
+
+
+# Team Member Admin
+@admin.register(TeamMember)
+class TeamMemberAdmin(admin.ModelAdmin):
+    list_display = ['name', 'role', 'image_preview', 'order', 'is_active']
+    list_filter = ['is_active']
+    search_fields = ['name', 'role', 'bio']
+    list_editable = ['order', 'is_active']
+    ordering = ['order', 'name']
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="max-height: 40px; width: 40px; object-fit: cover; border-radius: 50%;"/>', obj.image.url)
+        return format_html('<span style="color:#6c757d;">No image</span>')
+    image_preview.short_description = 'Photo'
+
+
+# Gallery Category Admin
+@admin.register(GalleryCategory)
+class GalleryCategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug', 'is_active', 'order', 'image_count']
+    list_filter = ['is_active']
+    search_fields = ['name', 'description']
+    prepopulated_fields = {'slug': ('name',)}
+    list_editable = ['is_active', 'order']
+    ordering = ['order', 'name']
+
+    def image_count(self, obj):
+        return obj.images.count()
+    image_count.short_description = 'Images'
+
+
+# Gallery Image Admin
+@admin.register(GalleryImage)
+class GalleryImageAdmin(admin.ModelAdmin):
+    list_display = ['title', 'category', 'event_date', 'is_featured', 'is_active', 'order', 'image_preview']
+    list_filter = ['category', 'is_featured', 'is_active', 'event_date']
+    search_fields = ['title', 'description']
+    list_editable = ['is_featured', 'is_active', 'order']
+    ordering = ['-is_featured', 'order', '-event_date']
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="max-height: 40px; max-width: 60px; object-fit: cover; border-radius: 4px;"/>', obj.image.url)
+        return '—'
+    image_preview.short_description = 'Preview'
+
+
+# Announcement Admin
+@admin.register(Announcement)
+class AnnouncementAdmin(admin.ModelAdmin):
+    list_display = ['title', 'announcement_type', 'status', 'start_date', 'application_deadline', 'applications_count', 'is_featured']
+    list_filter = ['announcement_type', 'status', 'is_featured', 'is_active']
+    search_fields = ['title', 'short_description']
+    prepopulated_fields = {'slug': ('title',)}
+    list_editable = ['status', 'is_featured']
+    date_hierarchy = 'start_date'
+    ordering = ['-is_featured', 'order', '-created_at']
+
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('title', 'slug', 'announcement_type', 'short_description', 'description', 'cover_image')
+        }),
+        ('Logistics', {
+            'fields': ('start_date', 'end_date', 'application_deadline', 'venue', 'mode', 'fee')
+        }),
+        ('Capacity & Requirements', {
+            'fields': ('capacity', 'prerequisites'),
+        }),
+        ('Contact', {
+            'fields': ('contact_email', 'contact_phone'),
+        }),
+        ('Applications', {
+            'fields': ('collect_applications', 'application_fields'),
+            'description': 'Extra fields for the application form. Default fields (name, email, phone, motivation) are always included.',
+        }),
+        ('Display', {
+            'fields': ('status', 'is_featured', 'is_active', 'order'),
+        }),
+    )
+
+    def applications_count(self, obj):
+        return obj.applications.count()
+    applications_count.short_description = 'Apps'
+
+
+# Announcement Application Admin
+@admin.register(AnnouncementApplication)
+class AnnouncementApplicationAdmin(admin.ModelAdmin):
+    list_display = ['full_name', 'email', 'phone', 'announcement', 'status', 'applied_at']
+    list_filter = ['status', 'announcement']
+    search_fields = ['full_name', 'email', 'phone']
+    list_editable = ['status']
+    date_hierarchy = 'applied_at'
+    ordering = ['-applied_at']
+    readonly_fields = ['applied_at', 'updated_at']
+
+    fieldsets = (
+        ('Applicant Information', {
+            'fields': ('full_name', 'email', 'phone')
+        }),
+        ('Application', {
+            'fields': ('motivation', 'extra_data', 'announcement')
+        }),
+        ('Status & Notes', {
+            'fields': ('status', 'admin_notes')
+        }),
+        ('Timestamps', {
+            'fields': ('applied_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )

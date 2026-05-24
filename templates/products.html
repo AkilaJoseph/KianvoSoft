@@ -1,0 +1,265 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Our Products - KianvoSoft{% endblock title %}
+{% block content %}
+
+<style>
+.ks-carousel-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  height: 420px;
+  background: rgba(10, 14, 26, 0.8);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.ks-carousel-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 240, 255, 0.15);
+}
+.ks-carousel-item .ks-carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.ks-carousel-item:hover .ks-carousel-img {
+  transform: scale(1.05);
+}
+.ks-carousel-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(10,14,26,0.95) 0%, rgba(10,14,26,0.3) 50%, transparent 80%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+}
+.ks-product-card {
+  padding: 30px;
+  text-align: center;
+  height: 100%;
+  background: rgba(10, 14, 26, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.ks-product-card:hover {
+  border-color: var(--ks-primary);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.1);
+  transform: translateY(-3px);
+}
+.ks-demo-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(0, 240, 255, 0.15);
+  color: var(--ks-primary);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+}
+.ks-gallery-grid .ks-gallery-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(0, 240, 255, 0.1);
+  transition: all 0.3s ease;
+}
+.ks-gallery-grid .ks-gallery-item:hover {
+  border-color: var(--ks-primary);
+  transform: scale(1.02);
+}
+.ks-gallery-grid .ks-gallery-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+.ks-gallery-grid .ks-gallery-item .ks-gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: linear-gradient(0deg, rgba(10,14,26,0.9), transparent);
+  color: white;
+  font-size: 0.85rem;
+}
+.ks-credential-box {
+  background: rgba(0, 240, 255, 0.05);
+  border: 1px dashed rgba(0, 240, 255, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+}
+.ks-credential-box code {
+  background: rgba(0,0,0,0.4);
+  padding: 2px 8px;
+  border-radius: 3px;
+  color: var(--ks-primary);
+}
+</style>
+
+<div class="page__banner">
+  <div class="page__banner-shape">
+    <img src="{% static 'assets/img/shape/page-banner-shape.png' %}" alt="">
+  </div>
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-xl-6 col-lg-7">
+        <div class="page__banner-content">
+          <h2>Our Products</h2>
+          <span><a href="{% url 'home' %}">Home</a><span>|</span>Products</span>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-5">
+        <div class="page__banner-img">
+          <img src="{% static 'assets/img/banner/page-banner-img.png' %}" alt="KianvoSoft Products">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Featured Showcase Carousel -->
+{% if featured_screenshots %}
+<section class="section-padding" style="background: var(--ks-bg-secondary);">
+  <div class="container">
+    <div class="row justify-content-center text-center mb-50">
+      <div class="col-xl-7 col-lg-8 col-md-10">
+        <span class="subtitle-one ks-reveal">Showcase</span>
+        <h2 class="ks-reveal ks-reveal-delay-1">Product Highlights</h2>
+        <p class="ks-reveal ks-reveal-delay-2">Browse through screenshots of our products in action.</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-12">
+        <div class="swiper ks-product-carousel">
+          <div class="swiper-wrapper">
+            {% for shot in featured_screenshots %}
+            <div class="swiper-slide">
+              <div class="ks-carousel-item">
+                <img src="{{ shot.image.url }}" alt="{{ shot.caption|default:shot.project.name }}" class="ks-carousel-img">
+                <div class="ks-carousel-overlay">
+                  <h4 style="color: white; margin-bottom: 5px;">{{ shot.project.name }}</h4>
+                  {% if shot.caption %}
+                  <p style="color: var(--ks-text-muted); font-size: 0.9rem; margin: 0;">{{ shot.caption }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination ks-carousel-pagination"></div>
+          <div class="swiper-button-next ks-carousel-next"></div>
+          <div class="swiper-button-prev ks-carousel-prev"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- All Products Grid -->
+<section class="section-padding" style="background: var(--ks-bg-primary);">
+  <div class="container">
+    <div class="row justify-content-center text-center mb-50">
+      <div class="col-xl-7 col-lg-8 col-md-10">
+        <span class="subtitle-one ks-reveal">Product Catalog</span>
+        <h2 class="ks-reveal ks-reveal-delay-1">Explore Our Full Product Line</h2>
+        <p class="ks-reveal ks-reveal-delay-2">Each product comes with a live demo — try them yourself with the provided credentials.</p>
+      </div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      {% for project in projects %}
+      <div class="col-xl-4 col-lg-6 col-md-6 d-flex align-items-stretch">
+        <div class="ks-reveal ks-reveal-delay-{{ forloop.counter }}" style="width: 100%;">
+          <div class="ks-product-card d-flex flex-column">
+            <!-- Product Screenshots Gallery (thumbnail strip) -->
+            {% with screenshots=project.screenshots.all %}
+            {% if screenshots %}
+            <div class="d-flex gap-1 mb-3 justify-content-center flex-wrap">
+              {% for shot in screenshots|slice:":4" %}
+              <a href="{{ shot.image.url }}" class="ks-gallery-popup" title="{{ shot.caption|default:project.name }}">
+                <img src="{{ shot.image.url }}" alt="" style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(0,240,255,0.15);">
+              </a>
+              {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <div style="width: 70px; height: 70px; margin: 0 auto 12px; background: rgba(0,240,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0,240,255,0.2); flex-shrink: 0;">
+              <i class="{{ project.icon_class|default:'flaticon-software-development' }}" style="font-size: 28px; color: var(--ks-primary);"></i>
+            </div>
+            <h4 style="margin-bottom: 8px; color: white;">{{ project.name }}</h4>
+            <p style="font-size: 0.9rem; color: var(--ks-text-muted); flex-grow: 1;">{{ project.tagline }}</p>
+
+            <!-- Demo Credentials -->
+            {% if project.demo_url %}
+            <div class="mb-3">
+              <a href="{{ project.demo_url }}" target="_blank" class="btn-one" style="padding: 6px 18px; font-size: 0.85rem;">
+                <i class="fas fa-external-link-alt me-1"></i>Live Demo
+              </a>
+              {% if project.demo_username %}
+              <div class="ks-credential-box mt-2">
+                <span style="color: var(--ks-text-muted);">Demo:</span>
+                <code>{{ project.demo_username }}</code>
+                <span style="color: var(--ks-text-muted);">/</span>
+                <code>{{ project.demo_password }}</code>
+              </div>
+              {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="mt-auto d-flex gap-2 justify-content-center flex-wrap">
+              <span class="ks-demo-badge">{{ project.get_status_display }}</span>
+              {% if project.category %}
+              <span class="ks-demo-badge" style="background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.3); color: var(--ks-accent);">{{ project.category.name }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center">
+        <p class="text-white-50">No products available yet. Check back soon!</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Swiper + Magnific Popup Activation -->
+<script src="{% static 'assets/js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Product Carousel
+  var carousel = new Swiper('.ks-product-carousel', {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: true,
+    autoplay: { delay: 5000, disableOnInteraction: false },
+    pagination: { el: '.ks-carousel-pagination', clickable: true },
+    navigation: { nextEl: '.ks-carousel-next', prevEl: '.ks-carousel-prev' },
+    breakpoints: {
+      768: { slidesPerView: 2 },
+      992: { slidesPerView: 3 }
+    }
+  });
+
+  // Gallery popup
+  $('.ks-gallery-popup').magnificPopup({
+    type: 'image',
+    gallery: { enabled: true },
+  });
+});
+</script>
+{% endblock content %}

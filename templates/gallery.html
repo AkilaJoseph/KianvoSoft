@@ -1,0 +1,166 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Gallery - KianvoSoft{% endblock title %}
+{% block content %}
+
+<style>
+.ks-gallery-card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  background: rgba(10, 14, 26, 0.6);
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+.ks-gallery-card:hover {
+  border-color: var(--ks-primary);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.12);
+  transform: translateY(-3px);
+}
+.ks-gallery-card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.ks-gallery-card:hover img {
+  transform: scale(1.06);
+}
+.ks-gallery-info {
+  padding: 16px 18px;
+}
+.ks-gallery-info h5 {
+  color: white;
+  margin-bottom: 4px;
+  font-size: 1rem;
+}
+.ks-gallery-info span {
+  color: var(--ks-text-muted);
+  font-size: 0.8rem;
+}
+.ks-gallery-cat-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(0, 240, 255, 0.12);
+  color: var(--ks-primary);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+.ks-filter-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  background: transparent;
+  color: var(--ks-text-muted);
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.ks-filter-btn:hover,
+.ks-filter-btn.active {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: var(--ks-primary);
+  color: var(--ks-primary);
+}
+</style>
+
+<div class="page__banner">
+  <div class="page__banner-shape">
+    <img src="{% static 'assets/img/shape/page-banner-shape.png' %}" alt="">
+  </div>
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-xl-6 col-lg-7">
+        <div class="page__banner-content">
+          <h2>Gallery</h2>
+          <span><a href="{% url 'home' %}">Home</a><span>|</span>Gallery</span>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-5">
+        <div class="page__banner-img">
+          <img src="{% static 'assets/img/banner/page-banner-img.png' %}" alt="KianvoSoft Gallery">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding" style="background: var(--ks-bg-primary);">
+  <div class="container">
+    <div class="row justify-content-center text-center mb-50">
+      <div class="col-xl-7 col-lg-8 col-md-10">
+        <span class="subtitle-one ks-reveal">Past Events</span>
+        <h2 class="ks-reveal ks-reveal-delay-1">Bootcamps, Trainings & Sessions</h2>
+        <p class="ks-reveal ks-reveal-delay-2">Moments from our technical training programmes, coding camps, and community outreach sessions.</p>
+      </div>
+    </div>
+
+    <!-- Category Filter -->
+    {% if categories %}
+    <div class="row justify-content-center mb-40">
+      <div class="col-xl-8">
+        <div class="d-flex flex-wrap justify-content-center gap-2 ks-reveal">
+          <a href="{% url 'gallery' %}" class="ks-filter-btn {% if not current_category %}active{% endif %}">All</a>
+          {% for cat in categories %}
+          <a href="{% url 'gallery' %}?category={{ cat.slug }}" class="ks-filter-btn {% if current_category == cat.slug %}active{% endif %}">
+            {% if cat.icon_class %}<i class="{{ cat.icon_class }} me-1"></i>{% endif %}
+            {{ cat.name }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Gallery Grid -->
+    <div class="row g-4">
+      {% for image in images %}
+      <div class="col-xl-4 col-lg-4 col-md-6">
+        <div class="ks-gallery-card ks-reveal ks-reveal-delay-{{ forloop.counter }}">
+          <a href="{{ image.image.url }}" class="ks-gallery-lightbox" title="{{ image.title }}">
+            <img src="{{ image.image.url }}" alt="{{ image.title }}" loading="lazy">
+          </a>
+          <div class="ks-gallery-info">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <h5>{{ image.title }}</h5>
+              {% if image.category %}
+              <span class="ks-gallery-cat-badge">{{ image.category.name }}</span>
+              {% endif %}
+            </div>
+            {% if image.description %}
+            <p style="color: var(--ks-text-muted); font-size: 0.85rem; margin-bottom: 4px;">{{ image.description|truncatechars:100 }}</p>
+            {% endif %}
+            {% if image.event_date %}
+            <span><i class="far fa-calendar-alt me-1" style="color: var(--ks-primary);"></i>{{ image.event_date|date:"F j, Y" }}</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center">
+        <div class="p-5">
+          <i class="fas fa-images" style="font-size: 48px; color: var(--ks-text-muted); opacity: 0.3; margin-bottom: 15px; display: block;"></i>
+          <p class="text-white-50">No gallery images added yet.</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  $('.ks-gallery-lightbox').magnificPopup({
+    type: 'image',
+    gallery: { enabled: true },
+    mainClass: 'mfp-with-zoom',
+    zoom: { enabled: true, duration: 300 }
+  });
+});
+</script>
+{% endblock content %}

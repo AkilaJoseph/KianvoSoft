@@ -3,7 +3,7 @@ from django.utils import timezone
 from kianvosite.models import (
     ProjectCategory, Project, Service, CompanyStat,
     BlogCategory, BlogPost, Testimonial, TeamMember,
-    Announcement, GalleryCategory
+    Announcement, GalleryCategory, Partner, RoadmapMilestone
 )
 
 
@@ -778,5 +778,105 @@ Long-term goal: Strengthen diagnostic capacity in rural health facilities where 
                 defaults=ann_data
             )
         self.stdout.write(self.style.SUCCESS(f'Created {len(announcements_data)} announcements'))
+
+        # Create Testimonials
+        testimonials_data = [
+            {
+                'client_name': 'Dr. Sarah Mwambene',
+                'client_position': 'Head of Pharmacy',
+                'client_company': 'City Health Pharmacy, Mbeya',
+                'content': 'Imforia has transformed how we manage our pharmacy operations. The inventory tracking, expiry alerts, and sales reports have given us visibility we never had before. Our team took to it quickly and we have seen a major reduction in stockouts.',
+                'rating': 5,
+                'is_featured': True,
+                'is_active': True,
+                'order': 1,
+            },
+            {
+                'client_name': 'Joseph Kalinga',
+                'client_position': 'Owner',
+                'client_company': 'Kalinga Hardware, Mbeya',
+                'content': 'Mjenzi solved the problem of managing different units and credit sales for our hardware business. It is easy to use, works in Swahili, and the support team responds quickly. Highly recommended for any hardware shop.',
+                'rating': 5,
+                'is_featured': True,
+                'is_active': True,
+                'order': 2,
+            },
+            {
+                'client_name': 'Dr. Happiness Mwaipopo',
+                'client_position': 'Dean, Faculty of Engineering',
+                'client_company': 'Mbeya University of Science and Technology',
+                'content': 'Kianvo Classroom and Kianvo Meet have been invaluable for our blended learning programmes. The platforms are built with local needs in mind — offline assessments, mobile support, and Swahili interface. A truly Tanzanian EdTech solution.',
+                'rating': 5,
+                'is_featured': True,
+                'is_active': True,
+                'order': 3,
+            },
+            {
+                'client_name': 'Amina Salum',
+                'client_position': 'Programme Manager',
+                'client_company': 'Tanzania Digital Health Initiative',
+                'content': 'The AI research team at KianvoSoft is doing important work in applying machine learning to healthcare challenges. Their malaria detection project has the potential to strengthen diagnostic capacity in some of our most underserved rural facilities.',
+                'rating': 4,
+                'is_featured': False,
+                'is_active': True,
+                'order': 4,
+            },
+            {
+                'client_name': 'David Mushi',
+                'client_position': 'Student',
+                'client_company': 'Python Bootcamp Graduate',
+                'content': 'I joined the Python Bootcamp with zero programming experience. By the end of 4 weeks, I had built my first web app. The instructors were patient, practical, and taught in a way that made sense. I am now working as a junior developer.',
+                'rating': 5,
+                'is_featured': True,
+                'is_active': True,
+                'order': 5,
+            },
+        ]
+        created_testimonials = 0
+        for t_data in testimonials_data:
+            _, created = Testimonial.objects.get_or_create(
+                client_name=t_data['client_name'],
+                defaults=t_data
+            )
+            if created:
+                created_testimonials += 1
+        self.stdout.write(self.style.SUCCESS(f'Created {created_testimonials} testimonials'))
+
+        # Create Partners
+        partners_data = [
+            {'name': 'Mbeya University of Science and Technology', 'website_url': 'https://www.must.ac.tz', 'order': 1, 'is_active': True},
+            {'name': 'Centre for Innovation Technology Transfer', 'website_url': '', 'order': 2, 'is_active': True},
+            {'name': 'Tanzania Commission for Science and Technology', 'website_url': 'https://www.costech.go.tz', 'order': 3, 'is_active': True},
+            {'name': 'City Health Pharmacy', 'website_url': '', 'order': 4, 'is_active': True},
+            {'name': 'Kalinga Hardware Supplies', 'website_url': '', 'order': 5, 'is_active': True},
+        ]
+        created_partners = 0
+        for p_data in partners_data:
+            _, created = Partner.objects.get_or_create(
+                name=p_data['name'],
+                defaults=p_data
+            )
+            if created:
+                created_partners += 1
+        self.stdout.write(self.style.SUCCESS(f'Created {created_partners} partners'))
+
+        # Create Roadmap Milestones
+        milestones_data = [
+            {'year': '2025', 'title': 'Foundation', 'description': 'Formalise governance. Deploy Imforia, Mjenzi, and ShopManagerPro with active clients. Launch short courses and bootcamps. Establish academic partnerships with MUST and CITT.', 'order': 1, 'is_active': True},
+            {'year': '2026', 'title': 'Growth', 'description': 'Expand product portfolio with Kianvo Classroom, Kianvo Meet, and HELP. Grow client base. Publish first AI research papers. Train 100+ students through bootcamps and coding camps.', 'order': 2, 'is_active': True},
+            {'year': '2027', 'title': 'Expansion', 'description': 'Scale SaaS deployments. Launch FleetLink and IMS. Expand training to 8+ programmes. Enter Dar es Salaam, Dodoma, and Arusha markets. Hire additional engineering and research staff.', 'order': 3, 'is_active': True},
+            {'year': '2028', 'title': 'Scaling', 'description': 'AI research unit fully operational. Brain stroke and malaria detection projects in clinical pilot phase. Staff of 12+. Explore Kenya, Uganda, and Rwanda markets.', 'order': 4, 'is_active': True},
+            {'year': '2029–2030', 'title': 'Leadership', 'description': 'East Africa\'s best-known homegrown technology company. 1,000+ students trained. 200+ active clients. Pan-African digital reach. Recognised for excellence in software, training, and AI research.', 'order': 5, 'is_active': True},
+        ]
+        created_milestones = 0
+        for m_data in milestones_data:
+            _, created = RoadmapMilestone.objects.get_or_create(
+                year=m_data['year'],
+                title=m_data['title'],
+                defaults=m_data
+            )
+            if created:
+                created_milestones += 1
+        self.stdout.write(self.style.SUCCESS(f'Created {created_milestones} roadmap milestones'))
 
         self.stdout.write(self.style.SUCCESS('Database seeding completed successfully!'))

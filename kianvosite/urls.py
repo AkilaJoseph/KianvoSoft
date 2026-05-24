@@ -15,6 +15,10 @@ urlpatterns = [
     path('announcements/<slug:slug>/', views.announcement_detail, name='announcement_detail'),
     path('blog/', views.blog, name='blog'),
     path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),
+    path('testimonials/', views.testimonials, name='testimonials'),
+    path('team/', views.team, name='team'),
+    path('partners/', views.partners, name='partners'),
+    path('roadmap/', views.roadmap, name='roadmap'),
     path('contact/', views.contact, name='contact'),
     path('subscribe/', views.subscribe_newsletter, name='subscribe_newsletter'),
 

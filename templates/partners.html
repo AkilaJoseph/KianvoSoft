@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Partners - KianvoSoft{% endblock title %}
+{% block content %}
+
+<div class="page__banner">
+  <div class="page__banner-shape">
+    <img src="{% static 'assets/img/shape/page-banner-shape.png' %}" alt="">
+  </div>
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-xl-6 col-lg-7">
+        <div class="page__banner-content">
+          <h2>Our Partners</h2>
+          <span><a href="{% url 'home' %}">Home</a><span>|</span>Partners</span>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-5">
+        <div class="page__banner-img">
+          <img src="{% static 'assets/img/banner/page-banner-img.png' %}" alt="Partners">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding" style="background: var(--ks-bg-secondary);">
+  <div class="container">
+    <div class="row justify-content-center text-center mb-50">
+      <div class="col-xl-7 col-lg-8">
+        <span class="subtitle-one ks-reveal">Collaboration</span>
+        <h2 class="ks-reveal ks-reveal-delay-1">Our Partners & Collaborators</h2>
+        <p class="ks-reveal ks-reveal-delay-2">We work with academic institutions, industry partners, and community organizations to deliver impact at scale.</p>
+      </div>
+    </div>
+    <div class="row gy-5 justify-content-center align-items-center">
+      {% if partners %}
+      {% for partner in partners %}
+      <div class="col-6 col-md-4 col-lg-3 text-center">
+        <div class="ks-reveal ks-reveal-delay-{{ forloop.counter0 }}" style="padding: 30px 20px; background: rgba(10, 14, 26, 0.4); border: 1px solid rgba(0, 240, 255, 0.08); border-radius: 12px; transition: all 0.3s ease; height: 100%;" onmouseover="this.style.borderColor='rgba(0,240,255,0.25)';this.style.background='rgba(10,14,26,0.7)'" onmouseout="this.style.borderColor='rgba(0,240,255,0.08)';this.style.background='rgba(10,14,26,0.4)'">
+          {% if partner.logo %}
+          <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" style="max-height: 70px; max-width: 160px; filter: grayscale(1) brightness(1.5); opacity: 0.5; transition: all 0.3s ease;" onmouseover="this.style.opacity='1';this.style.filter='grayscale(0) brightness(1)';" onmouseout="this.style.opacity='0.5';this.style.filter='grayscale(1) brightness(1.5)';">
+          {% endif %}
+          <h5 style="color: white; margin-top: 16px; font-size: 0.95rem;">{{ partner.name }}</h5>
+          {% if partner.website_url %}
+          <a href="{{ partner.website_url }}" target="_blank" style="color: var(--ks-cyan); font-size: 0.8rem; text-decoration: none; opacity: 0.6; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+            Visit Website <i class="fas fa-external-link-alt" style="font-size: 0.7rem;"></i>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="col-12 text-center">
+        <p class="text-white-50">No partners added yet. Check back soon!</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

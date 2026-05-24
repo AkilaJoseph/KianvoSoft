@@ -48,6 +48,39 @@ def products(request):
     return render(request, 'products.html', context)
 
 
+# Testimonials Page
+def testimonials(request):
+    context = {
+        'testimonials': Testimonial.objects.filter(is_active=True),
+        'stats': CompanyStat.objects.filter(is_active=True),
+    }
+    return render(request, 'testimonials.html', context)
+
+
+# Team Page
+def team(request):
+    context = {
+        'team_members': TeamMember.objects.filter(is_active=True),
+    }
+    return render(request, 'team.html', context)
+
+
+# Partners Page
+def partners(request):
+    context = {
+        'partners': Partner.objects.filter(is_active=True),
+    }
+    return render(request, 'partners.html', context)
+
+
+# Roadmap / Milestones Page
+def roadmap(request):
+    context = {
+        'milestones': RoadmapMilestone.objects.filter(is_active=True),
+    }
+    return render(request, 'roadmap.html', context)
+
+
 # Gallery Page (past classes, bootcamps, trainings)
 def gallery(request):
     category_slug = request.GET.get('category', None)

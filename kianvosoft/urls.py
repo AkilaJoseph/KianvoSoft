@@ -18,10 +18,19 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from django.views.generic.base import RedirectView
+from django.http import HttpResponse
+from kianvosite.sitemaps import sitemaps
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('robots.txt', lambda r: HttpResponse(
+        'User-agent: *\nDisallow: /admin/\nDisallow: /portal/\nAllow: /\n\nSitemap: https://kianvosoft.com/sitemap.xml\n',
+        content_type='text/plain'
+    )),
     path('', include('kianvosite.urls')),
 ]
 

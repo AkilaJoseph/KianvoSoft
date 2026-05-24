@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-y)@x+!u7k5xb3*tl$o*-@w&t4s!%%!!dz%699)r*pzxp(!533s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kianvosoft.com', 'www.kianvosoft.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -39,10 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
     'ckeditor',
     'ckeditor_uploader',
     'kianvosite',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -140,6 +144,9 @@ LOGOUT_REDIRECT_URL = '/portal/login/'
 SILENCED_SYSTEM_CHECKS = ['ckeditor.W001']
 
 SITE_URL = 'https://kianvosoft.com'
+
+# Google Analytics Measurement ID (set in production)
+GOOGLE_ANALYTICS_ID = ''
 
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

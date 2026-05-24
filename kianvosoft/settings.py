@@ -139,16 +139,18 @@ LOGOUT_REDIRECT_URL = '/portal/login/'
 
 SILENCED_SYSTEM_CHECKS = ['ckeditor.W001']
 
+SITE_URL = 'https://kianvosoft.com'
+
 # Email Configuration
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
-EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'KianvoSoft <noreply@kianvosoft.com>')
-SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'noreply@kianvosoft.com')
-ADMINS = [('Admin', os.environ.get('ADMIN_EMAIL', 'admin@kianvosoft.com'))]
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.kianvosoft.com'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'info@kianvosoft.com'
+EMAIL_HOST_PASSWORD = 'Kianvo@2026'
+DEFAULT_FROM_EMAIL = 'KianvoSoft <info@kianvosoft.com>'
+SERVER_EMAIL = 'info@kianvosoft.com'
+ADMINS = [('Admin', 'admin@kianvosoft.com')]
 
 # CKEditor Configuration
 CKEDITOR_UPLOAD_PATH = 'uploads/'

@@ -4343,17 +4343,9 @@ p {
 .page__banner-content span span {
   margin: 0 8px;
 }
-.page__banner-img {
-  z-index: 2;
-  position: relative;
-}
-
 @media (max-width: 991px) {
   .page__banner-content {
     padding: 85px 0;
-  }
-  .page__banner-img {
-    display: none;
   }
 }
 @media (max-width: 767px) {

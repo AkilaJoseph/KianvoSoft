@@ -288,20 +288,6 @@ class Partner(models.Model):
         return self.name
 
 
-# Roadmap / Timeline Milestone Model
-class RoadmapMilestone(models.Model):
-    year = models.CharField(max_length=50, help_text="E.g., '2025' or 'Q3 2026'")
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    is_active = models.BooleanField(default=True)
-    order = models.IntegerField(default=0)
-
-    class Meta:
-        ordering = ['order', 'year']
-
-    def __str__(self):
-        return f"{self.year} - {self.title}"
-
 
 # Team Member / Leadership Model
 class TeamMember(models.Model):

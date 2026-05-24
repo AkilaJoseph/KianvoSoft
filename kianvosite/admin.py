@@ -6,7 +6,7 @@ from .models import (
     ProjectCategory, Project, Service, Testimonial,
     BlogCategory, BlogPost, ContactInquiry,
     NewsletterSubscriber, CompanyStat, Partner,
-    RoadmapMilestone, TeamMember, ProductImage,
+    TeamMember, ProductImage,
     GalleryCategory, GalleryImage, Announcement,
     AnnouncementApplication
 )
@@ -267,14 +267,6 @@ class PartnerAdmin(admin.ModelAdmin):
     logo_preview.short_description = 'Logo'
 
 
-# Roadmap Milestone Admin
-@admin.register(RoadmapMilestone)
-class RoadmapMilestoneAdmin(admin.ModelAdmin):
-    list_display = ['year', 'title', 'is_active', 'order']
-    list_filter = ['is_active']
-    search_fields = ['year', 'title', 'description']
-    list_editable = ['is_active', 'order']
-    ordering = ['order', 'year']
 
 
 # Team Member Admin

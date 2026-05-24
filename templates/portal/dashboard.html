@@ -123,6 +123,14 @@
       color: white;
       border-left-color: var(--ks-primary);
     }
+    .ks-nav-item.active {
+      background: rgba(0, 240, 255, 0.06);
+      color: white;
+      border-left-color: var(--ks-primary);
+    }
+    .ks-nav-item.active i {
+      color: var(--ks-primary);
+    }
     .ks-nav-item i { width: 18px; text-align: center; font-size: 0.9rem; color: var(--ks-text-muted); }
     .ks-nav-item:hover i { color: var(--ks-primary); }
     .ks-nav-item .count {
@@ -348,8 +356,8 @@
     <nav class="ks-sidebar-nav">
       <div class="ks-nav-section">
         <div class="ks-nav-section-title">Main</div>
-        <a href="{% url 'portal_dashboard' %}" class="ks-nav-item" style="color: white; border-left-color: var(--ks-primary);">
-          <i class="fas fa-th-large" style="color: var(--ks-primary);"></i>Dashboard
+        <a href="{% url 'portal_dashboard' %}" class="ks-nav-item{% if request.resolver_match.url_name == 'portal_dashboard' %} active{% endif %}">
+          <i class="fas fa-th-large"></i>Dashboard
         </a>
         <a href="{% url 'home' %}" target="_blank" class="ks-nav-item">
           <i class="fas fa-external-link-alt"></i>View Site
@@ -359,8 +367,8 @@
       <div class="ks-nav-section">
         <div class="ks-nav-section-title">{{ section.name }}</div>
         {% for link in section.links %}
-        {% with label=link.0 icon=link.1 model_name=link.2 stats_key=link.3 %}
-        <a href="{% url 'portal_list' model_name %}" class="ks-nav-item">
+        {% with label=link.0 icon=link.1 link_model=link.2 stats_key=link.3 %}
+        <a href="{% url 'portal_list' link_model %}" class="ks-nav-item{% if request.resolver_match.url_name == 'portal_list' and request.resolver_match.kwargs.model_name == link_model %} active{% endif %}">
           <i class="{{ icon }}"></i>
           {{ label }}
           {% with count_val=stats|get_item:stats_key %}

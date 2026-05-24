@@ -6,7 +6,7 @@ from .models import (
     ProjectCategory, Project, Service, Testimonial,
     BlogCategory, BlogPost, ContactInquiry,
     NewsletterSubscriber, CompanyStat, Partner,
-    RoadmapMilestone, TeamMember, ProductImage,
+    TeamMember, ProductImage,
     GalleryCategory, GalleryImage, Announcement,
     AnnouncementApplication, HeroSlide, ActiveProduct
 )
@@ -19,7 +19,7 @@ def home(request):
         'featured_projects': Project.objects.filter(is_active=True, is_featured=True)[:6],
         'services': Service.objects.filter(is_active=True, service_type='current')[:4],
         'future_visions': Service.objects.filter(is_active=True, service_type='future')[:3],
-        'roadmap_milestones': RoadmapMilestone.objects.filter(is_active=True),
+
         'testimonials': Testimonial.objects.filter(is_active=True, is_featured=True)[:3],
         'blog_posts': BlogPost.objects.filter(is_published=True)[:3],
         'partners': Partner.objects.filter(is_active=True),
@@ -27,6 +27,7 @@ def home(request):
         'team_members': TeamMember.objects.filter(is_active=True),
         'hero_slides': HeroSlide.objects.filter(is_active=True),
         'active_products': ActiveProduct.objects.filter(is_active=True),
+        'open_announcements': Announcement.objects.filter(is_active=True, status='open'),
     }
     return render(request, 'index.html', context)
 
@@ -75,13 +76,6 @@ def partners(request):
     }
     return render(request, 'partners.html', context)
 
-
-# Roadmap / Milestones Page
-def roadmap(request):
-    context = {
-        'milestones': RoadmapMilestone.objects.filter(is_active=True),
-    }
-    return render(request, 'roadmap.html', context)
 
 
 # Gallery Page (past classes, bootcamps, trainings)

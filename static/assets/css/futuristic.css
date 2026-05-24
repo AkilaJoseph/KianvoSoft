@@ -320,6 +320,13 @@ a.btn-three:hover {
 .page__banner {
   background: var(--ks-gradient-hero) !important;
   position: relative;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+}
+
+.page__banner-content {
+  padding: 100px 0;
 }
 
 .page__banner::before {
@@ -1033,28 +1040,108 @@ a.btn-three:hover {
 }
 
 /* ============================
+   Advantage Cards — Why KianvoSoft
+   ============================ */
+.ks-advantage-card {
+  background: rgba(10, 14, 26, .5);
+  border: 1px solid rgba(255, 255, 255, .06);
+  border-top: 3px solid var(--ks-cyan);
+  border-radius: 16px;
+  padding: 36px 28px;
+  transition: all .4s cubic-bezier(.25, .46, .45, .94);
+  backdrop-filter: blur(8px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ks-advantage-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 240, 255, .03) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.ks-advantage-card:hover::before {
+  opacity: 1;
+}
+
+.ks-advantage-card:hover {
+  border-color: rgba(0, 240, 255, .2);
+  transform: translateY(-8px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .35), 0 0 30px rgba(0, 240, 255, .06);
+  background: rgba(17, 24, 39, .7);
+}
+
+.ks-advantage-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 1.5rem;
+  color: var(--ks-cyan);
+  transition: all .4s cubic-bezier(.34, 1.56, .64, 1);
+  position: relative;
+}
+
+.ks-advantage-card:hover .ks-advantage-icon {
+  transform: scale(1.15) rotate(-4deg);
+  box-shadow: 0 0 40px rgba(0, 240, 255, .2);
+}
+
+.ks-advantage-card h4 {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-family: 'Outfit', sans-serif;
+  position: relative;
+}
+
+.ks-advantage-card p {
+  color: var(--ks-text-muted);
+  font-size: .88rem;
+  line-height: 1.7;
+  margin: 0;
+  position: relative;
+}
+
+/* ============================
    Playcard Fan — Hero Image Stack
    ============================ */
 .ks-card-fan {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 420px;
-  perspective: 1000px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  min-height: 320px;
+  perspective: 1200px;
 }
 
 .ks-fan-card {
   position: absolute;
-  width: 280px;
+  top: 0;
+  left: 50%;
+  width: 360px;
   aspect-ratio: 4/3;
-  border-radius: 16px;
+  margin-left: -180px;
+  border-radius: 18px;
   overflow: hidden;
   border: 2px solid rgba(0, 240, 255, .15);
   box-shadow: 0 8px 32px rgba(0, 0, 0, .4), 0 0 20px rgba(0, 240, 255, .08);
-  transition: all .4s cubic-bezier(.25, .46, .45, .94);
+  transition: transform .6s cubic-bezier(.34, 1.56, .64, 1), box-shadow .6s ease, border-color .4s ease, z-index 0s;
   cursor: default;
   backface-visibility: hidden;
+  will-change: transform;
 }
 
 .ks-fan-card img {
@@ -1066,97 +1153,130 @@ a.btn-three:hover {
 
 /* Each card position — fan out like playing cards */
 .ks-fan-card:nth-child(1) {
-  transform: rotate(-12deg) translateX(-50px) translateY(10px);
+  transform: rotate(-10deg) translateX(-60px) translateY(12px);
   z-index: 1;
   border-color: rgba(0, 240, 255, .2);
 }
 
 .ks-fan-card:nth-child(2) {
-  transform: rotate(-5deg) translateX(-18px) translateY(3px);
+  transform: rotate(-4deg) translateX(-22px) translateY(4px);
   z-index: 2;
   border-color: rgba(139, 92, 246, .2);
 }
 
 .ks-fan-card:nth-child(3) {
-  transform: rotate(3deg) translateX(15px) translateY(-2px);
+  transform: rotate(2deg) translateX(18px) translateY(-3px);
   z-index: 3;
   border-color: rgba(0, 240, 255, .25);
 }
 
 .ks-fan-card:nth-child(4) {
-  transform: rotate(11deg) translateX(48px) translateY(-8px);
+  transform: rotate(9deg) translateX(55px) translateY(-10px);
   z-index: 2;
   border-color: rgba(139, 92, 246, .15);
 }
 
 .ks-fan-card:nth-child(5) {
-  transform: rotate(18deg) translateX(75px) translateY(-16px);
+  transform: rotate(16deg) translateX(85px) translateY(-18px);
   z-index: 1;
   border-color: rgba(0, 240, 255, .1);
 }
 
-/* Hover: fan spreads further apart */
+/* Hover: fan spreads further apart with smooth spring */
 .ks-card-fan:hover .ks-fan-card:nth-child(1) {
-  transform: rotate(-18deg) translateX(-80px) translateY(20px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, .5), 0 0 30px rgba(0, 240, 255, .15);
+  transform: rotate(-16deg) translateX(-100px) translateY(24px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .5), 0 0 40px rgba(0, 240, 255, .15);
 }
 
 .ks-card-fan:hover .ks-fan-card:nth-child(2) {
-  transform: rotate(-8deg) translateX(-35px) translateY(6px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, .5), 0 0 30px rgba(139, 92, 246, .12);
+  transform: rotate(-7deg) translateX(-45px) translateY(8px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .5), 0 0 40px rgba(139, 92, 246, .12);
 }
 
 .ks-card-fan:hover .ks-fan-card:nth-child(3) {
-  transform: rotate(4deg) translateX(30px) translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, .5), 0 0 30px rgba(0, 240, 255, .15);
+  transform: rotate(4deg) translateX(40px) translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .5), 0 0 40px rgba(0, 240, 255, .15);
 }
 
 .ks-card-fan:hover .ks-fan-card:nth-child(4) {
-  transform: rotate(16deg) translateX(70px) translateY(-14px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, .5), 0 0 30px rgba(139, 92, 246, .12);
+  transform: rotate(14deg) translateX(90px) translateY(-18px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .5), 0 0 40px rgba(139, 92, 246, .12);
 }
 
 .ks-card-fan:hover .ks-fan-card:nth-child(5) {
-  transform: rotate(26deg) translateX(105px) translateY(-26px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, .5), 0 0 30px rgba(0, 240, 255, .1);
+  transform: rotate(24deg) translateX(130px) translateY(-32px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .5), 0 0 40px rgba(0, 240, 255, .1);
 }
 
 /* Hover lift on individual card */
 .ks-fan-card:hover {
   z-index: 10 !important;
-  transform: scale(1.05) translateY(-12px) !important;
+  transform: scale(1.08) translateY(-16px) !important;
   border-color: var(--ks-primary) !important;
-  box-shadow: 0 20px 60px rgba(0, 240, 255, .25), 0 0 40px rgba(0, 240, 255, .1) !important;
+  box-shadow: 0 24px 72px rgba(0, 240, 255, .3), 0 0 56px rgba(0, 240, 255, .12) !important;
 }
 
 /* Responsive */
+@media (max-width: 1199px) {
+  .ks-card-fan {
+    min-height: 280px;
+  }
+  .ks-fan-card {
+    width: 300px;
+    margin-left: -150px;
+  }
+  .ks-fan-card:nth-child(1) { transform: rotate(-10deg) translateX(-50px) translateY(10px); }
+  .ks-fan-card:nth-child(2) { transform: rotate(-4deg) translateX(-18px) translateY(3px); }
+  .ks-fan-card:nth-child(3) { transform: rotate(2deg) translateX(15px) translateY(-2px); }
+  .ks-fan-card:nth-child(4) { transform: rotate(9deg) translateX(45px) translateY(-8px); }
+  .ks-fan-card:nth-child(5) { transform: rotate(16deg) translateX(70px) translateY(-15px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(1) { transform: rotate(-16deg) translateX(-80px) translateY(20px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(2) { transform: rotate(-7deg) translateX(-38px) translateY(6px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(3) { transform: rotate(4deg) translateX(32px) translateY(-4px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(4) { transform: rotate(14deg) translateX(72px) translateY(-14px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(5) { transform: rotate(24deg) translateX(105px) translateY(-26px); }
+}
+
 @media (max-width: 991px) {
   .ks-card-fan {
-    min-height: 340px;
+    min-height: 320px;
     margin-top: 40px;
   }
   .ks-fan-card {
-    width: 200px;
+    width: 240px;
+    margin-left: -120px;
   }
-  .ks-fan-card:nth-child(1) { transform: rotate(-10deg) translateX(-35px) translateY(8px); }
-  .ks-fan-card:nth-child(2) { transform: rotate(-3deg) translateX(-12px) translateY(2px); }
-  .ks-fan-card:nth-child(3) { transform: rotate(4deg) translateX(12px) translateY(-2px); }
-  .ks-fan-card:nth-child(4) { transform: rotate(10deg) translateX(35px) translateY(-6px); }
-  .ks-fan-card:nth-child(5) { transform: rotate(16deg) translateX(55px) translateY(-12px); }
+  .ks-fan-card:nth-child(1) { transform: rotate(-8deg) translateX(-35px) translateY(8px); }
+  .ks-fan-card:nth-child(2) { transform: rotate(-3deg) translateX(-14px) translateY(2px); }
+  .ks-fan-card:nth-child(3) { transform: rotate(2deg) translateX(12px) translateY(-2px); }
+  .ks-fan-card:nth-child(4) { transform: rotate(8deg) translateX(35px) translateY(-6px); }
+  .ks-fan-card:nth-child(5) { transform: rotate(14deg) translateX(55px) translateY(-12px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(1) { transform: rotate(-14deg) translateX(-60px) translateY(16px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(2) { transform: rotate(-6deg) translateX(-28px) translateY(5px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(3) { transform: rotate(3deg) translateX(22px) translateY(-4px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(4) { transform: rotate(12deg) translateX(55px) translateY(-12px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(5) { transform: rotate(21deg) translateX(80px) translateY(-22px); }
 }
 
 @media (max-width: 575px) {
   .ks-card-fan {
-    min-height: 260px;
+    min-height: 220px;
   }
   .ks-fan-card {
-    width: 150px;
+    width: 160px;
+    margin-left: -80px;
+    border-radius: 12px;
   }
-  .ks-fan-card:nth-child(1) { transform: rotate(-8deg) translateX(-25px) translateY(5px); }
-  .ks-fan-card:nth-child(2) { transform: rotate(-2deg) translateX(-8px) translateY(1px); }
-  .ks-fan-card:nth-child(3) { transform: rotate(3deg) translateX(8px) translateY(-1px); }
-  .ks-fan-card:nth-child(4) { transform: rotate(8deg) translateX(25px) translateY(-4px); }
-  .ks-fan-card:nth-child(5) { transform: rotate(13deg) translateX(40px) translateY(-9px); }
+  .ks-fan-card:nth-child(1) { transform: rotate(-7deg) translateX(-25px) translateY(5px); }
+  .ks-fan-card:nth-child(2) { transform: rotate(-2deg) translateX(-10px) translateY(1px); }
+  .ks-fan-card:nth-child(3) { transform: rotate(2deg) translateX(8px) translateY(-1px); }
+  .ks-fan-card:nth-child(4) { transform: rotate(7deg) translateX(25px) translateY(-4px); }
+  .ks-fan-card:nth-child(5) { transform: rotate(12deg) translateX(38px) translateY(-9px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(1) { transform: rotate(-12deg) translateX(-40px) translateY(12px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(2) { transform: rotate(-5deg) translateX(-18px) translateY(4px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(3) { transform: rotate(3deg) translateX(14px) translateY(-3px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(4) { transform: rotate(10deg) translateX(38px) translateY(-8px); }
+  .ks-card-fan:hover .ks-fan-card:nth-child(5) { transform: rotate(18deg) translateX(55px) translateY(-16px); }
 }
 
 /* ============================
@@ -1519,9 +1639,30 @@ a.btn-three:hover {
 /* ============================
    Responsive
    ============================ */
+
+/* MeanMenu hamburger — visible on dark header */
+.header__area-menubar-right .responsive-menu .mean-bar a.meanmenu-reveal span {
+  background: #00f0ff !important;
+}
+.header__area-menubar-right .responsive-menu .mean-bar a.meanmenu-reveal {
+  color: #00f0ff !important;
+}
+
+@media (max-width: 1199px) {
+  .banner__five-content h2 {
+    font-size: 2.6rem !important;
+  }
+  .banner__five-content p {
+    font-size: 1.1rem !important;
+  }
+}
+
 @media (max-width: 991px) {
   .banner__five-content h2 {
     font-size: 2.2rem !important;
+  }
+  .banner__five-content p {
+    font-size: 1.05rem !important;
   }
 
   .ks-timeline::before {
@@ -1543,15 +1684,219 @@ a.btn-three:hover {
     left: 12px !important;
     right: auto !important;
   }
+
+  /* Fix "Get a Quote" hiding */
+  .header__area-menubar-right-box-btn {
+    display: none;
+  }
+
+  /* Product carousel mobile height */
+  .ks-carousel-item {
+    height: 300px !important;
+  }
+
+  /* Team card image height */
+  .ks-team-card-img {
+    height: 220px !important;
+  }
+
+  /* Blog article */
+  .kv-article-hero {
+    min-height: 380px;
+  }
+  .kv-sticky-sidebar {
+    position: relative !important;
+  }
+  .kv-post-nav {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .kv-hero-title {
+    font-size: 1.7rem !important;
+  }
+
+  /* General spacing */
+  .section-padding {
+    padding: 60px 0 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .banner__five-content h2 {
+    font-size: 2rem !important;
+  }
+  .banner__five-content p {
+    font-size: 1rem !important;
+  }
+
+  /* Hero banner mobile height */
+  .banner__five {
+    min-height: auto !important;
+    padding: 100px 0 60px !important;
+  }
+  .banner__five-content {
+    text-align: center;
+  }
+  .banner__five-content-bottom {
+    justify-content: center;
+  }
+
+  .banner__five-content h2 {
+    font-size: 2rem !important;
+  }
+
+  .banner__five-content p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Product carousel */
+  .ks-carousel-item {
+    height: 240px !important;
+  }
+
+  /* Team cards */
+  .ks-team-card-img {
+    height: 200px !important;
+  }
+  .ks-team-card-content {
+    padding: 16px !important;
+  }
+
+  /* Blog */
+  .kv-article-hero {
+    min-height: 300px !important;
+  }
+
+  /* About page */
+  .about__five {
+    text-align: center;
+  }
+  .about__five-content-bottom {
+    justify-content: center;
+  }
+
+  /* Partner tiles */
+  .ks-partner-tile {
+    width: 120px !important;
+    height: 100px !important;
+  }
+
+  /* Services */
+  .service-item {
+    text-align: center;
+  }
+
+  /* Section titles */
+  h2.ks-section-title {
+    font-size: 1.6rem !important;
+  }
+
+  /* Stats */
+  .ks-stat-card {
+    padding: 24px 16px !important;
+  }
+  .ks-stat-card .ks-stat-number {
+    font-size: 2rem !important;
+  }
+
+  /* General spacing */
+  .section-padding {
+    padding: 50px 0 !important;
+  }
 }
 
 @media (max-width: 575px) {
   .banner__five-content h2 {
     font-size: 1.7rem !important;
   }
+  .banner__five-content p {
+    font-size: .95rem !important;
+  }
+
+  .banner__five {
+    padding: 80px 0 40px !important;
+  }
+  .banner__five-content-bottom {
+    flex-direction: column;
+    align-items: center;
+  }
+  .banner__five-content-bottom a {
+    width: 100%;
+    max-width: 260px;
+    text-align: center;
+    justify-content: center;
+  }
 
   .ks-stat-card .ks-stat-number {
     font-size: 2rem;
+  }
+
+  .ks-stat-card .ks-stat-label {
+    font-size: .85rem !important;
+  }
+
+  /* Products */
+  .ks-carousel-item {
+    height: 200px !important;
+  }
+  .ks-carousel-overlay-content h4 {
+    font-size: 1.1rem !important;
+  }
+
+  /* Team */
+  .ks-team-card-img {
+    height: 180px !important;
+  }
+
+  /* Partner tiles */
+  .ks-partner-tile {
+    width: 100px !important;
+    height: 80px !important;
+  }
+
+  /* Timeline */
+  .ks-timeline-item-content {
+    padding: 16px !important;
+  }
+  .ks-timeline-item-content h4 {
+    font-size: 1rem !important;
+  }
+
+  /* Blog */
+  .kv-hero-title {
+    font-size: 1.4rem !important;
+  }
+  .kv-article-hero {
+    min-height: 250px !important;
+  }
+  .kv-hero-content {
+    padding: 30px 15px !important;
+  }
+  .kv-share-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Footer */
+  .footer__one-widget {
+    text-align: center;
+  }
+  .footer__one-widget-social {
+    justify-content: center;
+  }
+
+  /* Section titles */
+  h2.ks-section-title {
+    font-size: 1.4rem !important;
+  }
+  .subtitle-one {
+    font-size: .8rem !important;
+  }
+
+  /* General spacing */
+  .section-padding {
+    padding: 40px 0 !important;
   }
 }
 

@@ -95,6 +95,31 @@ View in portal: http://localhost:8000/portal/blogposts/
     return send_notification(subject, body, 'info@kianvosoft.com')
 
 
+def send_blog_to_subscribers(post):
+    from django.conf import settings
+    from .models import NewsletterSubscriber
+    subscribers = NewsletterSubscriber.objects.filter(is_active=True).values_list('email', flat=True)
+    if not subscribers:
+        return False
+    subject = f'New Blog Post: {post.title}'
+    html_body = render_to_string('emails/blog_subscriber.html', {
+        'post': post,
+        'site_url': settings.SITE_URL,
+    })
+    body = f"""
+KianvoSoft has published a new blog post!
+
+Title: {post.title}
+Category: {post.category.name if post.category else 'Uncategorized'}
+Author: {post.author or 'KianvoSoft'}
+
+{post.excerpt or ''}
+
+Read the full post at: {settings.SITE_URL}/blog/{post.slug}/
+    """.strip()
+    return send_notification(subject, body, list(subscribers), html_body=html_body)
+
+
 def send_new_announcement_notification(announcement):
     subject = f'[KianvoSoft Announcement] {announcement.title}'
     body = f"""
@@ -111,3 +136,28 @@ Description:
 View in portal: http://localhost:8000/portal/announcements/
     """.strip()
     return send_notification(subject, body, 'info@kianvosoft.com')
+
+
+def send_announcement_to_subscribers(announcement):
+    from django.conf import settings
+    from .models import NewsletterSubscriber
+    subscribers = NewsletterSubscriber.objects.filter(is_active=True).values_list('email', flat=True)
+    if not subscribers:
+        return False
+    subject = f'New Opportunity: {announcement.title}'
+    html_body = render_to_string('emails/announcement_subscriber.html', {
+        'announcement': announcement,
+        'site_url': settings.SITE_URL,
+    })
+    body = f"""
+KianvoSoft has opened a new opportunity!
+
+Title: {announcement.title}
+Type: {announcement.get_announcement_type_display() if announcement.announcement_type else 'N/A'}
+Deadline: {announcement.application_deadline.strftime('%Y-%m-%d') if hasattr(announcement, 'application_deadline') and announcement.application_deadline else 'Open'}
+
+{announcement.short_description or ''}
+
+Apply now at: {settings.SITE_URL}/announcements/{announcement.slug}/
+    """.strip()
+    return send_notification(subject, body, list(subscribers), html_body=html_body)

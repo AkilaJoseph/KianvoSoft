@@ -10,7 +10,7 @@
 	</div>
 	<div class="container">
 		<div class="row justify-content-between align-items-center">
-			<div class="col-xl-6 col-lg-7">
+			<div class="col-xl-12 col-lg-12">
 				<div class="page__banner-content">
 					<h2>{{ project.name }}</h2>
 					<span><a href="{% url 'home' %}">Home</a>
@@ -19,15 +19,6 @@
 						<span>|</span>
 						{{ project.name }}
 					</span>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-5">
-				<div class="page__banner-img">
-					{% if project.banner_image %}
-					<img src="{{ project.banner_image.url }}" alt="{{ project.name }}">
-					{% else %}
-					<img src="{% static 'assets/img/banner/page-banner-img.png' %}" alt="{{ project.name }}">
-					{% endif %}
 				</div>
 			</div>
 		</div>

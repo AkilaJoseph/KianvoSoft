@@ -97,12 +97,11 @@
 									<li><a href="{% url 'portfolio' %}">Our Products</a></li>
 								</ul>
 							</li>
-							<li class="menu-item-has-children{% if request.resolver_match.url_name == 'team' or request.resolver_match.url_name == 'testimonials' or request.resolver_match.url_name == 'partners' or request.resolver_match.url_name == 'roadmap' or request.resolver_match.url_name == 'products' or request.resolver_match.url_name == 'gallery' %} active{% endif %}"><a href="#">More <i class="fas fa-angle-down"></i></a>
+							<li class="menu-item-has-children{% if request.resolver_match.url_name == 'team' or request.resolver_match.url_name == 'testimonials' or request.resolver_match.url_name == 'partners' or request.resolver_match.url_name == 'products' or request.resolver_match.url_name == 'gallery' %} active{% endif %}"><a href="#">More <i class="fas fa-angle-down"></i></a>
 								<ul class="sub-menu">
 									<li><a href="{% url 'team' %}">Our Team</a></li>
 									<li><a href="{% url 'testimonials' %}">Testimonials</a></li>
 									<li><a href="{% url 'partners' %}">Partners</a></li>
-									<li><a href="{% url 'roadmap' %}">Roadmap</a></li>
 									<li><a href="{% url 'products' %}">Products</a></li>
 									<li><a href="{% url 'gallery' %}">Gallery</a></li>
 								</ul>
@@ -345,8 +344,8 @@
 	<!-- Futuristic Enhancements -->
 	<script>
 	// Scroll-based reveal animation using IntersectionObserver
-	document.addEventListener('DOMContentLoaded', function() {
-		var reveals = document.querySelectorAll('.ks-reveal');
+	function ksRevealInit() {
+		var reveals = document.querySelectorAll('.ks-reveal:not(.ks-visible)');
 		if ('IntersectionObserver' in window) {
 			var observer = new IntersectionObserver(function(entries) {
 				entries.forEach(function(entry) {
@@ -360,6 +359,12 @@
 		} else {
 			reveals.forEach(function(el) { el.classList.add('ks-visible'); });
 		}
+	}
+	document.addEventListener('DOMContentLoaded', ksRevealInit);
+	// Re-init on bfcache restore (pageshow fires even for cached pages)
+	window.addEventListener('pageshow', function(e) {
+		if (e.persisted) { ksRevealInit(); }
+	});
 
 		// Particle canvas (lightweight constellation effect)
 		var canvas = document.getElementById('ks-particles-canvas');
@@ -419,7 +424,6 @@
 			}
 			drawParticles();
 		}
-	});
 	</script>
 </body>
 </html>

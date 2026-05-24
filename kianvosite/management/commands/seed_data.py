@@ -3,7 +3,7 @@ from django.utils import timezone
 from kianvosite.models import (
     ProjectCategory, Project, Service, CompanyStat,
     BlogCategory, BlogPost, Testimonial, TeamMember,
-    Announcement, GalleryCategory, Partner, RoadmapMilestone,
+    Announcement, GalleryCategory, Partner,
     SocialLink, HeroSlide, ActiveProduct
 )
 
@@ -860,25 +860,6 @@ Long-term goal: Strengthen diagnostic capacity in rural health facilities where 
             if created:
                 created_partners += 1
         self.stdout.write(self.style.SUCCESS(f'Created {created_partners} partners'))
-
-        # Create Roadmap Milestones
-        milestones_data = [
-            {'year': '2025', 'title': 'Foundation', 'description': 'Formalise governance. Deploy Imforia, Mjenzi, and ShopManagerPro with active clients. Launch short courses and bootcamps. Establish academic partnerships with MUST and CITT.', 'order': 1, 'is_active': True},
-            {'year': '2026', 'title': 'Growth', 'description': 'Expand product portfolio with Kianvo Classroom, Kianvo Meet, and HELP. Grow client base. Publish first AI research papers. Train 100+ students through bootcamps and coding camps.', 'order': 2, 'is_active': True},
-            {'year': '2027', 'title': 'Expansion', 'description': 'Scale SaaS deployments. Launch FleetLink and IMS. Expand training to 8+ programmes. Enter Dar es Salaam, Dodoma, and Arusha markets. Hire additional engineering and research staff.', 'order': 3, 'is_active': True},
-            {'year': '2028', 'title': 'Scaling', 'description': 'AI research unit fully operational. Brain stroke and malaria detection projects in clinical pilot phase. Staff of 12+. Explore Kenya, Uganda, and Rwanda markets.', 'order': 4, 'is_active': True},
-            {'year': '2029–2030', 'title': 'Leadership', 'description': 'East Africa\'s best-known homegrown technology company. 1,000+ students trained. 200+ active clients. Pan-African digital reach. Recognised for excellence in software, training, and AI research.', 'order': 5, 'is_active': True},
-        ]
-        created_milestones = 0
-        for m_data in milestones_data:
-            _, created = RoadmapMilestone.objects.get_or_create(
-                year=m_data['year'],
-                title=m_data['title'],
-                defaults=m_data
-            )
-            if created:
-                created_milestones += 1
-        self.stdout.write(self.style.SUCCESS(f'Created {created_milestones} roadmap milestones'))
 
         # Create Company Social Links
         social_links = [

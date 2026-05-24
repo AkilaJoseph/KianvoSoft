@@ -10,18 +10,13 @@
 	</div>
 	<div class="container">
 		<div class="row justify-content-between align-items-center">
-			<div class="col-xl-6 col-lg-7">
+			<div class="col-xl-12 col-lg-12">
 				<div class="page__banner-content">
 					<h2>About KianvoSoft</h2>
 					<span><a href="{% url 'home' %}">Home</a>
 						<span>|</span>
 						About Us
 					</span>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-5">
-				<div class="page__banner-img">
-					<img src="{% static 'assets/img/banner/page-banner-img.png' %}" alt="About KianvoSoft">
 				</div>
 			</div>
 		</div>
@@ -55,8 +50,15 @@
 				<div class="about__one-content ks-reveal ks-reveal-delay-2">
 					<span class="subtitle-one">Our Story</span>
 					<h2>Born at MUST, Building for Africa</h2>
-					<p style="font-size: 1.05rem; line-height: 1.8;">KianvoSoft is a technology venture founded by three Computer Engineering students of Mbeya University of Science and Technology (MUST). We bring together software engineering, technical training, and applied research under a single mission: to apply technology to the real problems faced by institutions, businesses, and communities across East Africa.</p>
-					<p style="font-size: 1.05rem; line-height: 1.8; margin-top: 15px;">Our work is organised around four interconnected pillars: <strong style="color: var(--ks-cyan);">Software Product Development</strong> — designing and deploying software products for education, healthcare, and small-business digital tools; <strong style="color: var(--ks-cyan);">Technical Training & Capacity Building</strong> — delivering short courses, bootcamps, and coding camps; <strong style="color: var(--ks-cyan);">Applied Research in AI</strong> — contributing to challenges in health, business, and the environment; and <strong style="color: var(--ks-cyan);">Technology Consultancy</strong> — helping SMEs, NGOs, and institutions with digital transformation.</p>
+					<p style="font-size: 1.05rem; line-height: 1.8;">KianvoSoft is a technology venture founded by three Computer Engineering students of Mbeya University of Science and Technology (MUST). The venture brings together <strong style="color: var(--ks-cyan);">software engineering</strong>, <strong style="color: var(--ks-cyan);">technical training</strong>, and <strong style="color: var(--ks-cyan);">applied research</strong> under a single mission: to apply technology to the real problems faced by institutions, health facilities, businesses, and communities across East Africa.</p>
+					<p style="font-size: 1.05rem; line-height: 1.8; margin-top: 15px;">Our work is organised around four interconnected pillars:</p>
+					<ul style="list-style: none; padding: 0; margin-top: 12px; font-size: 1rem; line-height: 1.9;">
+						<li style="padding-left: 24px; position: relative; color: var(--ks-text-muted);"><span style="position: absolute; left: 0; color: var(--ks-cyan);">▸</span> <strong style="color: white;">Software Product Development</strong> — designing and deploying products for education technology, healthcare, and small-business operations.</li>
+						<li style="padding-left: 24px; position: relative; color: var(--ks-text-muted); margin-top: 6px;"><span style="position: absolute; left: 0; color: var(--ks-purple);">▸</span> <strong style="color: white;">Technical Training &amp; Capacity Building</strong> — short courses, bootcamps, and coding camps in modern programming and emerging technologies.</li>
+						<li style="padding-left: 24px; position: relative; color: var(--ks-text-muted); margin-top: 6px;"><span style="position: absolute; left: 0; color: var(--ks-cyan);">▸</span> <strong style="color: white;">Applied Research in AI</strong> — research with practical contributions to challenges in health, business, and the environment.</li>
+						<li style="padding-left: 24px; position: relative; color: var(--ks-text-muted); margin-top: 6px;"><span style="position: absolute; left: 0; color: var(--ks-purple);">▸</span> <strong style="color: white;">Technology Consultancy &amp; Community Outreach</strong> — helping SMEs, NGOs, and institutions with digital transformation and running outreach programmes.</li>
+					</ul>
+					<p style="font-size: 1rem; line-height: 1.7; margin-top: 15px; color: var(--ks-text-muted);">The three co-founders contribute across all areas of the business and operate as a single team — each leading one Directorate while working jointly on everything.</p>
 					<a href="{% url 'contact' %}" class="btn-one" style="margin-top: 20px;">Get in Touch
 						<i class="fas fa-arrow-right"></i>
 					</a>
@@ -176,14 +178,68 @@
 						<p>We are accountable to our clients, students, and investors. We conduct business with honesty and the highest ethical standards.</p>
 					</div>
 				</div>
-				<div class="work-process-area__one-right-img ks-reveal ks-reveal-delay-4">
-					<img src="{% static 'assets/img/work-process/work-process-1.png' %}" alt="KianvoSoft Values">
+				<div class="work-process-area__one-single-work ks-reveal ks-reveal-delay-4">
+					<span>06</span>
+					<div class="work-process-area__one-single-work-content">
+						<h4>Community Impact</h4>
+						<p>We measure success by the real difference we make in the communities we serve — through technology access, training, and outreach.</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- Core Values End -->
+
+<!-- Our Structure Start -->
+<div class="section-padding" style="background: var(--ks-bg-primary);">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-7 col-lg-8 col-md-10">
+				<span class="subtitle-one ks-reveal">How We Are Organised</span>
+				<h2 class="ks-reveal ks-reveal-delay-1">Our Directorate Structure</h2>
+				<p class="ks-reveal ks-reveal-delay-2">KianvoSoft is organised into three Directorates, each led by one of the co-founders. All three carry equal authority and work jointly across all areas.</p>
+			</div>
+		</div>
+		<div class="row g-4 justify-content-center">
+			<div class="col-xl-4 col-lg-6 col-md-6 d-flex align-items-stretch">
+				<div class="ks-reveal ks-advantage-card" style="width: 100%; border-top-color: rgba(0, 240, 255, .5); text-align: left;">
+					<div class="ks-advantage-icon" style="background: linear-gradient(135deg, rgba(0,240,255,.15), rgba(0,240,255,.03)); margin-left: 0;">
+						<i class="fas fa-cogs"></i>
+					</div>
+					<h4>Product &amp; Engineering</h4>
+					<p style="font-size: .84rem; line-height: 1.65;"><strong style="color: var(--ks-cyan);">Led by Akila Body Joseph.</strong> Product management, software engineering, quality assurance, technical infrastructure, and client technical support for products including Kianvo Meet, Kianvo Classroom, HELP, Imforia, Mjenzi, and more.</p>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-6 col-md-6 d-flex align-items-stretch">
+				<div class="ks-reveal ks-reveal-delay-1 ks-advantage-card" style="width: 100%; border-top-color: rgba(139, 92, 246, .5); text-align: left;">
+					<div class="ks-advantage-icon" style="background: linear-gradient(135deg, rgba(139,92,246,.15), rgba(139,92,246,.03)); margin-left: 0;">
+						<i class="fas fa-microscope"></i>
+					</div>
+					<h4>Research &amp; AI</h4>
+					<p style="font-size: .84rem; line-height: 1.65;"><strong style="color: var(--ks-purple);">Led by Datius Rweyemamu Daud.</strong> Applied AI research (brain stroke detection, malaria diagnosis), academic partnerships with MUST and other institutions, publications, training programmes, and research ethics governance.</p>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-6 col-md-6 d-flex align-items-stretch">
+				<div class="ks-reveal ks-reveal-delay-2 ks-advantage-card" style="width: 100%; border-top-color: rgba(0, 240, 255, .5); text-align: left;">
+					<div class="ks-advantage-icon" style="background: linear-gradient(135deg, rgba(0,240,255,.15), rgba(0,240,255,.03)); margin-left: 0;">
+						<i class="fas fa-briefcase"></i>
+					</div>
+					<h4>Business &amp; Operations</h4>
+					<p style="font-size: .84rem; line-height: 1.65;"><strong style="color: var(--ks-cyan);">Led by Aneth Alphonce Seleli.</strong> Business development and sales, finance and administration, human resources, marketing and communications, legal and compliance, and institutional relationships.</p>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center mt-4">
+			<div class="col-xl-10 col-lg-10">
+				<div class="ks-reveal ks-reveal-delay-3" style="background: rgba(10, 14, 26, .4); border: 1px solid rgba(255, 255, 255, .06); border-radius: 14px; padding: 28px 32px; backdrop-filter: blur(8px);">
+					<p style="font-size: .92rem; line-height: 1.7; color: var(--ks-text-muted); margin: 0;"><strong style="color: white;">How we govern ourselves:</strong> The three Directors hold <strong style="color: var(--ks-cyan);">equal authority</strong> in the leadership of the company. Decisions are made through a three-tier framework — <strong style="color: var(--ks-cyan);">Routine</strong> (single Director), <strong style="color: var(--ks-purple);">Joint</strong> (at least two Directors), and <strong style="color: var(--ks-cyan);">Strategic</strong> (unanimous). An Advisory Board of 2–4 members provides non-executive guidance. A dispute resolution process ensures operating disagreements are handled constructively.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Our Structure End -->
 
 <!-- Leadership Section Start -->
 <style>
@@ -218,7 +274,7 @@
 			<div class="col-xl-7 col-lg-8 col-md-10">
 				<span class="subtitle-one ks-reveal">Leadership</span>
 				<h2 class="ks-reveal ks-reveal-delay-1">Our Team</h2>
-				<p class="ks-reveal ks-reveal-delay-2">KianvoSoft was founded by three Computer Engineering students of Mbeya University of Science and Technology (MUST). Each co-founder leads a Directorate and contributes across all areas of the business.</p>
+				<p class="ks-reveal ks-reveal-delay-2">KianvoSoft was founded by three Computer Engineering students of Mbeya University of Science and Technology (MUST). Each co-founder leads a Directorate and contributes across all areas of the business — engineering, research, training, business development, and operations — operating as a single team rather than separate departments.</p>
 			</div>
 		</div>
 		<div class="row g-4 justify-content-center">
@@ -266,6 +322,70 @@
 <!-- Leadership Section End -->
 
 <!-- Problem We Solve Start -->
+<style>
+.ks-problem-card {
+  background: rgba(17, 24, 39, .85);
+  border: 1px solid rgba(255, 255, 255, .06);
+  border-top: 3px solid var(--ks-cyan);
+  border-radius: 16px;
+  padding: 36px 28px;
+  transition: all .4s cubic-bezier(.25, .46, .45, .94);
+  backdrop-filter: blur(8px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+.ks-problem-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 240, 255, .03) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.ks-problem-card:hover::before { opacity: 1; }
+.ks-problem-card:hover {
+  border-color: rgba(0, 240, 255, .2);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .35), 0 0 30px rgba(0, 240, 255, .06);
+  background: rgba(17, 24, 39, .7);
+}
+.ks-problem-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 1.5rem;
+  transition: all .4s cubic-bezier(.34, 1.56, .64, 1);
+}
+.ks-problem-card:hover .ks-problem-icon {
+  transform: scale(1.15) rotate(-4deg);
+  box-shadow: 0 0 40px rgba(0, 240, 255, .2);
+}
+.ks-problem-card h4 {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-family: 'Outfit', sans-serif;
+  position: relative;
+}
+.ks-problem-card p {
+  color: var(--ks-text-muted);
+  font-size: .88rem;
+  line-height: 1.7;
+  margin: 0;
+  position: relative;
+}
+</style>
 <div class="section-padding" style="background: var(--ks-bg-primary);">
 	<div class="container">
 		<div class="row justify-content-center text-center mb-50">
@@ -276,48 +396,40 @@
 			</div>
 		</div>
 		<div class="row gy-4 justify-content-center">
-			<div class="col-xl-6 col-lg-6 col-md-6">
-				<div class="services__five-single-service ks-reveal ks-reveal-delay-1" style="padding: 35px 25px;">
-					<div class="services__five-single-service-icon">
+			<div class="col-xl-6 col-lg-6 col-md-6 d-flex align-items-stretch">
+				<div class="ks-reveal ks-reveal-delay-1 ks-problem-card" style="border-top-color: rgba(0, 240, 255, .5);">
+					<div class="ks-problem-icon" style="background: linear-gradient(135deg, rgba(0,240,255,.15), rgba(0,240,255,.03)); color: var(--ks-cyan);">
 						<i class="flaticon-software-development"></i>
 					</div>
-					<div class="services__five-single-service-content">
-						<h4>Lack of Local Software</h4>
-						<p>Most businesses rely on expensive imported software not adapted to local needs, or manual paper-based processes. Very few homegrown companies build scalable, affordable solutions.</p>
-					</div>
+					<h4>Lack of Local Software</h4>
+					<p>Most businesses rely on expensive imported software not adapted to local needs, or manual paper-based processes. Very few homegrown companies build scalable, affordable solutions.</p>
 				</div>
 			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6">
-				<div class="services__five-single-service ks-reveal ks-reveal-delay-2" style="padding: 35px 25px;">
-					<div class="services__five-single-service-icon">
+			<div class="col-xl-6 col-lg-6 col-md-6 d-flex align-items-stretch">
+				<div class="ks-reveal ks-reveal-delay-2 ks-problem-card" style="border-top-color: rgba(139, 92, 246, .5);">
+					<div class="ks-problem-icon" style="background: linear-gradient(135deg, rgba(139,92,246,.15), rgba(139,92,246,.03)); color: var(--ks-purple);">
 						<i class="flaticon-consultant"></i>
 					</div>
-					<div class="services__five-single-service-content">
-						<h4>Digital Skills Gap</h4>
-						<p>Despite growing internet access, trained software developers remain critically low. Existing training is expensive, urban-centric, and largely delivered only in English.</p>
-					</div>
+					<h4>Digital Skills Gap</h4>
+					<p>Despite growing internet access, trained software developers remain critically low. Existing training is expensive, urban-centric, and largely delivered only in English.</p>
 				</div>
 			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6">
-				<div class="services__five-single-service ks-reveal ks-reveal-delay-3" style="padding: 35px 25px;">
-					<div class="services__five-single-service-icon">
+			<div class="col-xl-6 col-lg-6 col-md-6 d-flex align-items-stretch">
+				<div class="ks-reveal ks-reveal-delay-3 ks-problem-card" style="border-top-color: rgba(0, 240, 255, .5);">
+					<div class="ks-problem-icon" style="background: linear-gradient(135deg, rgba(0,240,255,.15), rgba(0,240,255,.03)); color: var(--ks-cyan);">
 						<i class="flaticon-data-scientist"></i>
 					</div>
-					<div class="services__five-single-service-content">
-						<h4>No Applied AI Research</h4>
-						<p>AI research in Tanzania is almost non-existent — no Swahili language models, no AI-powered health tools for rural clinics, no agricultural AI for smallholder farmers.</p>
-					</div>
+					<h4>No Applied AI Research</h4>
+					<p>AI research in Tanzania is almost non-existent — no Swahili language models, no AI-powered health tools for rural clinics, no agricultural AI for smallholder farmers.</p>
 				</div>
 			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6">
-				<div class="services__five-single-service ks-reveal ks-reveal-delay-4" style="padding: 35px 25px;">
-					<div class="services__five-single-service-icon">
+			<div class="col-xl-6 col-lg-6 col-md-6 d-flex align-items-stretch">
+				<div class="ks-reveal ks-reveal-delay-4 ks-problem-card" style="border-top-color: rgba(139, 92, 246, .5);">
+					<div class="ks-problem-icon" style="background: linear-gradient(135deg, rgba(139,92,246,.15), rgba(139,92,246,.03)); color: var(--ks-purple);">
 						<i class="flaticon-satellite-signal"></i>
 					</div>
-					<div class="services__five-single-service-content">
-						<h4>Underserved Secondary Cities</h4>
-						<p>While Dar es Salaam has growing tech activity, secondary cities like Mbeya have very little ICT support. Businesses and institutions lack access to reliable technology services.</p>
-					</div>
+					<h4>Underserved Secondary Cities</h4>
+					<p>While Dar es Salaam has growing tech activity, secondary cities like Mbeya have very little ICT support. Businesses and institutions lack access to reliable technology services.</p>
 				</div>
 			</div>
 		</div>

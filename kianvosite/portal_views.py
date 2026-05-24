@@ -14,10 +14,10 @@ from .models import (
     BlogPost, BlogCategory, ContactInquiry, NewsletterSubscriber,
     CompanyStat, Partner, TeamMember, Announcement,
     AnnouncementApplication, GalleryImage, GalleryCategory,
-    RoadmapMilestone, ProductImage, SocialLink,
+    ProductImage, SocialLink,
     HeroSlide, ActiveProduct
 )
-from .utils import send_new_blog_notification, send_new_announcement_notification
+from .utils import send_new_blog_notification, send_new_announcement_notification, send_blog_to_subscribers, send_announcement_to_subscribers
 
 # ---------------------------------------------------------------------------
 #  Icon picker
@@ -159,7 +159,6 @@ def _stats():
         'total_gallery': GalleryImage.objects.filter(is_active=True).count(),
         'total_partners': Partner.objects.filter(is_active=True).count(),
         'total_testimonials': Testimonial.objects.filter(is_active=True).count(),
-        'total_milestones': RoadmapMilestone.objects.filter(is_active=True).count(),
         'total_categories': ProjectCategory.objects.filter(is_active=True).count(),
         'total_gallery_cats': GalleryCategory.objects.filter(is_active=True).count(),
         'total_social_links': SocialLink.objects.filter(is_active=True).count(),
@@ -323,12 +322,6 @@ REGISTRY = {
         'search': ['name'],
         'order': ['order'],
         'img': ['logo'],
-    },
-    'milestones': {
-        'model': RoadmapMilestone, 'icon': 'fas fa-road', 'label': 'Milestone',
-        'list': ['year','title','is_active','order'],
-        'search': ['title','description'],
-        'order': ['order'],
     },
     'inquiries': {
         'model': ContactInquiry, 'icon': 'fas fa-envelope', 'label': 'Inquiry',
@@ -534,8 +527,10 @@ def portal_create(request, model_name):
 
             if model_name == 'blogposts' and hasattr(obj, 'is_published') and obj.is_published:
                 send_new_blog_notification(obj)
+                send_blog_to_subscribers(obj)
             elif model_name == 'announcements':
                 send_new_announcement_notification(obj)
+                send_announcement_to_subscribers(obj)
 
             return redirect('portal_list', model_name=model_name)
         else:

@@ -18,7 +18,7 @@ urlpatterns = [
     path('testimonials/', views.testimonials, name='testimonials'),
     path('team/', views.team, name='team'),
     path('partners/', views.partners, name='partners'),
-    path('roadmap/', views.roadmap, name='roadmap'),
+
     path('contact/', views.contact, name='contact'),
     path('subscribe/', views.subscribe_newsletter, name='subscribe_newsletter'),
 

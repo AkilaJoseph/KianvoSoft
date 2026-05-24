@@ -1,0 +1,590 @@
+{% load static %}
+{% load portal_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block portal_title %}Dashboard{% endblock %} - KianvoSoft Portal</title>
+  <link rel="icon" type="image/png" href="{% static 'assets/img/favicon-1.png' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/all.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/sass/style.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/futuristic.css' %}">
+  <style>
+    :root {
+      --sidebar-w: 250px;
+      --sidebar-collapsed: 0px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--ks-bg-primary);
+      color: #ccc;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .ks-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: var(--sidebar-w);
+      background: rgba(8, 12, 22, 0.98);
+      border-right: 1px solid rgba(0, 240, 255, 0.08);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+    .ks-sidebar-logo {
+      padding: 20px 18px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .ks-sidebar-logo img { height: 32px; }
+    .ks-sidebar-logo span {
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .ks-sidebar-user {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ks-sidebar-user .avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--ks-primary), var(--ks-accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0a0e1a;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .ks-sidebar-user .info { flex-grow: 1; min-width: 0; }
+    .ks-sidebar-user .info .name {
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ks-sidebar-user .info .role {
+      color: var(--ks-text-muted);
+      font-size: 0.7rem;
+    }
+
+    .ks-sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 0;
+    }
+    .ks-sidebar-nav::-webkit-scrollbar { width: 3px; }
+    .ks-sidebar-nav::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.2); border-radius: 3px; }
+
+    .ks-nav-section { margin-bottom: 4px; }
+    .ks-nav-section-title {
+      padding: 8px 18px 4px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(255,255,255,0.25);
+      font-weight: 600;
+    }
+    .ks-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+      border-left: 2px solid transparent;
+    }
+    .ks-nav-item:hover {
+      background: rgba(0, 240, 255, 0.04);
+      color: white;
+      border-left-color: var(--ks-primary);
+    }
+    .ks-nav-item i { width: 18px; text-align: center; font-size: 0.9rem; color: var(--ks-text-muted); }
+    .ks-nav-item:hover i { color: var(--ks-primary); }
+    .ks-nav-item .count {
+      margin-left: auto;
+      font-size: 0.7rem;
+      background: rgba(255,255,255,0.06);
+      padding: 1px 7px;
+      border-radius: 8px;
+      color: rgba(255,255,255,0.35);
+    }
+    .ks-nav-item .badge-dot {
+      margin-left: auto;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #ff6b6b;
+    }
+
+    /* Main */
+    .ks-main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .ks-topbar {
+      padding: 12px 30px;
+      background: rgba(8, 12, 22, 0.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 240, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 500;
+    }
+    .ks-topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .ks-menu-toggle {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: none;
+      padding: 4px;
+    }
+    .ks-topbar h4 {
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .ks-topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .ks-topbar-right a {
+      color: var(--ks-text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .ks-topbar-right a:hover { color: var(--ks-primary); }
+
+    .ks-content { padding: 25px 30px; flex: 1; }
+
+    /* Stat Cards */
+    .ks-stat-card {
+      padding: 20px;
+      background: rgba(10, 14, 26, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 240, 255, 0.1);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    .ks-stat-card:hover {
+      border-color: rgba(0, 240, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    .ks-stat-card .icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+    .ks-stat-card .value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.1;
+    }
+    .ks-stat-card .label {
+      font-size: 0.8rem;
+      color: var(--ks-text-muted);
+      margin-top: 2px;
+    }
+
+    /* Quick Actions */
+    .ks-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 240, 255, 0.12);
+      background: rgba(10, 14, 26, 0.4);
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+    .ks-action-btn:hover {
+      border-color: var(--ks-primary);
+      background: rgba(0, 240, 255, 0.04);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    /* Section Card */
+    .ks-section-card {
+      background: rgba(10, 14, 26, 0.5);
+      border: 1px solid rgba(0, 240, 255, 0.08);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .ks-section-card .header {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ks-section-card .header h5 {
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .ks-section-card .header a {
+      color: var(--ks-primary);
+      font-size: 0.8rem;
+      text-decoration: none;
+    }
+    .ks-section-card .body { padding: 14px 18px; }
+
+    .ks-activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .ks-activity-item:last-child { border-bottom: none; }
+    .ks-activity-item .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .ks-activity-item .text { font-size: 0.82rem; color: rgba(255,255,255,0.6); }
+    .ks-activity-item .text strong { color: white; font-weight: 500; }
+    .ks-activity-item .time {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.2);
+      margin-top: 2px;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .ks-sidebar {
+        transform: translateX(-100%);
+      }
+      .ks-sidebar.open {
+        transform: translateX(0);
+      }
+      .ks-main { margin-left: 0; }
+      .ks-menu-toggle { display: block; }
+      .ks-content { padding: 15px; }
+      .ks-topbar { padding: 10px 15px; }
+    }
+
+    /* Overlay */
+    .ks-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    .ks-overlay.show { display: block; }
+  </style>
+</head>
+<body>
+  <!-- Overlay for mobile -->
+  <div class="ks-overlay" id="ks-overlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="ks-sidebar" id="ks-sidebar">
+    <div class="ks-sidebar-logo">
+      <img src="{% static 'assets/img/brand/logo.png' %}" alt="KianvoSoft">
+      <span>Admin Portal</span>
+    </div>
+
+    <div class="ks-sidebar-user">
+      <div class="avatar">{{ request.user.username|first|upper }}</div>
+      <div class="info">
+        <div class="name">{{ request.user.get_full_name|default:request.user.username }}</div>
+        <div class="role">Administrator</div>
+      </div>
+    </div>
+
+    <nav class="ks-sidebar-nav">
+      <div class="ks-nav-section">
+        <div class="ks-nav-section-title">Main</div>
+        <a href="{% url 'portal_dashboard' %}" class="ks-nav-item" style="color: white; border-left-color: var(--ks-primary);">
+          <i class="fas fa-th-large" style="color: var(--ks-primary);"></i>Dashboard
+        </a>
+        <a href="{% url 'home' %}" target="_blank" class="ks-nav-item">
+          <i class="fas fa-external-link-alt"></i>View Site
+        </a>
+      </div>
+      {% for section in sections %}
+      <div class="ks-nav-section">
+        <div class="ks-nav-section-title">{{ section.name }}</div>
+        {% for link in section.links %}
+        {% with label=link.0 icon=link.1 model_name=link.2 stats_key=link.3 %}
+        <a href="{% url 'portal_list' model_name %}" class="ks-nav-item">
+          <i class="{{ icon }}"></i>
+          {{ label }}
+          {% with count_val=stats|get_item:stats_key %}
+            {% if count_val > 0 %}
+            <span class="count">{{ count_val }}</span>
+            {% endif %}
+          {% endwith %}
+        </a>
+        {% endwith %}
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </nav>
+
+    <div style="padding: 12px 18px; border-top: 1px solid rgba(0,240,255,0.06);">
+      <a href="{% url 'portal_logout' %}" class="ks-nav-item" style="color: #ff6b6b;">
+        <i class="fas fa-sign-out-alt" style="color: #ff6b6b;"></i>Sign Out
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="ks-main">
+    <div class="ks-topbar">
+      <div class="ks-topbar-left">
+        <button class="ks-menu-toggle" id="ks-menu-toggle" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <h4>Dashboard</h4>
+      </div>
+      <div class="ks-topbar-right">
+        <a href="{% url 'home' %}" target="_blank"><i class="fas fa-external-link-alt me-1"></i>View Site</a>
+        <a href="{% url 'portal_logout' %}"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+      </div>
+    </div>
+
+    <div class="ks-content">
+      {% block portal_content %}
+      <!-- Welcome + Quick Actions -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <h3 style="color: white; font-family: 'Outfit', sans-serif; font-weight: 700; margin: 0;">Welcome, {{ request.user.get_full_name|default:request.user.username }}</h3>
+          <p style="color: var(--ks-text-muted); font-size: 0.85rem; margin-top: 2px;">Manage your website content from one place.</p>
+        </div>
+        <div class="d-flex flex-wrap gap-2 mt-2 mt-md-0">
+          {% for label, icon, model_name, action, color in quick_actions %}
+          <a href="{% url 'portal_create' model_name %}" class="ks-action-btn">
+            <i class="{{ icon }}" style="color: {{ color }};"></i>
+            {{ label }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="font-size: 0.85rem; background: rgba(72,187,120,0.1); border: 1px solid rgba(72,187,120,0.2); color: var(--ks-green);">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" style="filter: invert(1);"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      <!-- Stat Cards -->
+      <div class="row g-3 mb-4">
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+          <div class="ks-stat-card">
+            <div class="icon" style="background: rgba(0,240,255,0.1); color: var(--ks-primary);"><i class="fas fa-code"></i></div>
+            <div class="value">{{ stats.total_projects }}</div>
+            <div class="label">Projects</div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+          <div class="ks-stat-card">
+            <div class="icon" style="background: rgba(139,92,246,0.1); color: var(--ks-accent);"><i class="fas fa-cogs"></i></div>
+            <div class="value">{{ stats.total_services }}</div>
+            <div class="label">Services</div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+          <div class="ks-stat-card">
+            <div class="icon" style="background: rgba(72,187,120,0.1); color: var(--ks-green);"><i class="fas fa-newspaper"></i></div>
+            <div class="value">{{ stats.total_blog_posts }}</div>
+            <div class="label">Blog Posts</div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+          <div class="ks-stat-card">
+            <div class="icon" style="background: rgba(255,193,7,0.1); color: #ffc107;"><i class="fas fa-envelope"></i></div>
+            <div class="value">{{ stats.total_inquiries }}</div>
+            <div class="label">Inquiries{% if stats.pending_inquiries > 0 %} <span style="color: #ff6b6b;">({{ stats.pending_inquiries }} new)</span>{% endif %}</div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+          <div class="ks-stat-card">
+            <div class="icon" style="background: rgba(0,240,255,0.1); color: var(--ks-primary);"><i class="fas fa-bullhorn"></i></div>
+            <div class="value">{{ stats.total_announcements }}</div>
+            <div class="label">Announcements{% if stats.open_announcements > 0 %} <span style="color: var(--ks-green);">({{ stats.open_announcements }} open)</span>{% endif %}</div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+          <div class="ks-stat-card">
+            <div class="icon" style="background: rgba(139,92,246,0.1); color: var(--ks-accent);"><i class="fas fa-users"></i></div>
+            <div class="value">{{ stats.total_team }}</div>
+            <div class="label">Team Members</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Recent Inquiries -->
+        <div class="col-xl-6">
+          <div class="ks-section-card">
+            <div class="header">
+              <h5><i class="fas fa-envelope me-2" style="color: var(--ks-primary);"></i>Recent Inquiries</h5>
+              <a href="/admin/kianvosite/contactinquiry/" target="_blank">View All <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
+            <div class="body">
+              {% if recent_inquiries %}
+              {% for inquiry in recent_inquiries %}
+              <div class="ks-activity-item">
+                <div class="dot" style="background: {% if inquiry.status == 'new' %}#ff6b6b{% elif inquiry.status == 'in_progress' %}#ffc107{% elif inquiry.status == 'responded' %}#17a2b8{% else %}#28a745{% endif %};"></div>
+                <div class="text" style="flex: 1;">
+                  <strong>{{ inquiry.name }}</strong> — {{ inquiry.subject|truncatechars:50|default:inquiry.get_service_type_display }}
+                  <div class="time">{{ inquiry.created_at|timesince }} ago · Status: {{ inquiry.get_status_display }}</div>
+                </div>
+              </div>
+              {% endfor %}
+              {% else %}
+              <p style="color: var(--ks-text-muted); font-size: 0.85rem; text-align: center; padding: 10px;">No inquiries yet.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Applications -->
+        <div class="col-xl-6">
+          <div class="ks-section-card">
+            <div class="header">
+              <h5><i class="fas fa-file-signature me-2" style="color: var(--ks-accent);"></i>Recent Applications</h5>
+              <a href="/admin/kianvosite/announcementapplication/" target="_blank">View All <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
+            <div class="body">
+              {% if recent_applications %}
+              {% for app in recent_applications %}
+              <div class="ks-activity-item">
+                <div class="dot" style="background: {% if app.status == 'pending' %}#ffc107{% elif app.status == 'approved' %}#28a745{% elif app.status == 'rejected' %}#ff6b6b{% else %}#17a2b8{% endif %};"></div>
+                <div class="text" style="flex: 1;">
+                  <strong>{{ app.full_name }}</strong> — {{ app.announcement.title|truncatechars:40 }}
+                  <div class="time">{{ app.applied_at|timesince }} ago · Status: {{ app.get_status_display }}</div>
+                </div>
+              </div>
+              {% endfor %}
+              {% else %}
+              <p style="color: var(--ks-text-muted); font-size: 0.85rem; text-align: center; padding: 10px;">No applications yet.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Blog Posts -->
+        <div class="col-xl-6">
+          <div class="ks-section-card">
+            <div class="header">
+              <h5><i class="fas fa-newspaper me-2" style="color: var(--ks-green);"></i>Recent Blog Posts</h5>
+              <a href="/admin/kianvosite/blogpost/" target="_blank">View All <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
+            <div class="body">
+              {% if recent_posts %}
+              {% for post in recent_posts %}
+              <div class="ks-activity-item">
+                <div class="dot" style="background: var(--ks-green);"></div>
+                <div class="text" style="flex: 1;">
+                  <strong>{{ post.title|truncatechars:60 }}</strong>
+                  <div class="time">{{ post.published_date|date:"M j, Y" }} · {{ post.author }}</div>
+                </div>
+              </div>
+              {% endfor %}
+              {% else %}
+              <p style="color: var(--ks-text-muted); font-size: 0.85rem; text-align: center; padding: 10px;">No blog posts yet.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Open Announcements -->
+        <div class="col-xl-6">
+          <div class="ks-section-card">
+            <div class="header">
+              <h5><i class="fas fa-bullhorn me-2" style="color: #ffc107;"></i>Open Announcements</h5>
+              <a href="/admin/kianvosite/announcement/" target="_blank">View All <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
+            <div class="body">
+              {% if open_announcements_list %}
+              {% for ann in open_announcements_list %}
+              <div class="ks-activity-item">
+                <div class="dot" style="background: var(--ks-green);"></div>
+                <div class="text" style="flex: 1;">
+                  <strong>{{ ann.title|truncatechars:60 }}</strong>
+                  <div class="time">Deadline: {{ ann.application_deadline|date:"M j, Y" }} · {{ ann.applications_count }} applicant{% if ann.applications_count != 1 %}s{% endif %}</div>
+                </div>
+              </div>
+              {% endfor %}
+              {% else %}
+              <p style="color: var(--ks-text-muted); font-size: 0.85rem; text-align: center; padding: 10px;">No open announcements.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </main>
+
+  <script>
+  function toggleSidebar() {
+    document.getElementById('ks-sidebar').classList.toggle('open');
+    document.getElementById('ks-overlay').classList.toggle('show');
+  }
+  document.getElementById('ks-overlay').addEventListener('click', function() {
+    document.getElementById('ks-sidebar').classList.remove('open');
+    this.classList.remove('show');
+  });
+  </script>
+  <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

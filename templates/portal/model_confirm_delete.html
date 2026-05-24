@@ -1,0 +1,55 @@
+{% extends 'portal/dashboard.html' %}
+{% load static %}
+
+{% block portal_title %}Delete {{ meta.label }} - KianvoSoft Portal{% endblock %}
+
+{% block portal_content %}
+<style>
+.ks-del-card {
+  max-width: 480px; margin: 40px auto;
+  padding: 40px 35px; text-align: center;
+  background: rgba(10,14,26,0.6); backdrop-filter: blur(10px);
+  border: 1px solid rgba(220,53,69,0.15); border-radius: 14px;
+}
+.ks-del-card i.warn {
+  font-size: 48px; color: rgba(220,53,69,0.3); margin-bottom: 15px; display: block;
+}
+.ks-del-card h4 { color: white; font-family: 'Outfit', sans-serif; margin-bottom: 6px; }
+.ks-del-card p { color: rgba(255,255,255,0.4); font-size: 0.9rem; margin-bottom: 20px; }
+.ks-del-card .obj-name {
+  background: rgba(220,53,69,0.06); border: 1px solid rgba(220,53,69,0.15);
+  border-radius: 8px; padding: 10px 16px; color: #ff6b6b; font-weight: 500;
+  margin-bottom: 24px; display: inline-block;
+}
+.ks-btn-danger {
+  padding: 10px 28px; border: none; border-radius: 8px;
+  background: linear-gradient(135deg, #dc3545, #b91c1c);
+  color: white; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
+}
+.ks-btn-danger:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(220,53,69,0.25); }
+.ks-btn-cancel-del {
+  padding: 10px 24px; border-radius: 8px; font-size: 0.9rem;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.4); text-decoration: none; transition: all 0.2s;
+}
+.ks-btn-cancel-del:hover { border-color: rgba(255,255,255,0.15); color: white; }
+</style>
+
+<div class="ks-del-card">
+  <i class="fas fa-exclamation-triangle warn"></i>
+  <h4>Delete {{ meta.label }}</h4>
+  <p>This action cannot be undone. Are you sure you want to delete the following {{ meta.label|lower }}?</p>
+  <div class="obj-name">
+    <i class="fas fa-trash-alt me-2"></i>
+    {{ obj }}
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    <div class="d-flex gap-3 justify-content-center">
+      <button type="submit" class="ks-btn-danger"><i class="fas fa-trash me-1"></i>Yes, Delete</button>
+      <a href="{% url 'portal_list' model_name %}" class="ks-btn-cancel-del">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

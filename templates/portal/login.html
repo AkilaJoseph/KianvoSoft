@@ -1,0 +1,446 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Portal - KianvoSoft</title>
+  <link rel="icon" type="image/png" href="{% static 'assets/img/favicon-1.png' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/all.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/sass/style.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/futuristic.css' %}">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #080c16;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ---------- animated background ---------- */
+    .ks-bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .ks-bg-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .ks-bg-glow .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.12;
+      animation: orbDrift 14s ease-in-out infinite;
+    }
+    .ks-bg-glow .orb:nth-child(1) {
+      width: 500px; height: 500px;
+      background: #00f0ff;
+      top: -15%; left: -10%;
+      animation-delay: 0s;
+    }
+    .ks-bg-glow .orb:nth-child(2) {
+      width: 420px; height: 420px;
+      background: #8b5cf6;
+      bottom: -15%; right: -10%;
+      animation-delay: -5s;
+    }
+    .ks-bg-glow .orb:nth-child(3) {
+      width: 280px; height: 280px;
+      background: #10b981;
+      bottom: 25%; left: 50%;
+      transform: translateX(-50%);
+      animation-delay: -10s;
+    }
+    @keyframes orbDrift {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      25% { transform: translate(40px,-30px) scale(1.08); }
+      50% { transform: translate(-20px,20px) scale(0.95); }
+      75% { transform: translate(30px,30px) scale(1.04); }
+    }
+
+    /* ---------- particle canvas ---------- */
+    #ks-particles {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ---------- card ---------- */
+    .ks-login-card {
+      position: relative;
+      z-index: 2;
+      width: 420px;
+      max-width: 92vw;
+      padding: 44px 36px 38px;
+      background: rgba(8,12,22,0.88);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(0,240,255,0.1);
+      border-radius: 18px;
+      box-shadow:
+        0 24px 80px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(0,240,255,0.04) inset,
+        0 0 60px rgba(0,240,255,0.03);
+    }
+    /* subtle border-glow pulse */
+    .ks-login-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 19px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(0,240,255,0.15), transparent 40%, transparent 60%, rgba(139,92,246,0.12));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* ---------- logo ---------- */
+    .ks-login-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .ks-login-logo .logo-ring {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(139,92,246,0.15));
+      border: 1.5px solid rgba(0,240,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(0,240,255,0.06);
+      transition: box-shadow 0.4s;
+    }
+    .ks-login-logo .logo-ring img {
+      height: 34px;
+      filter: brightness(1.1);
+    }
+    .ks-login-logo h2 {
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      margin: 0;
+    }
+    .ks-login-logo p {
+      color: rgba(255,255,255,0.3);
+      font-size: 0.82rem;
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    /* ---------- input fields ---------- */
+    .ks-input-wrap {
+      display: flex;
+      align-items: center;
+      margin-bottom: 14px;
+      background: #060a14;
+      border: 1.5px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+      transition: all 0.3s ease;
+    }
+    .ks-input-wrap:focus-within {
+      border-color: #00f0ff;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,240,255,0.1), 0 0 28px rgba(0,240,255,0.05);
+    }
+    .ks-input-icon {
+      flex: 0 0 auto;
+      width: 44px;
+      text-align: center;
+      color: rgba(255,255,255,0.1);
+      font-size: 0.95rem;
+      transition: color 0.35s ease;
+      line-height: 1;
+    }
+    .ks-input-wrap:focus-within .ks-input-icon {
+      color: #00f0ff;
+    }
+    .ks-login-input {
+      flex: 1 1 auto;
+      width: 1%;
+      padding: 14px 12px 14px 0 !important;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      color: #fff !important;
+      font-size: 0.95rem !important;
+      font-family: 'Inter', sans-serif !important;
+      font-weight: 400 !important;
+      letter-spacing: 0.3px;
+      box-shadow: none !important;
+      outline: none !important;
+      -webkit-appearance: none;
+      appearance: none;
+      min-width: 0;
+    }
+    .ks-login-input::placeholder {
+      color: rgba(255,255,255,0.1) !important;
+      font-weight: 300;
+      font-size: 0.9rem;
+      opacity: 1;
+    }
+    .ks-login-input:-webkit-autofill,
+    .ks-login-input:-webkit-autofill:hover,
+    .ks-login-input:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 1000px #060a14 inset !important;
+      -webkit-text-fill-color: #fff !important;
+      caret-color: #fff;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
+    /* ---------- password visibility toggle ---------- */
+    .ks-pw-toggle {
+      flex: 0 0 auto;
+      background: none !important;
+      border: none !important;
+      color: rgba(255,255,255,0.12);
+      cursor: pointer;
+      padding: 6px 14px 6px 6px;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      line-height: 1;
+      outline: none !important;
+    }
+    .ks-pw-toggle:hover {
+      color: rgba(255,255,255,0.35);
+    }
+    .ks-input-wrap:focus-within .ks-pw-toggle {
+      color: rgba(0,240,255,0.35);
+    }
+
+    /* ---------- button ---------- */
+    .ks-login-btn-wrap {
+      position: relative;
+      margin-top: 6px;
+    }
+    .ks-login-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      color: #0b0f1a;
+      background: linear-gradient(135deg, #00f0ff 0%, #1a8aff 100%);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 24px rgba(0,240,255,0.2);
+      text-shadow: 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .ks-login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(0,240,255,0.35);
+    }
+    .ks-login-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 16px rgba(0,240,255,0.2);
+    }
+    .ks-login-btn i {
+      margin-right: 8px;
+    }
+    .ks-login-btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 10px;
+      background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.12) 50%, transparent 70%);
+      background-size: 200% 100%;
+      animation: btnShimmer 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes btnShimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ---------- messages ---------- */
+    .ks-msg {
+      border-radius: 10px;
+      padding: 11px 15px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1.4;
+    }
+    .ks-msg.error {
+      background: rgba(220,53,69,0.08);
+      border: 1px solid rgba(220,53,69,0.2);
+      color: #ff6b6b;
+    }
+    .ks-msg.success {
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.2);
+      color: #34d399;
+    }
+
+    /* ---------- footer ---------- */
+    .ks-login-footer {
+      text-align: center;
+      margin-top: 22px;
+    }
+    .ks-login-footer a {
+      color: rgba(255,255,255,0.2);
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ks-login-footer a:hover {
+      color: #00f0ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="ks-bg-grid"></div>
+  <div class="ks-bg-glow">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+  <canvas id="ks-particles"></canvas>
+
+  <div class="ks-login-card animate__animated animate__fadeInUp">
+    <div class="ks-login-logo">
+      <div class="logo-ring">
+        <img src="{% static 'assets/img/brand/logo.png' %}" alt="KianvoSoft">
+      </div>
+      <h2>Admin Portal</h2>
+      <p>Sign in to manage your website</p>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="ks-msg {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+      <i class="fas {% if message.tags == 'error' %}fa-exclamation-circle{% else %}fa-check-circle{% endif %}"></i>
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <form method="post" autocomplete="off">
+      {% csrf_token %}
+
+      <div class="ks-input-wrap">
+        <span class="ks-input-icon"><i class="fas fa-user"></i></span>
+        <input class="ks-login-input" type="text" name="username" placeholder="Enter your username" required autofocus>
+      </div>
+
+      <div class="ks-input-wrap">
+        <span class="ks-input-icon"><i class="fas fa-lock"></i></span>
+        <input class="ks-login-input" type="password" name="password" id="ks-password" placeholder="Enter your password" required>
+        <button type="button" class="ks-pw-toggle" id="ks-pw-toggle" tabindex="-1" aria-label="Toggle password visibility">
+          <i class="far fa-eye" id="ks-pw-icon"></i>
+        </button>
+      </div>
+
+      <div class="ks-login-btn-wrap">
+        <button type="submit" class="ks-login-btn">
+          <i class="fas fa-arrow-right-to-bracket"></i>Sign In
+        </button>
+      </div>
+    </form>
+
+    <div class="ks-login-footer">
+      <a href="{% url 'home' %}"><i class="fas fa-arrow-left"></i>Back to Website</a>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    /* ---- particles ---- */
+    var canvas = document.getElementById('ks-particles');
+    var ctx = canvas.getContext('2d');
+    var particles = [];
+    var count = 50;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function Particle() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.35;
+      this.vy = (Math.random() - 0.5) * 0.35;
+      this.r = Math.random() * 1.6 + 0.3;
+      this.o = Math.random() * 0.3 + 0.1;
+    }
+    for (var i = 0; i < count; i++) particles.push(new Particle());
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 240, 255, ' + p.o + ')';
+        ctx.fill();
+        for (var j = i + 1; j < particles.length; j++) {
+          var dx = p.x - particles[j].x;
+          var dy = p.y - particles[j].y;
+          var d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 120) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = 'rgba(0, 240, 255, ' + ((0.08 - d/1500) * p.o) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    /* ---- password toggle ---- */
+    var pwInput = document.getElementById('ks-password');
+    var pwToggle = document.getElementById('ks-pw-toggle');
+    var pwIcon = document.getElementById('ks-pw-icon');
+
+    pwToggle.addEventListener('click', function() {
+      var type = pwInput.type === 'password' ? 'text' : 'password';
+      pwInput.type = type;
+      pwIcon.className = type === 'password' ? 'far fa-eye' : 'far fa-eye-slash';
+    });
+  });
+  </script>
+</body>
+</html>

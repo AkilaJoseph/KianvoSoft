@@ -132,6 +132,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Silence django-ckeditor's CKEditor 4 advisory (non-functional warning)
+LOGIN_URL = '/portal/login/'
+LOGIN_REDIRECT_URL = '/portal/dashboard/'
+LOGOUT_REDIRECT_URL = '/portal/login/'
+
 SILENCED_SYSTEM_CHECKS = ['ckeditor.W001']
 
 # CKEditor Configuration

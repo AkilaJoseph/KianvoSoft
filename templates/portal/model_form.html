@@ -1,0 +1,132 @@
+{% extends 'portal/dashboard.html' %}
+{% load static %}
+
+{% block portal_title %}{% if is_edit %}Edit{% else %}New{% endif %} {{ meta.label }} - KianvoSoft Portal{% endblock %}
+
+{% block portal_content %}
+<style>
+.ks-form-wrap { max-width: 800px; }
+.ks-form-group { margin-bottom: 20px; }
+.ks-form-label {
+  display: block; color: rgba(255,255,255,0.5); font-size: 0.8rem;
+  font-weight: 500; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.ks-form-input, .ks-form-wrap input[type="text"], .ks-form-wrap input[type="email"],
+.ks-form-wrap input[type="number"], .ks-form-wrap input[type="url"], .ks-form-wrap input[type="date"],
+.ks-form-wrap input[type="datetime-local"], .ks-form-wrap input[type="tel"],
+.ks-form-wrap textarea, .ks-form-wrap select {
+  width: 100%; padding: 10px 14px; border-radius: 8px;
+  background: rgba(0,0,0,0.3); border: 1px solid rgba(0,240,255,0.1);
+  color: white; font-size: 0.9rem; font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+}
+.ks-form-wrap textarea { min-height: 90px; resize: vertical; }
+.ks-form-wrap select { cursor: pointer; }
+.ks-form-wrap input:focus, .ks-form-wrap textarea:focus, .ks-form-wrap select:focus {
+  outline: none; border-color: #00f0ff;
+  box-shadow: 0 0 15px rgba(0,240,255,0.06);
+}
+.ks-form-wrap input[type="checkbox"] {
+  width: 18px; height: 18px; accent-color: #00f0ff; cursor: pointer;
+}
+.ks-form-wrap .checkbox-group {
+  display: flex; align-items: center; gap: 8px; padding: 6px 0;
+}
+.ks-form-wrap .helptext {
+  display: block; color: rgba(255,255,255,0.2); font-size: 0.75rem; margin-top: 4px;
+}
+.ks-form-wrap .errorlist {
+  list-style: none; padding: 0; margin: 0 0 4px;
+}
+.ks-form-wrap .errorlist li {
+  color: #ff6b6b; font-size: 0.8rem;
+}
+.ks-form-wrap .error input, .ks-form-wrap .error textarea, .ks-form-wrap .error select {
+  border-color: rgba(220,53,69,0.4);
+}
+.ks-img-preview {
+  max-width: 120px; max-height: 80px; border-radius: 6px;
+  border: 1px solid rgba(0,240,255,0.1); margin-top: 6px;
+}
+.ks-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .ks-form-row { grid-template-columns: 1fr; } }
+.ks-btn-save {
+  padding: 11px 30px; border: none; border-radius: 8px;
+  background: linear-gradient(135deg, #00f0ff, #1a7aff);
+  color: #080c16; font-size: 0.95rem; font-weight: 600; font-family: 'Inter', sans-serif;
+  cursor: pointer; transition: all 0.3s;
+}
+.ks-btn-save:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(0,240,255,0.25); }
+.ks-btn-cancel {
+  padding: 11px 24px; border-radius: 8px; font-size: 0.9rem;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.4); text-decoration: none; transition: all 0.2s;
+}
+.ks-btn-cancel:hover { border-color: rgba(255,255,255,0.15); color: white; }
+</style>
+
+<div class="d-flex align-items-center gap-3 mb-4">
+  <a href="{% url 'portal_list' model_name %}" style="color:rgba(255,255,255,0.3);font-size:1.1rem;"><i class="fas fa-arrow-left"></i></a>
+  <h4 style="color:white;font-family:'Outfit',sans-serif;font-weight:600;margin:0;">
+    <i class="{{ meta.icon }} me-2" style="color:#00f0ff;"></i>
+    {% if is_edit %}Edit{% else %}New{% endif %} {{ meta.label }}
+  </h4>
+</div>
+
+<div class="ks-form-wrap">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div style="background:rgba(220,53,69,0.08);border:1px solid rgba(220,53,69,0.2);border-radius:8px;padding:10px 14px;color:#ff6b6b;font-size:0.85rem;margin-bottom:16px;">
+      {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+
+    {% for field in form %}
+    <div class="ks-form-group {% if field.errors %}error{% endif %}">
+      <label class="ks-form-label" for="{{ field.id_for_label }}">
+        {{ field.label }}{% if field.field.required %} <span style="color:#ff6b6b;">*</span>{% endif %}
+      </label>
+
+      {% if field.field.widget.input_type == 'checkbox' %}
+      <div class="checkbox-group">
+        {{ field }}
+        <span style="color:rgba(255,255,255,0.7);font-size:0.9rem;">{{ field.label }}</span>
+      </div>
+
+      {% elif field.name in meta.img %}
+        {% if field.value and not field.errors %}
+        <div>
+          <img src="{{ field.value.url }}" class="ks-img-preview" alt="">
+        </div>
+        {% endif %}
+        {{ field }}
+
+      {% elif 'CKEditor' in field.field.widget|safe %}
+        <div style="border: 1px solid rgba(0,240,255,0.1); border-radius: 8px; overflow: hidden;">
+          {{ field }}
+        </div>
+
+      {% else %}
+        {{ field }}
+      {% endif %}
+
+      {% if field.help_text and field.help_text != '' %}
+      <span class="helptext">{{ field.help_text|safe }}</span>
+      {% endif %}
+      {% if field.errors %}
+      <ul class="errorlist">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="d-flex gap-3 mt-4">
+      <button type="submit" class="ks-btn-save">
+        <i class="fas fa-save me-1"></i>{% if is_edit %}Save Changes{% else %}Create {{ meta.label }}{% endif %}
+      </button>
+      <a href="{% url 'portal_list' model_name %}" class="ks-btn-cancel">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'portal/dashboard.html' %}
+{% load static %}
+
+{% block portal_title %}{{ obj }} - {{ meta.label }} - KianvoSoft Portal{% endblock %}
+
+{% block portal_content %}
+<style>
+.ks-detail-card {
+  max-width: 720px; padding: 30px 35px;
+  background: rgba(10,14,26,0.5); border: 1px solid rgba(0,240,255,0.08); border-radius: 12px;
+}
+.ks-detail-row {
+  display: flex; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.ks-detail-row:last-child { border-bottom: none; }
+.ks-detail-label {
+  width: 180px; flex-shrink: 0; color: rgba(255,255,255,0.3);
+  font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px;
+}
+.ks-detail-value { color: rgba(255,255,255,0.75); font-size: 0.9rem; word-break: break-word; }
+.ks-detail-value img { max-width: 200px; max-height: 120px; border-radius: 6px; margin-top: 4px; }
+.ks-extra-item { padding: 4px 0; }
+.ks-extra-item strong { color: rgba(255,255,255,0.4); font-size: 0.8rem; display: block; }
+.ks-extra-item span { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+</style>
+
+<div class="d-flex align-items-center gap-3 mb-4 flex-wrap">
+  <a href="{% url 'portal_list' model_name %}" style="color:rgba(255,255,255,0.3);font-size:1.1rem;"><i class="fas fa-arrow-left"></i></a>
+  <h4 style="color:white;font-family:'Outfit',sans-serif;font-weight:600;margin:0;">
+    <i class="{{ meta.icon }} me-2" style="color:#00f0ff;"></i>
+    {{ obj }}
+  </h4>
+  <a href="{% url 'portal_update' model_name obj.pk %}" class="ks-action-btn-sm ks-btn-edit" style="padding:5px 14px;font-size:0.82rem;text-decoration:none;">
+    <i class="fas fa-pen me-1"></i>Edit
+  </a>
+</div>
+
+<div class="ks-detail-card">
+  {% for field in fields %}
+  <div class="ks-detail-row">
+    <div class="ks-detail-label">{{ field.label }}</div>
+    <div class="ks-detail-value">
+      {% if field.type == 'extra' %}
+        {% for item in field.extra_items %}
+        <div class="ks-extra-item">
+          <strong>{{ item.label }}</strong>
+          <span>{{ item.value }}</span>
+        </div>
+        {% endfor %}
+      {% elif field.img_url %}
+        <img src="{{ field.img_url }}" alt="">
+      {% elif field.type == 'BooleanField' or field.type == 'NullBooleanField' %}
+        {% if field.value == 'Yes' %}<span class="ks-badge ks-badge-green">Yes</span>
+        {% else %}<span class="ks-badge ks-badge-gray">No</span>{% endif %}
+      {% elif field.type == 'JSONField' %}
+        {{ field.value }}
+      {% else %}
+        {{ field.value|linebreaksbr }}
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="d-flex gap-2 mt-4">
+  <a href="{% url 'portal_update' model_name obj.pk %}" class="ks-action-btn-sm ks-btn-edit" style="padding:8px 20px;font-size:0.85rem;text-decoration:none;">
+    <i class="fas fa-pen me-1"></i>Edit
+  </a>
+  <a href="{% url 'portal_delete' model_name obj.pk %}" class="ks-action-btn-sm ks-btn-del" style="padding:8px 20px;font-size:0.85rem;text-decoration:none;">
+    <i class="fas fa-trash me-1"></i>Delete
+  </a>
+</div>
+{% endblock %}

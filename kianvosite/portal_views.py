@@ -7,6 +7,7 @@ from django.db.models import Count
 from django.utils import timezone
 from django.urls import reverse
 from django.core.paginator import Paginator
+from django.utils.html import format_html, mark_safe
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from .models import (
     Project, ProjectCategory, Service, Testimonial,
@@ -15,6 +16,105 @@ from .models import (
     AnnouncementApplication, GalleryImage, GalleryCategory,
     RoadmapMilestone, ProductImage
 )
+
+# ---------------------------------------------------------------------------
+#  Icon picker
+# ---------------------------------------------------------------------------
+
+ICON_CHOICES = [
+    # ── Flaticon (Bantec theme) ──
+    ('flaticon-software-development', 'Software Development'),
+    ('flaticon-web-research', 'Web Research'),
+    ('flaticon-data-scientist', 'Data Scientist'),
+    ('flaticon-consultant', 'Consultant'),
+    ('flaticon-satellite-signal', 'Satellite / Connectivity'),
+    ('flaticon-cyber-security', 'Cyber Security'),
+    ('flaticon-database', 'Database'),
+    ('flaticon-cloud-computing', 'Cloud Computing'),
+    ('flaticon-cloud-storage', 'Cloud Storage'),
+    ('flaticon-mobile-phone-1', 'Mobile Phone'),
+    ('flaticon-mobile-app', 'Mobile App'),
+    ('flaticon-mobile-data', 'Mobile Data'),
+    ('flaticon-iphone-1', 'iPhone'),
+    ('flaticon-laptop-1', 'Laptop'),
+    ('flaticon-imac-computer', 'iMac / Desktop'),
+    ('flaticon-computer-mouse', 'Computer Mouse'),
+    ('flaticon-global-network', 'Global Network'),
+    ('flaticon-radio-tower', 'Radio Tower'),
+    ('flaticon-it', 'IT Service'),
+    ('flaticon-it-service', 'IT Service Alt'),
+    ('flaticon-machine-repair', 'Machine Repair'),
+    ('flaticon-rocket', 'Rocket / Launch'),
+    ('flaticon-eye', 'Eye / Vision'),
+    ('flaticon-idea', 'Idea / Innovation'),
+    ('flaticon-good-feedback', 'Good Feedback'),
+    ('flaticon-telephone-call', 'Telephone Call'),
+    ('flaticon-phone-call', 'Phone Call'),
+    ('flaticon-phone-call-1', 'Phone Call Alt'),
+    ('flaticon-email', 'Email'),
+    ('flaticon-mail', 'Mail'),
+    ('flaticon-location', 'Location'),
+    ('flaticon-clock', 'Clock'),
+    ('flaticon-loupe', 'Search / Loupe'),
+    ('flaticon-incoming-message', 'Incoming Message'),
+    ('flaticon-twitter', 'Twitter'),
+    ('flaticon-instagram', 'Instagram'),
+    # ── Font Awesome Solid ──
+    ('fas fa-code', 'Code (FA)'),
+    ('fas fa-laptop-code', 'Laptop Code (FA)'),
+    ('fas fa-server', 'Server (FA)'),
+    ('fas fa-cogs', 'Cogs (FA)'),
+    ('fas fa-cog', 'Cog (FA)'),
+    ('fas fa-cloud', 'Cloud (FA)'),
+    ('fas fa-database', 'Database (FA)'),
+    ('fas fa-shield-alt', 'Shield (FA)'),
+    ('fas fa-mobile-alt', 'Mobile (FA)'),
+    ('fas fa-tablet-alt', 'Tablet (FA)'),
+    ('fas fa-chart-line', 'Chart Line (FA)'),
+    ('fas fa-chart-bar', 'Chart Bar (FA)'),
+    ('fas fa-user-graduate', 'Graduate (FA)'),
+    ('fas fa-chalkboard-teacher', 'Teacher (FA)'),
+    ('fas fa-hands-helping', 'Helping Hands (FA)'),
+    ('fas fa-rocket', 'Rocket (FA)'),
+    ('fas fa-lightbulb', 'Lightbulb (FA)'),
+    ('fas fa-globe', 'Globe (FA)'),
+    ('fas fa-wifi', 'WiFi (FA)'),
+    ('fas fa-brain', 'Brain (FA)'),
+    ('fas fa-robot', 'Robot (FA)'),
+    ('fas fa-network-wired', 'Network (FA)'),
+    ('fas fa-paint-brush', 'Design (FA)'),
+    ('fas fa-layer-group', 'Layers (FA)'),
+]
+
+class IconPickerWidget(forms.Widget):
+    def render(self, name, value, attrs=None, renderer=None):
+        value = value or ''
+        input_id = attrs.get('id', name) if attrs else name
+        icon_blocks = []
+        for icon_class, label in ICON_CHOICES:
+            sel = ' ks-icon-sel' if icon_class == value else ''
+            icon_blocks.append(
+                '<div class="ks-icon-opt%s" data-val="%s" title="%s">'
+                '<i class="%s"></i></div>' % (sel, icon_class, label, icon_class)
+            )
+        hidden = '<input type="hidden" name="%s" id="%s" value="%s">' % (name, input_id, value)
+        grid = '<div class="ks-icon-grid" data-target="%s">%s</div>' % (input_id, ''.join(icon_blocks))
+        script = (
+            '<script>'
+            '(function(){'
+            'var g=document.querySelector(\'.ks-icon-grid[data-target="%s"]\');'
+            'if(!g)return;'
+            'g.addEventListener("click",function(e){'
+            'var o=e.target.closest(".ks-icon-opt");'
+            'if(!o)return;'
+            'g.querySelectorAll(".ks-icon-opt").forEach(function(x){x.classList.remove("ks-icon-sel");});'
+            'o.classList.add("ks-icon-sel");'
+            'document.getElementById("%s").value=o.getAttribute("data-val");'
+            '});'
+            '})();'
+            '</script>'
+        ) % (input_id, input_id)
+        return mark_safe(hidden + grid + script)
 
 # ---------------------------------------------------------------------------
 #  Auth
@@ -44,6 +144,7 @@ def portal_logout(request):
 def _stats():
     return {
         'total_projects': Project.objects.filter(is_active=True).count(),
+        'total_product_images': ProductImage.objects.count(),
         'total_services': Service.objects.filter(is_active=True).count(),
         'total_blog_posts': BlogPost.objects.filter(is_published=True).count(),
         'total_inquiries': ContactInquiry.objects.count(),
@@ -64,6 +165,7 @@ def _stats():
 SIDEBAR = [
     {'name':'Content', 'links':[
         ('Projects','fas fa-code','projects','total_projects'),
+        ('Product Images','fas fa-images','productimages','total_product_images'),
         ('Services','fas fa-cogs','services','total_services'),
         ('Blog Posts','fas fa-newspaper','blogposts','total_blog_posts'),
         ('Testimonials','fas fa-quote-right','testimonials','total_testimonials'),
@@ -117,7 +219,15 @@ REGISTRY = {
         'search': ['name','tagline','description'],
         'filter_map': {'category': ProjectCategory, 'status': None, 'is_active': None},
         'order': ['order'],
-        'img': ['thumbnail'],
+        'img': ['thumbnail', 'screenshot_1', 'screenshot_2', 'screenshot_3', 'banner_image'],
+    },
+    'productimages': {
+        'model': ProductImage, 'icon': 'fas fa-images', 'label': 'Product Image',
+        'list': ['project','caption','is_featured','order'],
+        'search': ['caption'],
+        'filter_map': {'project': Project, 'is_featured': None},
+        'order': ['-is_featured','order'],
+        'img': ['image'],
     },
     'categories': {
         'model': ProjectCategory, 'icon': 'fas fa-tag', 'label': 'Category',
@@ -248,6 +358,12 @@ def _build_form(model, meta, data=None, files=None, instance=None):
     if 'ckeditor' in meta:
         for fname in meta['ckeditor']:
             widgets[fname] = CKEditorUploadingWidget(config_name='blog')
+
+    # Detect icon_class fields — use the visual icon picker
+    for f in model._meta.fields:
+        if f.name == 'icon_class':
+            widgets[f.name] = IconPickerWidget()
+            break
 
     FormClass = forms.modelform_factory(
         meta['model'],

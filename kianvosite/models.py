@@ -57,6 +57,7 @@ class Project(models.Model):
     demo_username = models.CharField(max_length=100, blank=True, help_text="Demo login username")
     demo_password = models.CharField(max_length=100, blank=True, help_text="Demo login password")
     documentation_url = models.URLField(blank=True, null=True)
+    github_url = models.URLField(blank=True, null=True, help_text="Source code / GitHub link")
 
     # Status & Links
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='completed')

@@ -16,17 +16,36 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+# ---------------------------------------------------------------------------
+# Environment detection
+# ---------------------------------------------------------------------------
+# Set DJANGO_ENV=production on cPanel (done in passenger_wsgi.py).
+# Leave it unset locally and DEBUG stays True automatically.
+_ENV = os.environ.get('DJANGO_ENV', 'development')
+IS_PRODUCTION = (_ENV == 'production')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-y)@x+!u7k5xb3*tl$o*-@w&t4s!%%!!dz%699)r*pzxp(!533s'
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-y)@x+!u7k5xb3*tl$o*-@w&t4s!%%!!dz%699)r*pzxp(!533s'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not IS_PRODUCTION
 
 ALLOWED_HOSTS = ['kianvosoft.com', 'www.kianvosoft.com', 'localhost', '127.0.0.1']
+
+# ---------------------------------------------------------------------------
+# Production-only security settings
+# ---------------------------------------------------------------------------
+if IS_PRODUCTION:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 
 # Application definition
@@ -124,11 +143,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+# STATIC_ROOT is where collectstatic copies files for production serving.
+# On cPanel, run: python manage.py collectstatic --noinput
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files (User uploads)
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
@@ -154,7 +176,7 @@ EMAIL_HOST = 'mail.kianvosoft.com'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'info@kianvosoft.com'
-EMAIL_HOST_PASSWORD = 'Kianvo@2026'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'Kianvo@2026')
 DEFAULT_FROM_EMAIL = 'KianvoSoft <info@kianvosoft.com>'
 SERVER_EMAIL = 'info@kianvosoft.com'
 ADMINS = [('Admin', 'admin@kianvosoft.com')]

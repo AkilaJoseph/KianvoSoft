@@ -171,11 +171,12 @@ SIDEBAR = [
     {'name':'Content', 'links':[
         ('Projects','fas fa-code','projects','total_projects'),
         ('Product Images','fas fa-images','productimages','total_product_images'),
+        ('Project Categories','fas fa-tag','categories','total_categories'),
         ('Services','fas fa-cogs','services','total_services'),
         ('Blog Posts','fas fa-newspaper','blogposts','total_blog_posts'),
+        ('Blog Categories','fas fa-tags','blogcategories',None),
         ('Testimonials','fas fa-quote-right','testimonials','total_testimonials'),
         ('Partner Logos','fas fa-handshake','partners','total_partners'),
-        ('Milestones','fas fa-road','milestones','total_milestones'),
     ]},
     {'name':'Team', 'links':[
         ('Team Members','fas fa-users','teammembers','total_team'),

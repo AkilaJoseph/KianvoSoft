@@ -1,6 +1,31 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block title %}{{ announcement.title }} - KianvoSoft{% endblock title %}
+
+{% block seo_meta %}
+<meta name="description" content="{{ announcement.short_description|truncatechars:155 }}">
+<meta property="og:title" content="{{ announcement.title }} — KianvoSoft">
+<meta property="og:description" content="{{ announcement.short_description|truncatechars:155 }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+{% if announcement.cover_image %}<meta property="og:image" content="{{ SITE_URL }}{{ announcement.cover_image.url }}">{% endif %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ announcement.title }}">
+<meta name="twitter:description" content="{{ announcement.short_description|truncatechars:155 }}">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "{{ announcement.title }}",
+  "description": "{{ announcement.short_description }}",
+  "startDate": "{{ announcement.start_date|date:'c' }}",
+  "organizer": { "@type": "Organization", "name": "KianvoSoft", "url": "{{ SITE_URL }}" },
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/{% if announcement.mode == 'Online' %}OnlineEventAttendanceMode{% else %}OfflineEventAttendanceMode{% endif %}"
+}
+</script>
+{% endblock seo_meta %}
+
 {% block content %}
 
 <style>

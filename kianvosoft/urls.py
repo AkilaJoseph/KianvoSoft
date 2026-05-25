@@ -15,11 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
-from django.views.generic.base import RedirectView
+from django.views.static import serve
 from django.http import HttpResponse
 from kianvosite.sitemaps import sitemaps
 
@@ -31,10 +31,10 @@ urlpatterns = [
         'User-agent: *\nDisallow: /admin/\nDisallow: /portal/\nAllow: /\n\nSitemap: https://kianvosoft.com/sitemap.xml\n',
         content_type='text/plain'
     )),
+    # Serve uploaded media files in both dev and production
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     path('', include('kianvosite.urls')),
 ]
 
-# Serve media/static files in development; in production Apache handles them
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

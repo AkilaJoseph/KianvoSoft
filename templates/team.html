@@ -99,17 +99,11 @@
                 <i class="{{ member.icon_class|default:'fas fa-user' }}" style="font-size:48px;color:rgba(0,240,255,0.3);"></i>
               </div>
               {% endif %}
-              <div class="ks-team-overlay">
-                <div class="ks-team-socials">
-                  {% if member.linkedin_url %}
-                  <a href="{{ member.linkedin_url }}" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                  {% endif %}
-                  {% if member.github_url %}
-                  <a href="{{ member.github_url }}" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                  {% endif %}
-                  {% if member.portfolio_url %}
-                  <a href="{{ member.portfolio_url }}" target="_blank" title="Portfolio"><i class="fas fa-globe"></i></a>
-                  {% endif %}
+              <div class="ks-team-overlay" style="align-items: center; background: linear-gradient(0deg, rgba(10,14,26,0.85) 0%, rgba(10,14,26,0.4) 100%);">
+                <div style="text-align: center; padding: 10px;">
+                  <span style="display: inline-block; padding: 4px 14px; border-radius: 20px; background: rgba(0,240,255,0.15); color: var(--ks-primary); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(0,240,255,0.25);">
+                    <i class="fas fa-chevron-circle-right me-1"></i>Leadership
+                  </span>
                 </div>
               </div>
             </div>

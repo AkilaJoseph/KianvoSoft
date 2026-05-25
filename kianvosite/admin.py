@@ -6,9 +6,9 @@ from .models import (
     ProjectCategory, Project, Service, Testimonial,
     BlogCategory, BlogPost, ContactInquiry,
     NewsletterSubscriber, CompanyStat, Partner,
-    TeamMember, ProductImage,
+    TeamMember, ProductImage, SocialLink,
     GalleryCategory, GalleryImage, Announcement,
-    AnnouncementApplication
+    AnnouncementApplication, HeroSlide, ActiveProduct
 )
 
 
@@ -380,3 +380,41 @@ class AnnouncementApplicationAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
+
+
+# Social Link Admin
+@admin.register(SocialLink)
+class SocialLinkAdmin(admin.ModelAdmin):
+    list_display = ['platform', 'icon_class', 'url', 'order', 'is_active']
+    list_filter = ['is_active']
+    search_fields = ['platform', 'url']
+    list_editable = ['order', 'is_active']
+    ordering = ['order', 'platform']
+
+
+# Hero Slide Admin
+@admin.register(HeroSlide)
+class HeroSlideAdmin(admin.ModelAdmin):
+    list_display = ['title', 'subtitle', 'is_active', 'order']
+    list_filter = ['is_active']
+    search_fields = ['title', 'subtitle', 'description']
+    list_editable = ['is_active', 'order']
+    ordering = ['order']
+
+
+# Active Product Admin
+@admin.register(ActiveProduct)
+class ActiveProductAdmin(admin.ModelAdmin):
+    list_display = ['name', 'category', 'project_link', 'is_featured', 'is_active', 'order']
+    list_filter = ['category', 'is_featured', 'is_active']
+    search_fields = ['name', 'short_description']
+    list_editable = ['is_featured', 'is_active', 'order']
+    ordering = ['category', 'order']
+
+    def project_link(self, obj):
+        if obj.project:
+            url = f'/portfolio/{obj.project.slug}/'
+            from django.utils.html import format_html
+            return format_html('<a href="{}" target="_blank">{}</a>', url, obj.project.name)
+        return '—'
+    project_link.short_description = 'Linked Project'

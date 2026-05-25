@@ -359,7 +359,7 @@ REGISTRY = {
     },
     'activeproducts': {
         'model': ActiveProduct, 'icon': 'fas fa-cube', 'label': 'Active Product',
-        'list': ['name','category','is_featured','is_active','order'],
+        'list': ['name','category','project','is_featured','is_active','order'],
         'search': ['name','short_description'],
         'filter_map': {'category': None, 'is_active': None},
         'order': ['category','order'],

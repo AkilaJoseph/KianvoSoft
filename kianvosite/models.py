@@ -505,6 +505,7 @@ class ActiveProduct(models.Model):
     image = models.ImageField(upload_to='active_products/', blank=True, null=True)
     icon_class = models.CharField(max_length=100, blank=True, help_text="Icon class for fallback display")
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='edtech')
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True, related_name='active_products', help_text="Link to Project detail page")
     is_featured = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     order = models.IntegerField(default=0)

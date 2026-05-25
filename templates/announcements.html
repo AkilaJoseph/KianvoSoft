@@ -87,11 +87,37 @@
     <div class="row g-4">
       {% for announce in open_announcements %}
       <div class="col-xl-6 col-lg-6">
-        <div class="ks-announce-card ks-reveal ks-reveal-delay-{{ forloop.counter }}">
-          <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
-            <span class="ks-announce-type ks-type-{{ announce.announcement_type }}">{{ announce.get_announcement_type_display }}</span>
-            <span class="ks-status-open">OPEN</span>
+        <div class="ks-announce-card ks-reveal ks-reveal-delay-{{ forloop.counter }}" style="position: relative;{% if announce.cover_image %} background-image: url('{{ announce.cover_image.url }}'); background-size: cover; background-position: center; background-blend-mode: overlay;{% endif %}">
+          <div style="position: absolute; inset: 0; background: rgba(10, 14, 26, 0.75); backdrop-filter: blur(4px); border-radius: 12px; pointer-events: none;{% if not announce.cover_image %} display: none;{% endif %}"></div>
+          <div style="position: relative; z-index: 1;">
+            <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+              <span class="ks-announce-type ks-type-{{ announce.announcement_type }}">{{ announce.get_announcement_type_display }}</span>
+              <span class="ks-status-open">OPEN</span>
+            </div>
+            <h4 style="color: white; margin-bottom: 10px;">
+              <a href="{% url 'announcement_detail' announce.slug %}" style="color: white; text-decoration: none;">{{ announce.title }}</a>
+            </h4>
+            <p style="color: var(--ks-text-muted); font-size: 0.9rem; margin-bottom: 15px;">{{ announce.short_description|truncatechars:150 }}</p>
+            <div class="d-flex flex-wrap gap-3 mb-3" style="font-size: 0.85rem; color: var(--ks-text-muted);">
+              <span><i class="far fa-calendar-alt me-1" style="color: var(--ks-primary);"></i>{{ announce.start_date|date:"M j, Y" }}</span>
+              {% if announce.mode %}
+              <span><i class="fas fa-map-marker-alt me-1" style="color: var(--ks-primary);"></i>{{ announce.mode }}</span>
+              {% endif %}
+              {% if announce.fee %}
+              <span><i class="fas fa-tag me-1" style="color: var(--ks-primary);"></i>{{ announce.fee }}</span>
+              {% endif %}
+            </div>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <span class="{% if announce.application_deadline < now %}text-muted{% else %}ks-deadline-urgent{% endif %}" style="font-size: 0.8rem;">
+                <i class="far fa-hourglass me-1"></i>Deadline: {{ announce.application_deadline|date:"M j, Y" }}
+              </span>
+              <a href="{% url 'announcement_detail' announce.slug %}" class="btn-one" style="padding: 6px 18px; font-size: 0.85rem;">
+                Apply Now <i class="fas fa-arrow-right ms-1"></i>
+              </a>
+            </div>
           </div>
+        </div>
+      </div>
           <h4 style="color: white; margin-bottom: 10px;">
             <a href="{% url 'announcement_detail' announce.slug %}" style="color: white; text-decoration: none;">{{ announce.title }}</a>
           </h4>
@@ -135,11 +161,31 @@
     <div class="row g-4">
       {% for announce in announcements %}
       <div class="col-xl-4 col-lg-6 col-md-6 d-flex align-items-stretch">
-        <div class="ks-announce-card ks-reveal ks-reveal-delay-{{ forloop.counter }}" style="width: 100%;">
-          <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
-            <span class="ks-announce-type ks-type-{{ announce.announcement_type }}">{{ announce.get_announcement_type_display }}</span>
-            <span class="{% if announce.status == 'open' %}ks-status-open{% else %}ks-status-closed{% endif %}">{{ announce.get_status_display|upper }}</span>
+        <div class="ks-announce-card ks-reveal ks-reveal-delay-{{ forloop.counter }}" style="width: 100%; position: relative; overflow: hidden;{% if announce.cover_image %} background-image: url('{{ announce.cover_image.url }}'); background-size: cover; background-position: center; background-blend-mode: overlay;{% endif %}">
+          <div style="position: absolute; inset: 0; background: rgba(10, 14, 26, 0.75); backdrop-filter: blur(4px); border-radius: 12px; pointer-events: none;{% if not announce.cover_image %} display: none;{% endif %}"></div>
+          <div style="position: relative; z-index: 1;">
+            <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+              <span class="ks-announce-type ks-type-{{ announce.announcement_type }}">{{ announce.get_announcement_type_display }}</span>
+              <span class="{% if announce.status == 'open' %}ks-status-open{% else %}ks-status-closed{% endif %}">{{ announce.get_status_display|upper }}</span>
+            </div>
+            <h5 style="color: white; margin-bottom: 8px;">
+              <a href="{% url 'announcement_detail' announce.slug %}" style="color: white; text-decoration: none;">{{ announce.title }}</a>
+            </h5>
+            <p style="color: var(--ks-text-muted); font-size: 0.85rem; margin-bottom: 12px;">{{ announce.short_description|truncatechars:120 }}</p>
+            <div class="d-flex flex-wrap gap-2 mb-2" style="font-size: 0.8rem; color: var(--ks-text-muted);">
+              <span><i class="far fa-calendar-alt me-1" style="color: var(--ks-primary);"></i>{{ announce.start_date|date:"M Y" }}</span>
+              {% if announce.mode %}
+              <span><i class="fas fa-map-marker-alt me-1" style="color: var(--ks-primary);"></i>{{ announce.mode }}</span>
+              {% endif %}
+            </div>
+            <div class="mt-auto">
+              <a href="{% url 'announcement_detail' announce.slug %}" style="color: var(--ks-primary); font-size: 0.85rem;">
+                View Details <i class="fas fa-arrow-right ms-1"></i>
+              </a>
+            </div>
           </div>
+        </div>
+      </div>
           <h5 style="color: white; margin-bottom: 8px;">
             <a href="{% url 'announcement_detail' announce.slug %}" style="color: white; text-decoration: none;">{{ announce.title }}</a>
           </h5>
@@ -149,6 +195,7 @@
             {% if announce.mode %}
             <span><i class="fas fa-map-marker-alt me-1" style="color: var(--ks-primary);"></i>{{ announce.mode }}</span>
             {% endif %}
+            {% if announce.fee %}
           </div>
           <div class="mt-auto">
             <a href="{% url 'announcement_detail' announce.slug %}" style="color: var(--ks-primary); font-size: 0.85rem;">

@@ -243,12 +243,12 @@
 					<div class="ks-project-image" style="background-image: url('{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/img/portfolio/portfolio-1.png' %}{% endif %}'); height: 160px;">
 						<span class="ks-project-category" style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);">{{ product.short_description|truncatechars:30 }}</span>
 					</div>
-					<div class="ks-project-content" style="flex-grow: 1;">
+					<div class="ks-project-content" style="flex-grow: 1; display: flex; flex-direction: column;">
 						<h4>{{ product.name }}</h4>
-						<p>{{ product.short_description }}</p>
+						<p style="flex-grow: 1;">{{ product.short_description }}</p>
 						{% if product.project %}
 						<div class="mt-auto pt-3">
-							<a href="{% url 'project_detail' product.project.slug %}" class="ks-project-link" style="color: var(--ks-primary); font-size: 0.85rem;">
+							<a href="{% url 'project_detail' product.project.slug %}" class="btn-one" style="display: block; text-align: center; padding: 8px 16px; font-size: 0.82rem;">
 								View Project Details <i class="fas fa-arrow-right ms-1"></i>
 							</a>
 						</div>
@@ -448,7 +448,7 @@
 			<div class="col-xl-7 col-lg-8 col-md-10">
 				<span class="subtitle-one ks-reveal">Our Team</span>
 				<h2 class="ks-reveal ks-reveal-delay-1">Meet the Founders</h2>
-				<p class="ks-reveal ks-reveal-delay-2">Three Computer Engineering students from Mbeya University of Science and Technology (MUST) — each leading a Directorate with equal authority.</p>
+				<p class="ks-reveal ks-reveal-delay-2">Meet the leadership behind KianvoSoft — co-founders who each head a dedicated Directorate, driving vision, strategy, and execution across every area of the business.</p>
 			</div>
 		</div>
 		<div class="row g-4 justify-content-center">
@@ -469,7 +469,6 @@
 								<div class="ks-home-socials">
 									{% if member.linkedin_url %}<a href="{{ member.linkedin_url }}" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>{% endif %}
 									{% if member.github_url %}<a href="{{ member.github_url }}" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>{% endif %}
-									
 									{% if member.portfolio_url %}<a href="{{ member.portfolio_url }}" target="_blank" title="Portfolio"><i class="fas fa-globe"></i></a>{% endif %}
 								</div>
 							</div>
@@ -509,8 +508,11 @@
 		<div class="row gy-4 justify-content-center">
 			{% for ann in open_announcements|slice:":3" %}
 			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="ks-project-card ks-reveal" style="height: 100%; display: flex; flex-direction: column; border-top: 3px solid var(--ks-cyan);{% if ann.cover_image %} background-image: url('{{ ann.cover_image.url }}'); background-size: cover; background-position: center; background-blend-mode: overlay;{% endif %}">
-					<div style="position: absolute; inset: 0; background: rgba(10, 14, 26, 0.75); backdrop-filter: blur(4px); border-radius: inherit; pointer-events: none;{% if not ann.cover_image %} display: none;{% endif %}"></div>
+				<div class="ks-project-card ks-reveal" style="position: relative; overflow: hidden; height: 100%; display: flex; flex-direction: column; border-top: 3px solid var(--ks-cyan);">
+					{% if ann.cover_image %}
+					<div style="position: absolute; inset: 0; background-image: url('{{ ann.cover_image.url }}'); background-size: cover; background-position: center; opacity: 0.18; border-radius: inherit; transition: opacity 0.3s ease; pointer-events: none;"></div>
+					<div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,14,26,0.65) 0%, rgba(10,14,26,0.45) 100%); border-radius: inherit; pointer-events: none;"></div>
+					{% endif %}
 					<div class="ks-project-content" style="flex-grow: 1; padding: 24px; position: relative; z-index: 1;">
 						<span style="display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: .75rem; background: rgba(0,240,255,.12); color: var(--ks-cyan); margin-bottom: 8px;">
 							{{ ann.get_announcement_type_display }}

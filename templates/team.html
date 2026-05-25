@@ -24,16 +24,13 @@
 .ks-team-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(10,14,26,0.9) 0%, rgba(10,14,26,0.2) 60%, transparent 100%);
+  background: linear-gradient(0deg, rgba(10,14,26,0.85) 0%, rgba(10,14,26,0.1) 60%, transparent 100%);
   display: flex;
   align-items: flex-end;
   justify-content: center;
   padding: 20px;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-.ks-team-card:hover .ks-team-overlay {
   opacity: 1;
+  transition: opacity 0.35s ease;
 }
 .ks-team-socials {
   display: flex;
@@ -82,7 +79,7 @@
       <div class="col-xl-7 col-lg-8 col-md-10">
         <span class="subtitle-one ks-reveal">Leadership</span>
         <h2 class="ks-reveal ks-reveal-delay-1">Meet the Team</h2>
-        <p class="ks-reveal ks-reveal-delay-2">KianvoSoft was founded by three Computer Engineering students of Mbeya University of Science and Technology (MUST). Each co-founder leads a Directorate and contributes across all areas of the business.</p>
+        <p class="ks-reveal ks-reveal-delay-2">Meet the leadership behind KianvoSoft — co-founders who each head a dedicated Directorate, bringing focused expertise, accountability, and strategic direction across every area of the business.</p>
       </div>
     </div>
     <div class="row g-4 justify-content-center">
@@ -99,10 +96,10 @@
                 <i class="{{ member.icon_class|default:'fas fa-user' }}" style="font-size:48px;color:rgba(0,240,255,0.3);"></i>
               </div>
               {% endif %}
-              <div class="ks-team-overlay" style="align-items: center; background: linear-gradient(0deg, rgba(10,14,26,0.85) 0%, rgba(10,14,26,0.4) 100%);">
-                <div style="text-align: center; padding: 10px;">
+              <div class="ks-team-overlay" style="align-items: flex-end; justify-content: center; background: linear-gradient(0deg, rgba(10,14,26,0.85) 0%, rgba(10,14,26,0.1) 60%, transparent 100%);">
+                <div style="text-align: center; padding-bottom: 4px;">
                   <span style="display: inline-block; padding: 4px 14px; border-radius: 20px; background: rgba(0,240,255,0.15); color: var(--ks-primary); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(0,240,255,0.25);">
-                    <i class="fas fa-chevron-circle-right me-1"></i>Leadership
+                    <i class="fas fa-star me-1"></i>Leadership
                   </span>
                 </div>
               </div>

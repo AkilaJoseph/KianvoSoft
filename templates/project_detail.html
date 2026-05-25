@@ -137,20 +137,24 @@
 						</p>
 						{% endif %}
 
-						{% if project.demo_url and project.demo_username %}
+						{% if project.demo_url or project.demo_username %}
 						<div class="mt-3 mb-3 p-3" style="background: rgba(0, 240, 255, 0.05); border: 1px dashed rgba(0, 240, 255, 0.25); border-radius: 8px;">
 							<h5 style="color: var(--ks-cyan); font-size: 0.9rem; margin-bottom: 8px;">
 								<i class="fas fa-key me-1"></i>Demo Credentials
 							</h5>
 							<div style="font-size: 0.8rem;">
+								{% if project.demo_url %}
 								<p class="mb-1" style="color: var(--ks-text-muted);">
 									<strong style="color: #ccc;">URL:</strong>
 									<a href="{{ project.demo_url }}" target="_blank" style="color: var(--ks-primary);">{{ project.demo_url }}</a>
 								</p>
+								{% endif %}
+								{% if project.demo_username %}
 								<p class="mb-1" style="color: var(--ks-text-muted);">
 									<strong style="color: #ccc;">Username:</strong>
 									<code style="background: rgba(0,0,0,0.4); padding: 1px 6px; border-radius: 3px; color: var(--ks-primary);">{{ project.demo_username }}</code>
 								</p>
+								{% endif %}
 								{% if project.demo_password %}
 								<p class="mb-0" style="color: var(--ks-text-muted);">
 									<strong style="color: #ccc;">Password:</strong>

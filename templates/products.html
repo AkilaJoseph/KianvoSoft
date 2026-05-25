@@ -304,12 +304,16 @@
             </div>
             {% endif %}
 
-            <div class="mt-auto d-flex gap-2 justify-content-center flex-wrap">
+            <div class="mt-auto d-flex gap-2 justify-content-center flex-wrap mb-3">
               <span class="ks-demo-badge">{{ project.get_status_display }}</span>
               {% if project.category %}
               <span class="ks-demo-badge" style="background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.3); color: var(--ks-accent);">{{ project.category.name }}</span>
               {% endif %}
             </div>
+
+            <a href="{% url 'project_detail' project.slug %}" class="ks-link-btn" style="width: 100%; justify-content: center; background: rgba(0,240,255,0.08); color: #00f0ff; border: 1px solid rgba(0,240,255,0.25);">
+              <i class="fas fa-eye"></i>View Project Details
+            </a>
           </div>
         </div>
       </div>

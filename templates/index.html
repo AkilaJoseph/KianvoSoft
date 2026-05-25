@@ -239,7 +239,10 @@
 			</div>
 			{% for product in category.list %}
 			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="ks-project-card ks-reveal" style="height: 100%; display: flex; flex-direction: column;">
+				{% if product.project %}
+				<a href="{% url 'project_detail' product.project.slug %}" style="text-decoration: none; display: block; height: 100%;">
+				{% endif %}
+				<div class="ks-project-card ks-reveal" style="height: 100%; display: flex; flex-direction: column;{% if product.project %} cursor: pointer;{% endif %}">
 					<div class="ks-project-image" style="background-image: url('{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/img/portfolio/portfolio-1.png' %}{% endif %}'); height: 160px;">
 						<span class="ks-project-category" style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);">{{ product.short_description|truncatechars:30 }}</span>
 					</div>
@@ -247,14 +250,15 @@
 						<h4>{{ product.name }}</h4>
 						<p style="flex-grow: 1;">{{ product.short_description }}</p>
 						{% if product.project %}
-						<div class="mt-auto pt-3">
-							<a href="{% url 'project_detail' product.project.slug %}" class="btn-one" style="display: block; text-align: center; padding: 8px 16px; font-size: 0.82rem;">
-								View Project Details <i class="fas fa-arrow-right ms-1"></i>
-							</a>
+						<div class="mt-auto pt-3" style="color: var(--ks-primary); font-size: 0.85rem; font-weight: 500;">
+							View Project Details <i class="fas fa-arrow-right ms-1"></i>
 						</div>
 						{% endif %}
 					</div>
 				</div>
+				{% if product.project %}
+				</a>
+				{% endif %}
 			</div>
 			{% endfor %}
 			{% empty %}

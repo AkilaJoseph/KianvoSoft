@@ -13,6 +13,16 @@ from .models import (
 from .utils import send_contact_notification, send_application_notification
 
 
+def _resolve_active_products():
+    """Return active products with project resolved by FK first, then by name match."""
+    products = list(ActiveProduct.objects.filter(is_active=True).select_related('project'))
+    all_projects = {p.name.lower(): p for p in Project.objects.filter(is_active=True)}
+    for product in products:
+        if not product.project:
+            product.project = all_projects.get(product.name.lower())
+    return products
+
+
 # Home Page
 def home(request):
     context = {
@@ -26,7 +36,7 @@ def home(request):
         'stats': CompanyStat.objects.filter(is_active=True),
         'team_members': TeamMember.objects.filter(is_active=True),
         'hero_slides': HeroSlide.objects.filter(is_active=True),
-        'active_products': ActiveProduct.objects.filter(is_active=True),
+        'active_products': _resolve_active_products(),
         'open_announcements': Announcement.objects.filter(is_active=True, status='open'),
     }
     return render(request, 'index.html', context)

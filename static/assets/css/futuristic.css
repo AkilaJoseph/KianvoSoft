@@ -1045,7 +1045,6 @@ a.btn-three:hover {
 .ks-advantage-card {
   background: rgba(10, 14, 26, .5);
   border: 1px solid rgba(255, 255, 255, .06);
-  border-top: 3px solid var(--ks-cyan);
   border-radius: 16px;
   padding: 36px 28px;
   transition: all .4s cubic-bezier(.25, .46, .45, .94);
@@ -1053,23 +1052,6 @@ a.btn-three:hover {
   text-align: center;
   position: relative;
   overflow: hidden;
-}
-
-.ks-advantage-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background: linear-gradient(180deg, rgba(0, 240, 255, .03) 0%, transparent 60%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .4s ease;
-}
-
-.ks-advantage-card:hover::before {
-  opacity: 1;
 }
 
 .ks-advantage-card:hover {
@@ -3269,4 +3251,15 @@ select.form-select {
 /* When post has NO h2 headings — hide TOC card */
 .kv-toc-nav:has(.kv-toc-empty) ~ .kv-toc-header {
   display: none;
+}
+
+/* ============================
+   Testimonial Cards Override
+   ============================ */
+.about-testimonial .testimonial__four-card {
+  width: auto !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  position: static !important;
+  z-index: auto !important;
 }

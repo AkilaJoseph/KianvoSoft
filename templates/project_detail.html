@@ -1,30 +1,36 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}{{ project.name }} - KianvoSoft{% endblock title %}
+{% block title %}{% if project.seo_title %}{{ project.seo_title }}{% else %}{{ project.name }} - KianvoSoft{% endif %}{% endblock title %}
 
 {% block seo_meta %}
-<meta name="description" content="{{ project.tagline }} — {{ project.description|truncatechars:150 }}">
-<meta property="og:title" content="{{ project.name }} — KianvoSoft">
-<meta property="og:description" content="{{ project.tagline }}">
+{% with seo_desc=project.seo_description|default:project.tagline %}
+<meta name="description" content="{{ seo_desc }}">
+{% if project.seo_keywords %}
+<meta name="keywords" content="{{ project.seo_keywords }}">
+{% endif %}
+<meta property="og:title" content="{% if project.seo_title %}{{ project.seo_title }}{% else %}{{ project.name }} — KianvoSoft{% endif %}">
+<meta property="og:description" content="{{ seo_desc }}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
 {% if project.thumbnail %}<meta property="og:image" content="{{ SITE_URL }}{{ project.thumbnail.url }}">{% elif project.screenshot_1 %}<meta property="og:image" content="{{ SITE_URL }}{{ project.screenshot_1.url }}">{% endif %}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ project.name }} — KianvoSoft">
-<meta name="twitter:description" content="{{ project.tagline }}">
+<meta name="twitter:title" content="{% if project.seo_title %}{{ project.seo_title }}{% else %}{{ project.name }} — KianvoSoft{% endif %}">
+<meta name="twitter:description" content="{{ seo_desc }}">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "{{ project.name }}",
-  "description": "{{ project.tagline }}",
+  "description": "{{ seo_desc }}",
   "operatingSystem": "Web",
   "applicationCategory": "BusinessApplication",
+  {% if project.seo_keywords %}"keywords": "{{ project.seo_keywords }}",{% endif %}
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "author": { "@type": "Organization", "name": "KianvoSoft", "url": "{{ SITE_URL }}" }{% if project.demo_url %},
   "url": "{{ project.demo_url }}"{% endif %}
 }
 </script>
+{% endwith %}
 {% endblock seo_meta %}
 
 {% block content %}

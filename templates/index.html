@@ -50,6 +50,84 @@
 </div>
 <!-- Hero Banner End -->
 
+<!-- Products Portfolio Start -->
+<div class="section-padding" style="background: var(--ks-bg-primary);">
+	<div class="container">
+		<div class="row justify-content-center text-center mb-50">
+			<div class="col-xl-7 col-lg-8 col-md-10">
+				<span class="subtitle-one ks-reveal">Our Products</span>
+				<h2 class="ks-reveal ks-reveal-delay-1">Software Products in Active Use</h2>
+				<p class="ks-reveal ks-reveal-delay-2">We have designed, built, and deployed a portfolio of products spanning education technology, business operations, and AI-powered health solutions.</p>
+			</div>
+		</div>
+		<div class="row gy-4 justify-content-center">
+			{% regroup active_products by get_category_display as product_categories %}
+			{% for category in product_categories %}
+			<div class="col-12 mb-20{% if not forloop.first %} mt-30{% endif %}">
+				<h4 class="ks-reveal" style="color: var(--ks-cyan); margin-bottom: 20px;">
+					{% if category.grouper == "Education Technology" %}
+					<i class="fas fa-graduation-cap me-2"></i>
+					{% else %}
+					<i class="fas fa-briefcase me-2"></i>
+					{% endif %}
+					{{ category.grouper }}</h4>
+			</div>
+			{% for product in category.list %}
+			<div class="col-xl-4 col-lg-6 col-md-6">
+				{% if product.project %}
+				<a href="{% url 'project_detail' product.project.slug %}" style="text-decoration: none; display: block; height: 100%;">
+				{% endif %}
+				<div class="ks-project-card ks-reveal" style="height: 100%; display: flex; flex-direction: column;{% if product.project %} cursor: pointer;{% endif %}">
+					<div class="ks-project-image" style="background-image: url('{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/img/portfolio/portfolio-1.png' %}{% endif %}'); height: 160px;">
+						<span class="ks-project-category" style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);">{{ product.short_description|truncatechars:30 }}</span>
+					</div>
+					<div class="ks-project-content" style="flex-grow: 1; display: flex; flex-direction: column;">
+						<h4>{{ product.name }}</h4>
+						<p style="flex-grow: 1;">{{ product.short_description }}</p>
+						{% if product.project %}
+						<div class="mt-auto pt-3" style="color: var(--ks-primary); font-size: 0.85rem; font-weight: 500;">
+							View Project Details <i class="fas fa-arrow-right ms-1"></i>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+				{% if product.project %}
+				</a>
+				{% endif %}
+			</div>
+			{% endfor %}
+			{% empty %}
+			<div class="col-12 text-center"><p>No active products at this time.</p></div>
+			{% endfor %}
+			<div class="col-12 text-center mt-4">
+				<a href="{% url 'portfolio' %}" class="btn-one ks-reveal">View All Products <i class="fas fa-arrow-right"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Products Portfolio End -->
+
+<!-- Stats Counter Section Start -->
+<div class="ks-stats-section">
+	<div class="container">
+		<div class="row gy-4 justify-content-center">
+			{% if stats %}
+			{% for stat in stats %}
+			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
+				<div class="ks-stat-card ks-reveal ks-reveal-delay-1"
+					style="background: rgba(10, 14, 26, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(0, 240, 255, 0.15); border-top: 2px solid var(--ks-primary); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+					<div class="ks-stat-icon"><i class="{{ stat.icon_class|default:'flaticon-consultant' }}"></i></div>
+					<div class="ks-stat-number"><span class="counter">{{ stat.value }}</span>{{ stat.suffix }}</div>
+					<div class="ks-stat-label">{{ stat.name }}</div>
+				</div>
+			</div>
+			{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+</div>
+<!-- Stats Counter Section End -->
+
 <!-- About Teaser Start -->
 <div class="about__five section-padding" style="background: var(--ks-bg-primary);">
 	<div class="container">
@@ -214,84 +292,6 @@
 	</div>
 </div>
 <!-- Four Pillars End -->
-
-<!-- Products Portfolio Start -->
-<div class="section-padding" style="background: var(--ks-bg-primary);">
-	<div class="container">
-		<div class="row justify-content-center text-center mb-50">
-			<div class="col-xl-7 col-lg-8 col-md-10">
-				<span class="subtitle-one ks-reveal">Our Products</span>
-				<h2 class="ks-reveal ks-reveal-delay-1">Software Products in Active Use</h2>
-				<p class="ks-reveal ks-reveal-delay-2">We have designed, built, and deployed a portfolio of products spanning education technology, business operations, and AI-powered health solutions.</p>
-			</div>
-		</div>
-		<div class="row gy-4 justify-content-center">
-			{% regroup active_products by get_category_display as product_categories %}
-			{% for category in product_categories %}
-			<div class="col-12 mb-20{% if not forloop.first %} mt-30{% endif %}">
-				<h4 class="ks-reveal" style="color: var(--ks-cyan); margin-bottom: 20px;">
-					{% if category.grouper == "Education Technology" %}
-					<i class="fas fa-graduation-cap me-2"></i>
-					{% else %}
-					<i class="fas fa-briefcase me-2"></i>
-					{% endif %}
-					{{ category.grouper }}</h4>
-			</div>
-			{% for product in category.list %}
-			<div class="col-xl-4 col-lg-6 col-md-6">
-				{% if product.project %}
-				<a href="{% url 'project_detail' product.project.slug %}" style="text-decoration: none; display: block; height: 100%;">
-				{% endif %}
-				<div class="ks-project-card ks-reveal" style="height: 100%; display: flex; flex-direction: column;{% if product.project %} cursor: pointer;{% endif %}">
-					<div class="ks-project-image" style="background-image: url('{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/img/portfolio/portfolio-1.png' %}{% endif %}'); height: 160px;">
-						<span class="ks-project-category" style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);">{{ product.short_description|truncatechars:30 }}</span>
-					</div>
-					<div class="ks-project-content" style="flex-grow: 1; display: flex; flex-direction: column;">
-						<h4>{{ product.name }}</h4>
-						<p style="flex-grow: 1;">{{ product.short_description }}</p>
-						{% if product.project %}
-						<div class="mt-auto pt-3" style="color: var(--ks-primary); font-size: 0.85rem; font-weight: 500;">
-							View Project Details <i class="fas fa-arrow-right ms-1"></i>
-						</div>
-						{% endif %}
-					</div>
-				</div>
-				{% if product.project %}
-				</a>
-				{% endif %}
-			</div>
-			{% endfor %}
-			{% empty %}
-			<div class="col-12 text-center"><p>No active products at this time.</p></div>
-			{% endfor %}
-			<div class="col-12 text-center mt-4">
-				<a href="{% url 'portfolio' %}" class="btn-one ks-reveal">View All Products <i class="fas fa-arrow-right"></i></a>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Products Portfolio End -->
-
-<!-- Stats Counter Section Start -->
-<div class="ks-stats-section">
-	<div class="container">
-		<div class="row gy-4 justify-content-center">
-			{% if stats %}
-			{% for stat in stats %}
-			<div class="col-xl-3 col-lg-3 col-md-6 col-6">
-				<div class="ks-stat-card ks-reveal ks-reveal-delay-1"
-					style="background: rgba(10, 14, 26, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(0, 240, 255, 0.15); border-top: 2px solid var(--ks-primary); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
-					<div class="ks-stat-icon"><i class="{{ stat.icon_class|default:'flaticon-consultant' }}"></i></div>
-					<div class="ks-stat-number"><span class="counter">{{ stat.value }}</span>{{ stat.suffix }}</div>
-					<div class="ks-stat-label">{{ stat.name }}</div>
-				</div>
-			</div>
-			{% endfor %}
-			{% endif %}
-		</div>
-	</div>
-</div>
-<!-- Stats Counter Section End -->
 
 <!-- AI Research Section Start -->
 <div class="section-padding" style="background: var(--ks-bg-primary);">

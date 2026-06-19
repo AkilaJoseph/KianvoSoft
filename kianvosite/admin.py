@@ -99,6 +99,15 @@ class ProjectAdmin(admin.ModelAdmin):
         ('Status & Links', {
             'fields': ('status', 'documentation_url', 'completed_date')
         }),
+        ('SEO / Search Optimisation', {
+            'fields': ('seo_title', 'seo_description', 'seo_keywords'),
+            'description': (
+                'Help Google rank this product for the right searches. '
+                'seo_title: e.g. "IMFORIA – Best Pharmacy Management System in Tanzania | KianvoSoft". '
+                'seo_description: 1–2 sentences using the phrases people actually search. '
+                'seo_keywords: comma-separated terms, e.g. "pharmacy management system, drug inventory software Tanzania".'
+            ),
+        }),
         ('Display Options', {
             'fields': ('is_featured', 'is_active', 'order')
         }),

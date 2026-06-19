@@ -62,6 +62,20 @@ class Project(models.Model):
     # Status & Links
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='completed')
 
+    # SEO Fields
+    seo_title = models.CharField(
+        max_length=70, blank=True,
+        help_text="Page title for Google (max 70 chars). E.g. 'IMFORIA – Best Pharmacy Management System in Tanzania | KianvoSoft'"
+    )
+    seo_description = models.CharField(
+        max_length=160, blank=True,
+        help_text="Meta description for Google (max 160 chars). Use target search phrases naturally."
+    )
+    seo_keywords = models.CharField(
+        max_length=500, blank=True,
+        help_text="Comma-separated keywords. E.g. 'pharmacy management system, pharmacy software Tanzania, drug inventory system'"
+    )
+
     # Display Options
     is_featured = models.BooleanField(default=False, help_text="Show on homepage")
     is_active = models.BooleanField(default=True)

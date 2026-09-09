@@ -3,8 +3,135 @@
 {% block title %}KianvoSoft — Innovating Africa's Digital Future{% endblock title %}
 {% block content %}
 
+{% if spotlight_projects %}
+<!-- Spotlight Reel Start (Now Showcasing — flagship systems, movie-premiere style) -->
+<div class="ks-spotlight" id="ks-spotlight">
+	<div class="ks-spotlight-bg-layer">
+		{% for p in spotlight_projects %}
+		<div class="ks-spotlight-bg{% if forloop.first %} is-active{% endif %}"
+			style="background-image:url('{% if p.banner_image %}{{ p.banner_image.url }}{% elif p.thumbnail %}{{ p.thumbnail.url }}{% else %}{% brand_art 'product' p.slug %}{% endif %}');"></div>
+		{% endfor %}
+		<div class="ks-spotlight-scrim"></div>
+	</div>
+
+	<div class="container">
+		<div class="ks-spotlight-inner">
+			<div class="ks-spotlight-eyebrow"><span class="ks-live-dot"></span>Now Showcasing &middot; Our Flagship Systems</div>
+
+			<div class="ks-spotlight-grid">
+				<div class="ks-spotlight-slides">
+					{% for p in spotlight_projects %}
+					<div class="ks-spotlight-slide{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.counter0 }}">
+						<span class="ks-spotlight-kicker">{{ p.get_status_display }} &middot; {{ p.category.name|default:"Business System" }}</span>
+						<h1 class="ks-spotlight-title">{{ p.name }}</h1>
+						<p class="ks-spotlight-tagline">{{ p.tagline }}</p>
+						{% with techs=p.get_technologies_list %}
+						{% if techs %}
+						<div class="ks-spotlight-chips">
+							{% for tech in techs|slice:":4" %}
+							<span class="ks-spotlight-chip">{{ tech }}</span>
+							{% endfor %}
+						</div>
+						{% endif %}
+						{% endwith %}
+						<div class="ks-spotlight-cta">
+							<a href="{% url 'project_detail' p.slug %}" class="btn-one">Explore {{ p.name }} <i class="fas fa-arrow-right"></i></a>
+							{% if p.demo_url %}
+							<a href="{{ p.demo_url }}" target="_blank" rel="noopener" class="btn-two">Live Demo <i class="fas fa-external-link-alt"></i></a>
+							{% endif %}
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+
+				<div class="ks-spotlight-poster">
+					{% for p in spotlight_projects %}
+					<div class="ks-spotlight-poster-item{% if forloop.first %} is-active{% endif %}">
+						<img src="{% if p.banner_image %}{{ p.banner_image.url }}{% elif p.thumbnail %}{{ p.thumbnail.url }}{% else %}{% brand_art 'product' p.slug %}{% endif %}" alt="{{ p.name }}">
+					</div>
+					{% endfor %}
+					<div class="ks-spotlight-poster-glow"></div>
+				</div>
+			</div>
+
+			{% if spotlight_projects|length > 1 %}
+			<div class="ks-spotlight-rail">
+				{% for p in spotlight_projects %}
+				<button type="button" class="ks-spotlight-thumb{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.counter0 }}">
+					<img src="{% if p.thumbnail %}{{ p.thumbnail.url }}{% elif p.banner_image %}{{ p.banner_image.url }}{% else %}{% brand_art 'product' p.slug %}{% endif %}" alt="{{ p.name }}">
+					<span>{{ p.name }}</span>
+				</button>
+				{% endfor %}
+			</div>
+			<div class="ks-spotlight-progress"><span id="ks-spotlight-progress-bar"></span></div>
+			{% endif %}
+
+			<a href="#ks-hero-banner" class="ks-spotlight-scrolldown"><span>Built by KianvoSoft</span><i class="fas fa-chevron-down"></i></a>
+		</div>
+	</div>
+</div>
+<!-- Spotlight Reel End -->
+<script>
+(function () {
+	var root = document.getElementById('ks-spotlight');
+	if (!root) return;
+
+	var slides = root.querySelectorAll('.ks-spotlight-slide');
+	var bgs = root.querySelectorAll('.ks-spotlight-bg');
+	var posters = root.querySelectorAll('.ks-spotlight-poster-item');
+	var thumbs = root.querySelectorAll('.ks-spotlight-thumb');
+	var progressBar = document.getElementById('ks-spotlight-progress-bar');
+	var total = slides.length;
+	var INTERVAL = 6500;
+	var current = 0;
+	var timer = null;
+	var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	function activate(index) {
+		current = (index + total) % total;
+		[slides, bgs, posters, thumbs].forEach(function (group) {
+			group.forEach(function (el, i) { el.classList.toggle('is-active', i === current); });
+		});
+		restartProgress();
+	}
+
+	function restartProgress() {
+		if (!progressBar) return;
+		progressBar.style.transition = 'none';
+		progressBar.style.width = '0%';
+		void progressBar.offsetWidth; // force reflow so the reset takes before re-animating
+		progressBar.style.transition = 'width ' + INTERVAL + 'ms linear';
+		progressBar.style.width = '100%';
+	}
+
+	function startTimer() {
+		if (total <= 1 || reduceMotion) return;
+		stopTimer();
+		timer = setInterval(function () { activate(current + 1); }, INTERVAL);
+	}
+
+	function stopTimer() {
+		if (timer) { clearInterval(timer); timer = null; }
+	}
+
+	thumbs.forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			activate(parseInt(btn.getAttribute('data-index'), 10));
+			startTimer();
+		});
+	});
+
+	root.addEventListener('mouseenter', stopTimer);
+	root.addEventListener('mouseleave', startTimer);
+
+	activate(0);
+	startTimer();
+})();
+</script>
+{% endif %}
+
 <!-- Hero Banner Start -->
-<div class="banner__five"
+<div class="banner__five" id="ks-hero-banner"
 	style="background: var(--ks-gradient-hero); min-height: 92vh; display: flex; align-items: center;">
 	<canvas id="ks-particles-canvas"></canvas>
 	<div class="container">

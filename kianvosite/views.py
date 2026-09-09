@@ -36,6 +36,9 @@ def home(request):
         'stats': CompanyStat.objects.filter(is_active=True),
         'team_members': TeamMember.objects.filter(is_active=True),
         'hero_slides': HeroSlide.objects.filter(is_active=True),
+        'spotlight_projects': Project.objects.filter(
+            is_active=True, is_spotlight=True,
+        ).order_by('spotlight_order', 'name')[:5],
         'active_products': _resolve_active_products(),
         'open_announcements': Announcement.objects.filter(is_active=True, status='open'),
     }

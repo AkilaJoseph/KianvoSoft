@@ -1262,6 +1262,343 @@ a.btn-three:hover {
 }
 
 /* ============================
+   Spotlight Reel — "Now Showcasing" movie-premiere hero
+   The very first thing a visitor sees: the flagship systems themselves,
+   auto-rotating like new releases, with the KianvoSoft brand hero
+   (and the rest of the page) revealed just below.
+   ============================ */
+.ks-spotlight {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #05060c;
+  padding: 130px 0 70px;
+}
+
+.ks-spotlight-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.ks-spotlight-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  filter: blur(18px) brightness(.55) saturate(1.15);
+  transform: scale(1.15);
+  transition: opacity 1.2s ease;
+}
+
+.ks-spotlight-bg.is-active {
+  opacity: 1;
+  animation: ks-spotlight-kenburns 9s ease-in-out infinite alternate;
+}
+
+@keyframes ks-spotlight-kenburns {
+  0% { transform: scale(1.15) translate(0, 0); }
+  100% { transform: scale(1.28) translate(-1.5%, -1.5%); }
+}
+
+.ks-spotlight-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(100deg, rgba(5,6,12,.96) 0%, rgba(5,6,12,.88) 38%, rgba(5,6,12,.55) 68%, rgba(5,6,12,.85) 100%),
+    linear-gradient(to top, #05060c 0%, rgba(5,6,12,0) 22%, rgba(5,6,12,0) 78%, #05060c 100%);
+}
+
+.ks-spotlight .container,
+.ks-spotlight-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.ks-spotlight-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(0, 240, 255, .08);
+  border: 1px solid rgba(0, 240, 255, .25);
+  color: var(--ks-cyan);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.ks-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ks-cyan);
+  box-shadow: 0 0 0 rgba(0, 240, 255, .6);
+  animation: ks-live-dot-pulse 1.8s ease-out infinite;
+}
+
+@keyframes ks-live-dot-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 240, 255, .55); }
+  70% { box-shadow: 0 0 0 9px rgba(0, 240, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+}
+
+.ks-spotlight-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 40px;
+  align-items: center;
+}
+
+/* Slides — crossfade + rise, stacked on top of one another */
+.ks-spotlight-slides {
+  position: relative;
+  min-height: 300px;
+}
+
+.ks-spotlight-slide {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(18px);
+  pointer-events: none;
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.ks-spotlight-slide.is-active {
+  position: relative;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.ks-spotlight-kicker {
+  display: block;
+  color: var(--ks-cyan);
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.ks-spotlight-title {
+  font-family: var(--ks-font-heading);
+  font-size: clamp(2.6rem, 5.2vw, 4.4rem);
+  font-weight: 800;
+  line-height: 1.02;
+  margin-bottom: 16px;
+  background: linear-gradient(120deg, #fff 35%, var(--ks-cyan) 75%, var(--ks-purple) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ks-spotlight-tagline {
+  color: var(--ks-text-secondary);
+  font-size: 1.08rem;
+  max-width: 480px;
+  margin-bottom: 22px;
+}
+
+.ks-spotlight-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.ks-spotlight-chip {
+  padding: 5px 13px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid var(--ks-border-glass);
+  color: var(--ks-text-secondary);
+  font-size: .78rem;
+}
+
+.ks-spotlight-cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Poster stack — the "movie poster" itself, crossfading behind the copy */
+.ks-spotlight-poster {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: 22px;
+}
+
+.ks-spotlight-poster-item {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 240, 255, .18);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .55), 0 0 60px rgba(0, 240, 255, .1);
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity .8s ease, transform 1.1s cubic-bezier(.16, 1, .3, 1);
+}
+
+.ks-spotlight-poster-item.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ks-spotlight-poster-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ks-spotlight-poster-glow {
+  position: absolute;
+  inset: -30px;
+  z-index: -1;
+  background: radial-gradient(circle, rgba(0, 240, 255, .18), transparent 65%);
+  filter: blur(10px);
+}
+
+/* Thumbnail rail — click to jump, like a "coming up" strip */
+.ks-spotlight-rail {
+  display: flex;
+  gap: 12px;
+  margin-top: 44px;
+  flex-wrap: wrap;
+}
+
+.ks-spotlight-thumb {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 14px 6px 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid var(--ks-border-glass);
+  color: var(--ks-text-secondary);
+  font-size: .82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--ks-transition);
+}
+
+.ks-spotlight-thumb img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.ks-spotlight-thumb:hover {
+  border-color: rgba(0, 240, 255, .3);
+  color: var(--ks-text-primary);
+}
+
+.ks-spotlight-thumb.is-active {
+  background: rgba(0, 240, 255, .1);
+  border-color: var(--ks-cyan);
+  color: #fff;
+}
+
+.ks-spotlight-progress {
+  width: 100%;
+  max-width: 340px;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .08);
+  margin-top: 16px;
+  overflow: hidden;
+}
+
+.ks-spotlight-progress span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--ks-gradient-accent);
+  border-radius: 3px;
+}
+
+.ks-spotlight-scrolldown {
+  position: absolute;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--ks-text-muted);
+  font-size: .74rem;
+  text-decoration: none;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  animation: ks-float 2.4s ease-in-out infinite;
+}
+
+.ks-spotlight-scrolldown i {
+  color: var(--ks-cyan);
+}
+
+@media (max-width: 991px) {
+  .ks-spotlight {
+    padding: 110px 0 60px;
+    text-align: center;
+  }
+  .ks-spotlight-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .ks-spotlight-eyebrow,
+  .ks-spotlight-rail,
+  .ks-spotlight-cta {
+    justify-content: center;
+  }
+  .ks-spotlight-chips {
+    justify-content: center;
+  }
+  .ks-spotlight-tagline {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .ks-spotlight-poster {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .ks-spotlight-progress {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .ks-spotlight-title { font-size: 2.2rem; }
+  .ks-spotlight-thumb span { display: none; }
+  .ks-spotlight-thumb { padding: 5px; }
+  .ks-spotlight-thumb img { width: 34px; height: 34px; }
+}
+
+/* Respect reduced-motion preferences: keep the crossfades (they carry the
+   content), drop the continuous zoom/float/pulse animations. */
+@media (prefers-reduced-motion: reduce) {
+  .ks-spotlight-bg.is-active,
+  .ks-live-dot,
+  .ks-spotlight-scrolldown {
+    animation: none;
+  }
+}
+
+/* ============================
    Custom Sections
    ============================ */
 

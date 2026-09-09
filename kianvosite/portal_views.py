@@ -265,9 +265,9 @@ REGISTRY = {
     },
     'projects': {
         'model': Project, 'icon': 'fas fa-code', 'label': 'Project',
-        'list': ['name','category','status','is_featured','is_active','order'],
+        'list': ['name','category','status','is_featured','is_spotlight','is_active','order'],
         'search': ['name','tagline','description'],
-        'filter_map': {'category': ProjectCategory, 'status': None, 'is_active': None},
+        'filter_map': {'category': ProjectCategory, 'status': None, 'is_active': None, 'is_spotlight': None},
         'order': ['order'],
         'img': ['thumbnail', 'screenshot_1', 'screenshot_2', 'screenshot_3', 'banner_image'],
     },

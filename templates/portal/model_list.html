@@ -46,7 +46,12 @@
 .ks-filter-select {
   padding: 8px 12px; border-radius: 8px; background: rgba(0,0,0,0.3);
   border: 1px solid rgba(0,240,255,0.1); color: rgba(255,255,255,0.6); font-size: 0.82rem;
+  cursor: pointer;
 }
+/* `color-scheme: dark` is what makes the native dropdown list dark too —
+   without it the popup renders white on Chrome/Edge. */
+.ks-filter-select { color-scheme: dark; }
+.ks-filter-select option, .ks-filter-select optgroup { background: #0d1424; color: #fff; }
 .ks-filter-select:focus { outline: none; border-color: #00f0ff; }
 .ks-pagination { display: flex; justify-content: center; gap: 4px; margin-top: 20px; }
 .ks-page-btn {

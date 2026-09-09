@@ -81,6 +81,19 @@ class Project(models.Model):
     is_active = models.BooleanField(default=True)
     order = models.IntegerField(default=0)
 
+    # Homepage hero spotlight (the "Now Showcasing" movie-premiere style reel)
+    is_spotlight = models.BooleanField(
+        default=False,
+        help_text="Feature this system in the animated 'Now Showcasing' reel at "
+                   "the very top of the homepage, above the hero banner. Keep this "
+                   "to your 2-4 most important systems — everything ticked here "
+                   "rotates like a movie-poster carousel.",
+    )
+    spotlight_order = models.PositiveIntegerField(
+        default=0,
+        help_text="Order within the spotlight reel — lower shows first.",
+    )
+
     # Timestamps
     completed_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

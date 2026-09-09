@@ -479,3 +479,252 @@ def render_invoice_pdf(invoice):
     canvas.showPage()   # exactly one page, always
     canvas.save()
     return buffer.getvalue()
+
+
+# ---------------------------------------------------------------------------
+# Receipt PDF — short and fixed-shape, so unlike the invoice it needs no
+# measure-and-shrink pass; it comfortably clears one page on its own.
+# ---------------------------------------------------------------------------
+
+GREEN_BG = HexColor('#F0FBF4')
+GREEN_LINE = HexColor('#BBEBCB')
+GREEN_STRONG = HexColor('#15803D')
+
+
+class ReceiptCanvas:
+    """Draws the receipt blocks top-down: header, meta, amount, payment
+    details, notes, footer. Mirrors InvoiceCanvas's drawing primitives."""
+
+    def __init__(self, canvas, receipt):
+        self.c = canvas
+        self.r = receipt
+        self.inv = receipt.invoice
+        self.y = PAGE_H - MARGIN
+
+    # -- primitives (unscaled — receipts are always a fixed, short shape) --
+    def gap(self, points):
+        self.y -= points
+
+    def text(self, x, y, value, font=REG, size=9, color=INK):
+        self.c.setFillColor(color)
+        self.c.setFont(font, size)
+        self.c.drawString(x, y, str(value))
+
+    def rtext(self, x, y, value, font=REG, size=9, color=INK):
+        self.c.setFillColor(color)
+        self.c.setFont(font, size)
+        self.c.drawRightString(x, y, str(value))
+
+    def rounded(self, x, y, w, h, fill=None, stroke=None, radius=7, left_bar=None):
+        if fill is not None:
+            self.c.setFillColor(fill)
+        self.c.setStrokeColor(stroke or fill or WHITE)
+        self.c.setLineWidth(0.8)
+        self.c.roundRect(x, y, w, h, radius, stroke=1 if stroke else 0, fill=1 if fill else 0)
+        if left_bar:
+            self.c.setFillColor(left_bar)
+            self.c.rect(x, y, 3.2, h, stroke=0, fill=1)
+
+    def label(self, x, y, value, color=MUTED, size=7.2):
+        self.text(x, y, str(value).upper(), font=BOLD, size=size, color=color)
+
+    # -- blocks --------------------------------------------------------
+    def header(self):
+        r = self.r
+        h = 108
+        top = self.y - h
+        self.c.setFillColor(NAVY)
+        self.c.roundRect(MARGIN, top, CONTENT_W, h, 10, stroke=0, fill=1)
+        self.c.saveState()
+        clip = self.c.beginPath()
+        clip.roundRect(MARGIN, top, CONTENT_W, h, 10)
+        self.c.clipPath(clip, stroke=0, fill=0)
+        self.c.setFillColor(Color(GREEN.red, GREEN.green, GREEN.blue, alpha=0.30))
+        self.c.circle(MARGIN + CONTENT_W - 30, top + h - 4, 58, stroke=0, fill=1)
+        self.c.setFillColor(Color(NAVY_2.red, NAVY_2.green, NAVY_2.blue, alpha=0.55))
+        self.c.circle(MARGIN + CONTENT_W - 96, top + h + 26, 52, stroke=0, fill=1)
+        self.c.restoreState()
+
+        x = MARGIN + 20
+        cursor = top + h - 26
+
+        logo = finders.find('assets/img/brand/logo.png')
+        if logo:
+            box = 38
+            self.c.setFillColor(WHITE)
+            self.c.roundRect(x, cursor - box + 12, box, box, 8, stroke=0, fill=1)
+            try:
+                self.c.drawImage(
+                    ImageReader(logo), x + 3, cursor - box + 15,
+                    width=box - 6, height=box - 6,
+                    preserveAspectRatio=True, mask='auto',
+                )
+            except Exception:
+                pass  # a missing/unreadable logo must never break the receipt
+            x += box + 12
+
+        self.text(x, cursor, 'KianvoSoft', font=BOLD, size=17, color=WHITE)
+        self.text(x, cursor - 13, "Innovating Africa's Digital Future",
+                  size=8, color=HexColor('#C9C3E8'))
+
+        right = MARGIN + CONTENT_W - 20
+        self.rtext(right, cursor + 2, 'RECEIPT', font=BOLD, size=19, color=WHITE)
+        self.rtext(right, cursor - 13, r.number, font=BOLD, size=9.5, color=HexColor('#D8D3F0'))
+
+        text = 'PAYMENT RECEIVED'
+        size = 7.2
+        w = stringWidth(text, BOLD, size) + 16
+        pill_y = cursor - 32
+        self.c.setFillColor(GREEN)
+        self.c.setStrokeColor(GREEN)
+        self.c.roundRect(right - w, pill_y, w, 13, 6.5, stroke=1, fill=1)
+        self.rtext(right - 8, pill_y + 4, text, font=BOLD, size=size, color=WHITE)
+
+        line_y = top + 26
+        for i, line in enumerate(COMPANY_LINES):
+            self.text(MARGIN + 20, line_y - i * 10, line, size=7.6, color=HexColor('#B9B2DC'))
+
+        self.y = top
+        self.gap(14)
+
+    def meta(self):
+        r, inv = self.r, self.inv
+        col = CONTENT_W / 3
+        top = self.y
+        rows = []
+
+        received = [(inv.client.name, True)]
+        for extra in (inv.client.contact_person, inv.client.phone, inv.client.email):
+            if extra:
+                received.append((extra, False))
+
+        paid = [(_date(r.payment_date), True), (r.get_payment_method_display(), False)]
+        if r.reference:
+            paid.append((f"Ref: {r.reference}", False))
+
+        for_lines = [(inv.project_title, True), (f"Invoice {inv.number}", False)]
+
+        rows.append(('Received From', received))
+        rows.append(('Payment Date', paid))
+        rows.append(('For', for_lines))
+
+        depth = 0
+        for i, (title, lines) in enumerate(rows):
+            x = MARGIN + i * col
+            y = top - 10
+            self.label(x, y, title)
+            y -= 12
+            for line, strong in lines:
+                font = BOLD if strong else REG
+                size = 9.5 if strong else 8.2
+                for piece in _wrap(line, font, size, col - 14):
+                    self.text(x, y, piece, font=font, size=size,
+                              color=NAVY if strong else MUTED)
+                    y -= 11
+            depth = max(depth, top - y)
+
+        self.y = top - depth
+        self.gap(8)
+
+    def amount(self):
+        r = self.r
+        h = 62
+        top = self.y - h
+        self.rounded(MARGIN, top, CONTENT_W, h, fill=GREEN_BG, stroke=GREEN_LINE, left_bar=GREEN)
+        self.label(MARGIN + 18, top + h - 20, 'Amount Received', color=GREEN_STRONG)
+        self.text(MARGIN + 18, top + 15, _fmt(self.inv.currency, r.amount),
+                  font=BOLD, size=24, color=GREEN)
+
+        right = MARGIN + CONTENT_W - 18
+        if r.balance_after > 0:
+            self.rtext(right, top + h - 20, 'BALANCE REMAINING', font=BOLD, size=7.2,
+                       color=AMBER_STRONG)
+            self.rtext(right, top + 15, _fmt(self.inv.currency, r.balance_after),
+                       font=BOLD, size=16, color=AMBER_STRONG)
+        else:
+            self.rtext(right, top + h - 20, 'STATUS', font=BOLD, size=7.2, color=GREEN_STRONG)
+            self.rtext(right, top + 15, 'PAID IN FULL', font=BOLD, size=14, color=GREEN_STRONG)
+
+        self.y = top
+        self.gap(10)
+
+    def details(self):
+        r = self.r
+        rows = [
+            ('Payment method', r.get_payment_method_display()),
+            ('Reference', r.reference or '—'),
+            ('Received by', r.received_by or 'KianvoSoft'),
+            ('Balance before this payment', _fmt(self.inv.currency, r.balance_before)),
+        ]
+        h = 30 + len(rows) * 13
+        top = self.y - h
+        self.rounded(MARGIN, top, CONTENT_W, h, fill=SOFT, stroke=LINE)
+        self.label(MARGIN + 14, top + h - 14, 'Payment Details / Malipo', color=NAVY)
+
+        y = top + h - 30
+        for name, value in rows:
+            self.text(MARGIN + 14, y, name, size=8.4, color=MUTED)
+            self.rtext(MARGIN + CONTENT_W - 14, y, value, font=BOLD, size=8.8, color=INK)
+            y -= 13
+
+        self.y = top
+        self.gap(10)
+
+    def notes(self):
+        r = self.r
+        body = r.notes or 'Asante kwa malipo yako. Thank you for your payment.'
+        lines = []
+        for paragraph in str(body).splitlines() or ['']:
+            lines.extend(_wrap(paragraph, REG, 8.4, CONTENT_W - 28))
+        h = 26 + len(lines) * 10.5
+        top = self.y - h
+        self.rounded(MARGIN, top, CONTENT_W, h, fill=WHITE, stroke=LINE)
+        self.label(MARGIN + 14, top + h - 14, 'Notes', color=NAVY)
+        y = top + h - 26
+        for line in lines:
+            self.text(MARGIN + 14, y, line, size=8.4, color=MUTED)
+            y -= 10.5
+        self.y = top
+        self.gap(10)
+
+    def footer(self):
+        h = 40
+        top = max(MARGIN, self.y - 14 - h)
+        self.c.setFillColor(SOFT)
+        self.c.roundRect(MARGIN, top, CONTENT_W, h, 8, stroke=0, fill=1)
+        centre = MARGIN + CONTENT_W / 2
+        self.c.setFillColor(NAVY)
+        self.c.setFont(BOLD, 10.5)
+        self.c.drawCentredString(centre, top + h - 16, 'Asante! / Thank you')
+        self.c.setFillColor(MUTED)
+        self.c.setFont(REG, 7.6)
+        self.c.drawCentredString(
+            centre, top + h - 27,
+            "Issued by KianvoSoft · Innovating Africa's Digital Future",
+        )
+        self.c.drawCentredString(
+            centre, top + h - 36,
+            'Questions? info@kianvosoft.com · 0753 177 709',
+        )
+
+    def draw(self):
+        self.header()
+        self.meta()
+        self.amount()
+        self.details()
+        self.notes()
+        self.footer()
+        return self.y
+
+
+def render_receipt_pdf(receipt):
+    """Return the receipt as single-page PDF bytes."""
+    buffer = BytesIO()
+    canvas = rl_canvas.Canvas(buffer, pagesize=A4)
+    canvas.setTitle(f"Receipt {receipt.number} — KianvoSoft")
+    canvas.setAuthor('KianvoSoft')
+    canvas.setSubject(receipt.invoice.project_title)
+    ReceiptCanvas(canvas, receipt).draw()
+    canvas.showPage()   # the layout is short and fixed — always one page
+    canvas.save()
+    return buffer.getvalue()

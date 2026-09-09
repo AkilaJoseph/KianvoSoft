@@ -100,6 +100,9 @@
 .ks-btn-renew { background:linear-gradient(135deg,#f59e0b,#d97706); color:#fff; padding:10px 18px;
   border-radius:8px; text-decoration:none; font-size:0.88rem; font-weight:600;
   display:inline-flex; align-items:center; gap:7px; }
+.ks-btn-receipt { background:linear-gradient(135deg,#10b981,#059669); color:#fff; padding:10px 18px;
+  border-radius:8px; text-decoration:none; font-size:0.88rem; font-weight:600;
+  display:inline-flex; align-items:center; gap:7px; }
 .ks-renew-note { color:rgba(255,255,255,0.4); font-size:0.78rem; margin-top:8px; }
 </style>
 
@@ -124,7 +127,35 @@
      onclick="return confirm('Create the next period invoice for this subscription?');">
      <i class="fas fa-rotate"></i> Renew — next period</a>
   {% endif %}
+  {% if not invoice.is_paid %}
+  <a class="ks-btn-receipt" href="{% url 'portal_create' 'receipts' %}?invoice={{ invoice.pk }}&amount={{ invoice.amount_outstanding_now|floatformat:2 }}">
+     <i class="fas fa-receipt"></i> Record Payment</a>
+  {% endif %}
 </div>
+
+{% if invoice.receipts.exists %}
+<div class="ks-card">
+  <h5><i class="fas fa-receipt"></i> Payments received</h5>
+  <table class="ks-items" style="width:100%;">
+    <thead>
+      <tr>
+        <th>Receipt</th><th>Date</th><th>Method</th><th class="col-price">Amount</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in invoice.receipts.all %}
+      <tr>
+        <td style="color:#fff;">{{ r.number }}</td>
+        <td style="color:rgba(255,255,255,0.6);">{{ r.payment_date|date:"d M Y" }}</td>
+        <td style="color:rgba(255,255,255,0.6);">{{ r.get_payment_method_display }}</td>
+        <td style="color:#10b981;font-weight:600;">{{ invoice.currency }} {{ r.amount|floatformat:0 }}</td>
+        <td><a href="{{ r.get_absolute_url }}" target="_blank" style="color:#00f0ff;font-size:0.82rem;">Open &nearr;</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
 <div class="ks-card">
   <div class="ks-summary">
     <div><span class="k">Total</span><span class="v">{{ invoice.currency }} {{ invoice.total }}</span></div>

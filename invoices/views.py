@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 
-from .models import Invoice, InvoiceSection
-from .pdf import render_invoice_pdf
+from .models import Invoice, InvoiceSection, Receipt
+from .pdf import render_invoice_pdf, render_receipt_pdf
 
 
 def _get_invoice(token):
@@ -34,6 +34,33 @@ def invoice_pdf(request, token):
     response = HttpResponse(pdf, content_type='application/pdf')
     disposition = 'attachment' if request.GET.get('download') else 'inline'
     filename = f"Invoice-{invoice.number}-KianvoSoft.pdf"
+    response['Content-Disposition'] = f'{disposition}; filename="{filename}"'
+    response['X-Robots-Tag'] = 'noindex, nofollow'
+    return response
+
+
+def _get_receipt(token):
+    return get_object_or_404(
+        Receipt.objects.select_related('invoice', 'invoice__client'),
+        public_token=token,
+    )
+
+
+def public_receipt(request, token):
+    """Client-facing receipt, opened via its unguessable token link."""
+    receipt = _get_receipt(token)
+    return render(request, 'invoices/receipt_detail.html', {'receipt': receipt})
+
+
+def receipt_pdf(request, token):
+    """The receipt as a real PDF, built on the server — same approach as
+    the invoice PDF, for the same reasons (see invoice_pdf above)."""
+    receipt = _get_receipt(token)
+    pdf = render_receipt_pdf(receipt)
+
+    response = HttpResponse(pdf, content_type='application/pdf')
+    disposition = 'attachment' if request.GET.get('download') else 'inline'
+    filename = f"Receipt-{receipt.number}-KianvoSoft.pdf"
     response['Content-Disposition'] = f'{disposition}; filename="{filename}"'
     response['X-Robots-Tag'] = 'noindex, nofollow'
     return response

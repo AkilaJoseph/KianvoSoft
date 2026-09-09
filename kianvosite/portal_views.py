@@ -18,7 +18,7 @@ from .models import (
     HeroSlide, ActiveProduct
 )
 from .utils import send_new_blog_notification, send_new_announcement_notification, send_blog_to_subscribers, send_announcement_to_subscribers
-from invoices.models import Client as BillingClient, Invoice, InvoiceItem
+from invoices.models import Client as BillingClient, Invoice, InvoiceItem, Receipt
 
 # ---------------------------------------------------------------------------
 #  Icon picker
@@ -170,6 +170,7 @@ def _stats():
         'total_invoices': Invoice.objects.count(),
         'unpaid_invoices': Invoice.objects.exclude(status=Invoice.STATUS_PAID)
                                           .exclude(status=Invoice.STATUS_CANCELLED).count(),
+        'total_receipts': Receipt.objects.count(),
     }
 
 SIDEBAR = [
@@ -190,6 +191,7 @@ SIDEBAR = [
     ]},
     {'name':'Billing', 'links':[
         ('Invoices','fas fa-file-invoice-dollar','invoices','total_invoices'),
+        ('Receipts','fas fa-receipt','receipts','total_receipts'),
         ('Clients','fas fa-user-tie','clients','total_clients'),
     ]},
     {'name':'Announcements', 'links':[
@@ -220,6 +222,7 @@ def portal_dashboard(request):
         'open_announcements_list': Announcement.objects.filter(status='open')[:5],
         'quick_actions': [
             ('New Invoice','fas fa-file-invoice-dollar','invoices','create','#00f0ff'),
+            ('Record Payment','fas fa-receipt','receipts','create','#10b981'),
             ('New Blog Post','fas fa-plus-circle','blogposts','create','#1a7aff'),
             ('New Project','fas fa-plus-circle','projects','create','#8b5cf6'),
             ('New Announcement','fas fa-bullhorn','announcements','create','#ffc107'),
@@ -240,6 +243,19 @@ REGISTRY = {
         'search': ['number','project_title','client__name','plan_name'],
         'filter_map': {'status': None, 'project_type': None, 'billing_type': None},
         'order': ['-issue_date','-id'],
+    },
+    'receipts': {
+        'model': Receipt, 'icon': 'fas fa-receipt', 'label': 'Receipt',
+        'list': ['number','invoice','amount','payment_method','payment_date'],
+        'search': ['number','invoice__number','invoice__client__name','reference'],
+        'filter_map': {'payment_method': None},
+        'order': ['-payment_date','-id'],
+        # Excluded from every form — system-managed or computed at save time.
+        'readonly': ['number','public_token','balance_before','balance_after',
+                     'created_at','updated_at'],
+        # Locked once the receipt exists — editing these after the fact would
+        # leave the invoice's amount_paid out of sync with what was recorded.
+        'edit_readonly': ['invoice','amount','payment_date'],
     },
     'clients': {
         'model': BillingClient, 'icon': 'fas fa-user-tie', 'label': 'Client',
@@ -393,11 +409,15 @@ REGISTRY = {
 def _get_meta(model_name):
     return REGISTRY[model_name]
 
-def _build_form(model, meta, data=None, files=None, instance=None):
+def _build_form(model, meta, data=None, files=None, instance=None, initial=None):
     """Build a ModelForm for the given model/meta, handling CKEditor + images."""
     exclude = ['id']
     if 'readonly' in meta:
         exclude += meta['readonly']
+    if instance is not None and 'edit_readonly' in meta:
+        # e.g. a Receipt's amount/invoice/payment_date — settable at creation,
+        # locked afterwards so the ledger they already applied can't drift.
+        exclude += meta['edit_readonly']
     if 'slug' in meta and instance is None:
         # auto-slug on create; on edit don't exclude
         pass
@@ -423,7 +443,7 @@ def _build_form(model, meta, data=None, files=None, instance=None):
     if instance:
         form = FormClass(data, files, instance=instance)
     else:
-        form = FormClass(data, files)
+        form = FormClass(data, files, initial=initial)
 
     return form
 
@@ -561,7 +581,9 @@ def portal_create(request, model_name):
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
-        form = _build_form(meta['model'], meta)
+        # Lets a link like receipts/create/?invoice=3&amount=50000 (used by
+        # the "Record Payment" button on an invoice) pre-fill the new form.
+        form = _build_form(meta['model'], meta, initial=request.GET.dict() or None)
 
     base_ctx = {'sections': SIDEBAR, 'stats': _stats(), 'meta': meta, 'model_name': model_name}
     context = {**base_ctx,
@@ -615,6 +637,11 @@ def portal_detail(request, model_name, pk):
     """Read-only detail view (for inquiries, applications, etc.)."""
     if model_name == 'invoices':
         return _portal_invoice_form(request, pk=pk)
+    if model_name == 'receipts':
+        # The branded public receipt page *is* the detail view — open it
+        # directly rather than the generic (and here, mostly empty) one.
+        receipt = get_object_or_404(Receipt, pk=pk)
+        return redirect(receipt.get_absolute_url())
     meta = _get_meta(model_name)
     obj = get_object_or_404(meta['model'], pk=pk)
     fields = []

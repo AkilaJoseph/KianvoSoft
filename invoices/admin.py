@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import Client, Invoice, InvoiceItem, InvoiceSection
+from .models import Client, Invoice, InvoiceItem, InvoiceSection, Receipt
 
 
 def _fmt(currency, amount):
@@ -54,9 +54,34 @@ class InvoiceItemInline(admin.TabularInline):
         return "—"
 
 
+class ReceiptInline(admin.TabularInline):
+    """Read-only — receipts are created on the Receipt admin page (or the
+    portal), where issuing one properly applies the payment to the invoice
+    and freezes a balance snapshot. Editing the money fields here would
+    bypass that, so this inline is for visibility only."""
+    model = Receipt
+    extra = 0
+    can_delete = False
+    fields = ('number', 'amount', 'payment_date', 'payment_method', 'reference', 'view_link')
+    readonly_fields = fields
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    @admin.display(description='Receipt')
+    def view_link(self, obj):
+        if not obj.pk:
+            return '—'
+        page = reverse('invoices:public_receipt', args=[obj.public_token])
+        return format_html('<a href="{}" target="_blank">Open &nearr;</a>', page)
+
+
 @admin.register(Invoice)
 class InvoiceAdmin(admin.ModelAdmin):
-    inlines = [InvoiceItemInline]
+    inlines = [InvoiceItemInline, ReceiptInline]
     list_display = (
         'number', 'client', 'project_title', 'billing_type', 'period_column',
         'issue_date', 'total_display', 'balance_display', 'status', 'view_link',
@@ -182,3 +207,59 @@ class InvoiceAdmin(admin.ModelAdmin):
             for k, v in rows
         )
         return format_html('<table>{}</table>', format_html(html))
+
+
+@admin.register(Receipt)
+class ReceiptAdmin(admin.ModelAdmin):
+    list_display = ('number', 'invoice', 'amount_display', 'payment_method', 'payment_date', 'view_link')
+    list_filter = ('payment_method', 'payment_date')
+    search_fields = ('number', 'invoice__number', 'invoice__client__name', 'reference')
+    date_hierarchy = 'payment_date'
+    autocomplete_fields = ('invoice',)
+    # Bulk "delete selected" bypasses Receipt.delete(), which reverses the
+    # payment on the invoice — force per-object delete so that always runs.
+    actions = None
+    fieldsets = (
+        ('Receipt', {
+            'fields': ('number', 'invoice', ('amount', 'payment_date'),
+                       'payment_method', 'reference', 'received_by'),
+        }),
+        ('Balance (frozen at the moment this receipt was issued)', {
+            'fields': (('balance_before', 'balance_after'),),
+        }),
+        ('Note to client', {'fields': ('notes',)}),
+        ('Share', {'fields': ('view_link', 'public_token')}),
+        ('System', {
+            'classes': ('collapse',),
+            'fields': ('created_at', 'updated_at'),
+        }),
+    )
+
+    def get_readonly_fields(self, request, obj=None):
+        base = ('number', 'created_at', 'updated_at', 'public_token',
+                'balance_before', 'balance_after', 'view_link')
+        if obj:
+            # Locked after creation — editing these here would leave the
+            # invoice's amount_paid out of sync with what this receipt says.
+            return base + ('invoice', 'amount', 'payment_date')
+        return base
+
+    @admin.display(description='Amount')
+    def amount_display(self, obj):
+        return _fmt(obj.invoice.currency, obj.amount)
+
+    @admin.display(description='Receipt')
+    def view_link(self, obj):
+        if not obj.pk:
+            return "— save first —"
+        page = reverse('invoices:public_receipt', args=[obj.public_token])
+        pdf = reverse('invoices:receipt_pdf', args=[obj.public_token])
+        style = ('color:#fff;padding:4px 10px;border-radius:6px;'
+                 'text-decoration:none;margin-right:6px;')
+        return format_html(
+            '<a class="button" href="{}" target="_blank" style="background:#5b3fd6;{}">'
+            'Open &nearr;</a>'
+            '<a class="button" href="{}?download=1" style="background:#0f766e;{}">'
+            'PDF &darr;</a>',
+            page, style, pdf, style,
+        )

@@ -150,6 +150,46 @@ Each invoice has an unguessable link: `/invoices/i/<token>/`. It carries
 `noindex` and is disallowed in `robots.txt`, so it won't be found by search
 engines — only people you send it to can open it.
 
+## Receipts — recording a payment
+
+Once a client has paid (all or part of an invoice), issue a receipt so they
+have proof of payment. A receipt is what **moves the money** — creating one
+adds its amount to the invoice's `amount_paid` and updates the status pill
+automatically; you don't edit `Amount paid` by hand once receipts are in use.
+
+**From the portal:** open the invoice and press **Record Payment** (shown
+whenever a balance is still owed). It opens a receipt form with the invoice
+and the amount still owed already filled in — adjust the amount if the
+client paid a different sum, pick the payment method, add a reference (e.g.
+the Selcom transaction code), and save. The invoice page then lists every
+receipt issued against it under **Payments received**.
+
+**From the admin:** Admin → **Invoices & Billing → Receipts → Add**. Pick the
+invoice, enter the amount and method, save.
+
+Either way, the receipt:
+
+- gets its own number (e.g. `KVS-RCT-2026-0001`) and an unguessable share
+  link, same pattern as an invoice (`/invoices/r/<token>/`);
+- freezes a **balance before / balance after** snapshot at the moment it's
+  issued, so it stays accurate even if the invoice changes later;
+- moves the invoice to **Deposit paid**, **Partially paid**, or **Fully
+  paid** depending on how much has now been paid in total (never touches a
+  **Cancelled** invoice).
+
+**Amount, invoice and payment date are locked once the receipt is saved** —
+correcting a mistake means deleting the receipt (which reverses the payment
+it applied) and issuing a new one, rather than editing figures that have
+already been counted. Only the reference, payment method, "received by" and
+notes can still be changed afterwards.
+
+### The receipt PDF
+
+Same approach as the invoice — built on the server with ReportLab, always a
+single page, no browser headers or URLs. `/invoices/r/<token>/pdf/` to
+preview, `?download=1` to save. Buttons: **Download PDF** on the receipt's
+own page, and **PDF ↓** next to each receipt in the admin.
+
 ## Tests
 
 ```bash

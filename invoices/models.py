@@ -509,3 +509,132 @@ class InvoiceItem(models.Model):
     @property
     def line_total(self):
         return _money((self.quantity or Decimal('0')) * (self.unit_price or Decimal('0')))
+
+
+def _sync_invoice_status(invoice):
+    """Recompute the status pill from the money on the invoice.
+
+    Called after a receipt is applied or reversed. Never touches a cancelled
+    invoice, and leaves an untouched draft alone (no payment yet).
+    """
+    if invoice.status == Invoice.STATUS_CANCELLED:
+        return
+    if invoice.total > 0 and invoice.balance_due <= Decimal('0.00'):
+        invoice.status = Invoice.STATUS_PAID
+    elif (invoice.amount_paid or Decimal('0')) <= Decimal('0.00'):
+        if invoice.status != Invoice.STATUS_DRAFT:
+            invoice.status = Invoice.STATUS_SENT
+    elif invoice.deposit_percentage < 100 and invoice.amount_paid >= invoice.deposit_amount:
+        invoice.status = Invoice.STATUS_DEPOSIT
+    else:
+        invoice.status = Invoice.STATUS_PARTIAL
+
+
+class Receipt(models.Model):
+    """Proof of a single payment against an invoice.
+
+    Issuing one (via the admin or the portal) applies its amount to the
+    invoice's `amount_paid` and recomputes the status — the receipt is what
+    moves the money, not a manual edit to the invoice. `amount`, `invoice`
+    and `payment_date` are locked once saved so the payment history can't
+    silently drift from what was actually recorded; deleting a receipt
+    reverses the payment it applied.
+    """
+    METHOD_MOBILE = 'mobile_money'
+    METHOD_BANK = 'bank_transfer'
+    METHOD_CASH = 'cash'
+    METHOD_CARD = 'card'
+    METHOD_CHEQUE = 'cheque'
+    METHOD_OTHER = 'other'
+    METHOD_CHOICES = [
+        (METHOD_MOBILE, 'Mobile Money (Selcom, M-Pesa, Tigo Pesa...)'),
+        (METHOD_BANK, 'Bank Transfer'),
+        (METHOD_CASH, 'Cash'),
+        (METHOD_CARD, 'Card'),
+        (METHOD_CHEQUE, 'Cheque'),
+        (METHOD_OTHER, 'Other'),
+    ]
+
+    number = models.CharField(
+        max_length=30, unique=True, blank=True,
+        help_text="Auto-generated if left blank, e.g. KVS-RCT-2026-0001.",
+    )
+    public_token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+
+    invoice = models.ForeignKey(Invoice, on_delete=models.PROTECT, related_name='receipts')
+
+    amount = models.DecimalField(
+        max_digits=12, decimal_places=2,
+        help_text="The amount this receipt covers — this payment only, not the invoice total.",
+    )
+    payment_date = models.DateField(default=timezone.localdate)
+    payment_method = models.CharField(max_length=20, choices=METHOD_CHOICES, default=METHOD_MOBILE)
+    reference = models.CharField(
+        max_length=120, blank=True,
+        help_text="Transaction / confirmation code, e.g. the Selcom reference.",
+    )
+    received_by = models.CharField(max_length=120, blank=True, default='KianvoSoft')
+
+    # Snapshot of the invoice balance at the moment this receipt was issued —
+    # frozen so a later edit to the invoice never rewrites payment history.
+    balance_before = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal('0.00'))
+    balance_after = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal('0.00'))
+
+    notes = models.TextField(
+        blank=True,
+        help_text="Shown to the client, e.g. a thank-you note (Swahili is fine).",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-payment_date', '-id']
+
+    def __str__(self):
+        return f"{self.number} — {self.invoice.client}"
+
+    # -- numbering ------------------------------------------------------
+    def _generate_number(self):
+        year = (self.payment_date or timezone.localdate()).year
+        prefix = f"KVS-RCT-{year}-"
+        last = (
+            Receipt.objects.filter(number__startswith=prefix)
+            .order_by('-number').first()
+        )
+        seq = 1
+        if last and last.number:
+            try:
+                seq = int(last.number.split('-')[-1]) + 1
+            except (ValueError, IndexError):
+                seq = Receipt.objects.filter(number__startswith=prefix).count() + 1
+        return f"{prefix}{seq:04d}"
+
+    def save(self, *args, **kwargs):
+        is_new = self._state.adding
+        if not self.number:
+            self.number = self._generate_number()
+        if is_new:
+            # Freeze the invoice balance right before this payment lands.
+            self.balance_before = self.invoice.balance_due
+            self.balance_after = _money(self.balance_before - (self.amount or Decimal('0')))
+        super().save(*args, **kwargs)
+        if is_new:
+            self._apply_to_invoice()
+
+    def _apply_to_invoice(self):
+        invoice = self.invoice
+        invoice.amount_paid = _money((invoice.amount_paid or Decimal('0')) + self.amount)
+        _sync_invoice_status(invoice)
+        invoice.save(update_fields=['amount_paid', 'status', 'updated_at'])
+
+    def delete(self, *args, **kwargs):
+        invoice = self.invoice
+        invoice.amount_paid = _money(
+            max(Decimal('0.00'), (invoice.amount_paid or Decimal('0')) - self.amount)
+        )
+        _sync_invoice_status(invoice)
+        invoice.save(update_fields=['amount_paid', 'status', 'updated_at'])
+        super().delete(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('invoices:public_receipt', args=[self.public_token])

@@ -9,7 +9,7 @@
 	<div class="ks-spotlight-bg-layer">
 		{% for p in spotlight_projects %}
 		<div class="ks-spotlight-bg{% if forloop.first %} is-active{% endif %}"
-			style="background-image:url('{% if p.banner_image %}{{ p.banner_image.url }}{% elif p.thumbnail %}{{ p.thumbnail.url }}{% else %}{% brand_art 'product' p.slug %}{% endif %}');"></div>
+			style="background-image:url('{% if p.spotlight_poster %}{{ p.spotlight_poster.url }}{% else %}{% brand_art 'product' p.slug %}{% endif %}');"></div>
 		{% endfor %}
 		<div class="ks-spotlight-scrim"></div>
 	</div>
@@ -25,13 +25,13 @@
 						<span class="ks-spotlight-kicker">{{ p.get_status_display }} &middot; {{ p.category.name|default:"Business System" }}</span>
 						<h1 class="ks-spotlight-title">{{ p.name }}</h1>
 						<p class="ks-spotlight-tagline">{{ p.tagline }}</p>
-						{% with techs=p.get_technologies_list %}
-						{% if techs %}
-						<div class="ks-spotlight-chips">
-							{% for tech in techs|slice:":4" %}
-							<span class="ks-spotlight-chip">{{ tech }}</span>
+						{% with feats=p.get_features_list %}
+						{% if feats %}
+						<ul class="ks-spotlight-features">
+							{% for feat in feats|slice:":3" %}
+							<li><i class="fas fa-check"></i>{{ feat }}</li>
 							{% endfor %}
-						</div>
+						</ul>
 						{% endif %}
 						{% endwith %}
 						<div class="ks-spotlight-cta">
@@ -47,7 +47,8 @@
 				<div class="ks-spotlight-poster">
 					{% for p in spotlight_projects %}
 					<div class="ks-spotlight-poster-item{% if forloop.first %} is-active{% endif %}">
-						<img src="{% if p.banner_image %}{{ p.banner_image.url }}{% elif p.thumbnail %}{{ p.thumbnail.url }}{% else %}{% brand_art 'product' p.slug %}{% endif %}" alt="{{ p.name }}">
+						<img src="{% if p.spotlight_poster %}{{ p.spotlight_poster.url }}{% else %}{% brand_art 'product' p.slug %}{% endif %}" alt="{{ p.name }}">
+						<span class="ks-spotlight-ribbon"><i class="fas fa-star"></i>Flagship System</span>
 					</div>
 					{% endfor %}
 					<div class="ks-spotlight-poster-glow"></div>
@@ -58,7 +59,7 @@
 			<div class="ks-spotlight-rail">
 				{% for p in spotlight_projects %}
 				<button type="button" class="ks-spotlight-thumb{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.counter0 }}">
-					<img src="{% if p.thumbnail %}{{ p.thumbnail.url }}{% elif p.banner_image %}{{ p.banner_image.url }}{% else %}{% brand_art 'product' p.slug %}{% endif %}" alt="{{ p.name }}">
+					<img src="{% if p.spotlight_thumb %}{{ p.spotlight_thumb.url }}{% else %}{% brand_art 'product' p.slug %}{% endif %}" alt="{{ p.name }}">
 					<span>{{ p.name }}</span>
 				</button>
 				{% endfor %}
@@ -336,15 +337,7 @@
 					<div class="ks-project-content" style="flex-grow: 1; display: flex; flex-direction: column;">
 						<h4>{{ service.name }}</h4>
 						<p>{{ service.short_description }}</p>
-						{% if service.technologies %}
-						<div class="ks-project-tech mt-auto mb-3">
-							{% for tech in service.get_technologies_list|slice:":3" %}
-							<span class="ks-tech-pill">{{ tech }}</span>
-							{% endfor %}
-						</div>
-						{% else %}
 						<div class="mt-auto mb-3"></div>
-						{% endif %}
 						<div class="ks-project-footer border-top border-secondary pt-3">
 							<a href="{% url 'services' %}#{{ service.slug }}" class="ks-project-link">Learn More <i
 									class="fas fa-arrow-right"></i></a>

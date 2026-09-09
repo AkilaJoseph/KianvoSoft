@@ -93,13 +93,6 @@
 					<div class="ks-project-content">
 						<h4>{{ project.name }}</h4>
 						<p>{{ project.tagline }}</p>
-						<div class="ks-project-tech">
-							{% for tech in project.technologies_list %}
-							<span>{{ tech }}</span>
-							{% empty %}
-							<span>{{ project.technologies }}</span>
-							{% endfor %}
-						</div>
 						<div class="ks-project-footer">
 							{% if project.status == 'completed' %}
 							<span style="color: var(--ks-green); font-size: 0.85rem; font-weight: 600;"><i

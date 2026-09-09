@@ -157,13 +157,6 @@
 							{% endif %}
 						</p>
 
-						<p class="mb-2">
-							<strong>Technologies:</strong><br>
-							{% for tech in project.get_technologies_list %}
-							<span class="badge bg-light text-dark me-1 mb-1">{{ tech }}</span>
-							{% endfor %}
-						</p>
-
 						{% if project.completed_date %}
 						<p class="mb-2">
 							<strong>Completed:</strong><br>

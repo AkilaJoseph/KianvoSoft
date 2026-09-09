@@ -269,7 +269,7 @@ REGISTRY = {
         'search': ['name','tagline','description'],
         'filter_map': {'category': ProjectCategory, 'status': None, 'is_active': None, 'is_spotlight': None},
         'order': ['order'],
-        'img': ['thumbnail', 'screenshot_1', 'screenshot_2', 'screenshot_3', 'banner_image'],
+        'img': ['thumbnail', 'screenshot_1', 'screenshot_2', 'screenshot_3', 'banner_image', 'spotlight_image'],
     },
     'productimages': {
         'model': ProductImage, 'icon': 'fas fa-images', 'label': 'Product Image',

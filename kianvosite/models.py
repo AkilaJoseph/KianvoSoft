@@ -51,6 +51,13 @@ class Project(models.Model):
     screenshot_1 = models.ImageField(upload_to='projects/screenshots/', blank=True, null=True)
     screenshot_2 = models.ImageField(upload_to='projects/screenshots/', blank=True, null=True)
     screenshot_3 = models.ImageField(upload_to='projects/screenshots/', blank=True, null=True)
+    spotlight_image = models.ImageField(
+        upload_to='projects/spotlight/', blank=True, null=True,
+        help_text="Purpose-made poster art for the homepage 'Now Showcasing' reel "
+                   "(portrait or landscape both work — it's cropped to fill a wide "
+                   "poster frame). Falls back to the banner image, then the "
+                   "thumbnail, then on-brand generated art if left blank.",
+    )
 
     # Demo Credentials
     demo_url = models.URLField(blank=True, null=True, help_text="Live demo link")
@@ -116,6 +123,21 @@ class Project(models.Model):
         if self.technologies:
             return [t.strip() for t in self.technologies.split(',') if t.strip()]
         return []
+
+    @property
+    def spotlight_poster(self):
+        """Best available image for the homepage spotlight's big poster and
+        blurred backdrop — the purpose-made spotlight image if one was
+        uploaded, else the banner, else the thumbnail. None if nothing has
+        been uploaded at all (the template falls back to generated art)."""
+        return self.spotlight_image or self.banner_image or self.thumbnail or None
+
+    @property
+    def spotlight_thumb(self):
+        """Best available small image for the spotlight's thumbnail rail —
+        the square-ish thumbnail first, since it fits that spot better than
+        a widescreen poster crop."""
+        return self.thumbnail or self.spotlight_image or self.banner_image or None
 
 
 # Service Model

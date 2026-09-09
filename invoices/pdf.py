@@ -630,7 +630,7 @@ class ReceiptCanvas:
         r = self.r
         h = 62
         top = self.y - h
-        self.rounded(MARGIN, top, CONTENT_W, h, fill=GREEN_BG, stroke=GREEN_LINE, left_bar=GREEN)
+        self.rounded(MARGIN, top, CONTENT_W, h, fill=GREEN_BG, stroke=GREEN_LINE)
         self.label(MARGIN + 18, top + h - 20, 'Amount Received', color=GREEN_STRONG)
         self.text(MARGIN + 18, top + 15, _fmt(self.inv.currency, r.amount),
                   font=BOLD, size=24, color=GREEN)

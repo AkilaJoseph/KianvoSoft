@@ -1408,20 +1408,35 @@ a.btn-three:hover {
   margin-bottom: 22px;
 }
 
-.ks-spotlight-chips {
+.ks-spotlight-features {
+  list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 30px;
+  gap: 10px 26px;
+  margin: 0 0 32px;
+  padding: 0;
 }
 
-.ks-spotlight-chip {
-  padding: 5px 13px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .05);
-  border: 1px solid var(--ks-border-glass);
+.ks-spotlight-features li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
   color: var(--ks-text-secondary);
-  font-size: .78rem;
+  font-size: .92rem;
+  font-weight: 500;
+}
+
+.ks-spotlight-features i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, .12);
+  color: var(--ks-cyan);
+  font-size: .62rem;
+  flex-shrink: 0;
 }
 
 .ks-spotlight-cta {
@@ -1459,6 +1474,43 @@ a.btn-three:hover {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.ks-spotlight-poster-item::after {
+  /* Subtle inner sheen — keeps a plain screenshot from looking flat inside
+     the poster frame, the way a real movie poster has a printed gloss. */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(155deg, rgba(255, 255, 255, .10) 0%, rgba(255, 255, 255, 0) 30%),
+              linear-gradient(to top, rgba(5, 6, 12, .55) 0%, rgba(5, 6, 12, 0) 38%);
+  pointer-events: none;
+}
+
+.ks-spotlight-ribbon {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(5, 6, 12, .55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 240, 255, .3);
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+}
+
+.ks-spotlight-ribbon i {
+  color: #ffc107;
+  font-size: .68rem;
 }
 
 .ks-spotlight-poster-glow {
@@ -1564,7 +1616,7 @@ a.btn-three:hover {
   .ks-spotlight-cta {
     justify-content: center;
   }
-  .ks-spotlight-chips {
+  .ks-spotlight-features {
     justify-content: center;
   }
   .ks-spotlight-tagline {

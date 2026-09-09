@@ -39,7 +39,14 @@
   transition: all 0.3s ease;
 }
 .ks-form-wrap textarea { min-height: 90px; resize: vertical; }
-.ks-form-wrap select { cursor: pointer; }
+/* `color-scheme: dark` is what makes the native dropdown list dark too —
+   without it the popup renders white on Chrome/Edge. */
+.ks-form-wrap select { cursor: pointer; color-scheme: dark; appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%2300f0ff' d='M1 1.5 6 6.5l5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 13px center;
+  background-size: 11px; padding-right: 34px; }
+.ks-form-wrap select option, .ks-form-wrap select optgroup {
+  background: #0d1424; color: #fff; }
 .ks-form-wrap input:focus, .ks-form-wrap textarea:focus, .ks-form-wrap select:focus {
   outline: none; border-color: #00f0ff;
   box-shadow: 0 0 15px rgba(0,240,255,0.06);

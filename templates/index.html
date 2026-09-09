@@ -1,5 +1,5 @@
 {% extends 'main/base.html' %}
-{% load static %}
+{% load static brand_art %}
 {% block title %}KianvoSoft — Innovating Africa's Digital Future{% endblock title %}
 {% block content %}
 
@@ -78,7 +78,7 @@
 				<a href="{% url 'project_detail' product.project.slug %}" style="text-decoration: none; display: block; height: 100%;">
 				{% endif %}
 				<div class="ks-project-card ks-reveal" style="height: 100%; display: flex; flex-direction: column;{% if product.project %} cursor: pointer;{% endif %}">
-					<div class="ks-project-image" style="background-image: url('{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/img/portfolio/portfolio-1.png' %}{% endif %}'); height: 160px;">
+					<div class="ks-project-image" style="background-image: url('{% if product.image %}{{ product.image.url }}{% else %}{% brand_art 'product' product.name|slugify %}{% endif %}'); height: 160px;">
 						<span class="ks-project-category" style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);">{{ product.short_description|truncatechars:30 }}</span>
 					</div>
 					<div class="ks-project-content" style="flex-grow: 1; display: flex; flex-direction: column;">
@@ -201,7 +201,7 @@
 				<div class="ks-project-card ks-reveal ks-reveal-delay-1"
 					style="height: 100%; display: flex; flex-direction: column;">
 					<div class="ks-project-image"
-						style="background-image: url('{% if service.image %}{{ service.image.url }}{% else %}{% static 'assets/img/portfolio/portfolio-1.png' %}{% endif %}');">
+						style="background-image: url('{% if service.image %}{{ service.image.url }}{% else %}{% brand_art 'service' service.slug %}{% endif %}');">
 						<span class="ks-project-category"
 							style="background: rgba(0, 240, 255, 0.2); border-color: var(--ks-primary);"><i
 								class="{{ service.icon_class }}"></i></span>
@@ -627,9 +627,16 @@
 				<div class="ks-reveal ks-reveal-delay-{{ forloop.counter0 }}" style="width: 100%;">
 					<div class="ks-testimonial-card" style="padding: 35px 28px; text-align: center; height: 100%; display: flex; flex-direction: column; background: rgba(10, 14, 26, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(0, 240, 255, 0.1); border-radius: 14px; transition: all 0.3s ease;">
 						<div style="margin-bottom: 18px;">
-							<img src="{% if testimonial.client_image %}{{ testimonial.client_image.url }}{% else %}{% static 'assets/img/testimonial/user-pic-2.png' %}{% endif %}"
-								alt="{{ testimonial.client_name }}"
+							{% if testimonial.client_image %}
+							<img src="{{ testimonial.client_image.url }}" alt="{{ testimonial.client_name }}"
 								style="width: 72px; height: 72px; object-fit: cover; border-radius: 50%; border: 2px solid var(--ks-cyan);">
+							{% else %}
+							{# Initials rather than a stock face — see testimonials.html #}
+							<div aria-label="{{ testimonial.client_name }}"
+								style="width: 72px; height: 72px; margin: 0 auto; border-radius: 50%; border: 2px solid var(--ks-cyan); display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, rgba(139,92,246,0.22), rgba(0,240,255,0.12)); color: var(--ks-cyan); font-family: var(--ks-font-heading), sans-serif; font-weight: 700; font-size: 1.5rem;">
+								{{ testimonial.client_name|initials }}
+							</div>
+							{% endif %}
 						</div>
 						<h4 style="margin-bottom: 2px; color: white; font-size: 1.1rem;">{{ testimonial.client_name }}</h4>
 						<span style="display: block; color: var(--ks-cyan); font-size: 0.85rem; margin-bottom: 14px;">{{ testimonial.client_position }}{% if testimonial.client_company %}, {{ testimonial.client_company }}{% endif %}</span>

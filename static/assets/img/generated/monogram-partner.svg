@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320" role="img" aria-label="Partner">
+  <defs>
+    <linearGradient id="g23598bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="52%" stop-color="#1a103d"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="g23598glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#00f0ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g23598glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g23598stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <pattern id="g23598grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#f1f5f9" stroke-opacity=".045" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="320" height="320" rx="58" fill="url(#g23598bg)"/>
+  <rect width="320" height="320" rx="58" fill="url(#g23598grid)"/>
+  <ellipse cx="96" cy="80" rx="160" ry="160" fill="url(#g23598glowA)"/>
+  <rect x="1" y="1" width="318" height="318" rx="58" fill="none" stroke="url(#g23598stroke)" stroke-opacity=".45" stroke-width="2"/>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="115" font-weight="800" fill="url(#g23598stroke)">P</text>
+</svg>

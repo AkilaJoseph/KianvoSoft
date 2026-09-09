@@ -1,0 +1,475 @@
+{% extends 'portal/dashboard.html' %}
+{% load static %}
+
+{% block portal_title %}{% if is_edit %}Edit Invoice{% else %}New Invoice{% endif %} - KianvoSoft Portal{% endblock %}
+
+{% block portal_content %}
+<style>
+.ks-form-wrap { max-width: 920px; }
+.ks-form-group { margin-bottom: 18px; }
+.ks-form-label {
+  display: block; color: rgba(255,255,255,0.5); font-size: 0.78rem;
+  font-weight: 500; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.ks-form-wrap input[type="text"], .ks-form-wrap input[type="email"],
+.ks-form-wrap input[type="number"], .ks-form-wrap input[type="date"],
+.ks-form-wrap textarea, .ks-form-wrap select {
+  width: 100%; padding: 10px 14px; border-radius: 8px;
+  background: rgba(0,0,0,0.3); border: 1px solid rgba(0,240,255,0.1);
+  color: white; font-size: 0.9rem; font-family: 'Inter', sans-serif; transition: all 0.3s ease;
+}
+.ks-form-wrap textarea { min-height: 70px; resize: vertical; }
+/* `color-scheme: dark` is what makes the native dropdown list dark too —
+   without it the popup renders white on Chrome/Edge. */
+.ks-form-wrap select { cursor: pointer; color-scheme: dark; appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%2300f0ff' d='M1 1.5 6 6.5l5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 13px center;
+  background-size: 11px; padding-right: 34px; }
+.ks-form-wrap select option, .ks-form-wrap select optgroup {
+  background: #0d1424; color: #fff; }
+.ks-form-wrap input:focus, .ks-form-wrap textarea:focus, .ks-form-wrap select:focus {
+  outline: none; border-color: #00f0ff; box-shadow: 0 0 15px rgba(0,240,255,0.06);
+}
+.ks-form-wrap .helptext { display:block; color: rgba(255,255,255,0.2); font-size: 0.72rem; margin-top: 4px; }
+.ks-form-wrap .errorlist { list-style:none; padding:0; margin:0 0 4px; }
+.ks-form-wrap .errorlist li { color:#ff6b6b; font-size:0.8rem; }
+.ks-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+.ks-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:700px){ .ks-grid-3,.ks-grid-2{grid-template-columns:1fr;} }
+
+.ks-card { background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);
+  border-radius:12px; padding:20px; margin-bottom:20px; }
+.ks-card h5 { color:#fff; font-family:'Outfit',sans-serif; font-weight:600; font-size:0.95rem;
+  margin:0 0 16px; display:flex; align-items:center; gap:8px; }
+.ks-card h5 i { color:#00f0ff; }
+
+/* items table */
+.ks-items { width:100%; border-collapse:collapse; }
+.ks-items th { text-align:left; color:rgba(255,255,255,0.4); font-size:0.72rem; text-transform:uppercase;
+  letter-spacing:.5px; padding:6px 8px; font-weight:500; }
+.ks-items td { padding:6px 8px; vertical-align:top; }
+.ks-items input { margin:0; }
+.ks-items .col-desc { width:46%; }
+.ks-items .col-qty { width:14%; }
+.ks-items .col-price { width:22%; }
+.ks-items .col-del { width:60px; text-align:center; }
+.ks-del-check { accent-color:#ff6b6b; width:18px; height:18px; cursor:pointer; }
+.ks-add-row { margin-top:10px; background:rgba(0,240,255,0.08); border:1px solid rgba(0,240,255,0.15);
+  color:#00f0ff; padding:8px 16px; border-radius:8px; cursor:pointer; font-size:0.85rem; }
+.ks-add-row:hover { background:rgba(0,240,255,0.15); }
+
+.ks-btn-save { padding:11px 30px; border:none; border-radius:8px;
+  background:linear-gradient(135deg,#00f0ff,#1a7aff); color:#080c16; font-size:0.95rem;
+  font-weight:600; cursor:pointer; transition:all .3s; }
+.ks-btn-save:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(0,240,255,0.25); }
+.ks-btn-cancel { padding:11px 24px; border-radius:8px; font-size:0.9rem;
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  color:rgba(255,255,255,0.4); text-decoration:none; }
+
+.ks-actionbar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; }
+.ks-btn-print { background:linear-gradient(135deg,#8b5cf6,#6d28d9); color:#fff; padding:10px 18px;
+  border-radius:8px; text-decoration:none; font-size:0.88rem; font-weight:600; display:inline-flex; align-items:center; gap:7px; }
+.ks-btn-wa { background:#25D366; color:#fff; padding:10px 18px; border-radius:8px; text-decoration:none;
+  font-size:0.88rem; font-weight:600; display:inline-flex; align-items:center; gap:7px; }
+.ks-share { background:rgba(0,0,0,0.3); border:1px solid rgba(0,240,255,0.1); border-radius:8px;
+  padding:8px 12px; color:#00f0ff; font-size:0.8rem; flex:1; min-width:220px; }
+.ks-summary { display:flex; gap:22px; flex-wrap:wrap; }
+.ks-summary div span { display:block; }
+.ks-summary .k { color:rgba(255,255,255,0.4); font-size:0.72rem; text-transform:uppercase; letter-spacing:.5px; }
+.ks-summary .v { color:#fff; font-size:1.1rem; font-weight:700; font-family:'Outfit',sans-serif; }
+.ks-summary .v.bal { color:#ff6b6b; }
+.ks-summary .v.paid { color:#10b981; }
+
+/* billing type switch */
+.ks-billing { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:4px; }
+.ks-billing label { flex:1; min-width:210px; cursor:pointer; margin:0; }
+.ks-billing input { position:absolute; opacity:0; pointer-events:none; }
+.ks-billing .box { border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 14px;
+  background:rgba(0,0,0,0.25); transition:all .25s; }
+.ks-billing .box b { color:#fff; font-size:0.9rem; display:block; }
+.ks-billing .box span { color:rgba(255,255,255,0.35); font-size:0.75rem; }
+.ks-billing input:checked + .box { border-color:#00f0ff; background:rgba(0,240,255,0.07);
+  box-shadow:0 0 18px rgba(0,240,255,0.08); }
+.ks-billing .box i { color:#00f0ff; margin-right:6px; }
+.ks-check { display:flex; align-items:center; gap:9px; color:rgba(255,255,255,0.75); font-size:0.87rem; }
+.ks-check input { width:17px; height:17px; accent-color:#00f0ff; cursor:pointer; }
+.ks-preset { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  color:rgba(255,255,255,0.6); padding:5px 12px; border-radius:20px; cursor:pointer;
+  font-size:0.76rem; margin:0 6px 6px 0; }
+.ks-preset:hover { border-color:#00f0ff; color:#00f0ff; }
+.ks-btn-renew { background:linear-gradient(135deg,#f59e0b,#d97706); color:#fff; padding:10px 18px;
+  border-radius:8px; text-decoration:none; font-size:0.88rem; font-weight:600;
+  display:inline-flex; align-items:center; gap:7px; }
+.ks-renew-note { color:rgba(255,255,255,0.4); font-size:0.78rem; margin-top:8px; }
+</style>
+
+<div class="d-flex align-items-center gap-3 mb-4">
+  <a href="{% url 'portal_list' 'invoices' %}" style="color:rgba(255,255,255,0.3);font-size:1.1rem;"><i class="fas fa-arrow-left"></i></a>
+  <h4 style="color:white;font-family:'Outfit',sans-serif;font-weight:600;margin:0;">
+    <i class="fas fa-file-invoice-dollar me-2" style="color:#00f0ff;"></i>
+    {% if is_edit %}Edit Invoice — {{ invoice.number }}{% else %}New Invoice{% endif %}
+  </h4>
+</div>
+
+{% if is_edit %}
+<div class="ks-actionbar">
+  <a class="ks-btn-print" href="{{ pdf_url }}?download=1"><i class="fas fa-file-pdf"></i> Download PDF</a>
+  <a class="ks-btn-cancel" style="display:inline-flex;align-items:center;gap:7px;" href="{{ share_url }}" target="_blank"><i class="fas fa-eye"></i> Preview page</a>
+  <a class="ks-btn-wa" target="_blank"
+     href="https://wa.me/{% if invoice.client.phone %}{{ invoice.client.phone|cut:' '|cut:'+' }}{% endif %}?text={{ share_url|urlencode }}">
+     <i class="fab fa-whatsapp"></i> Send on WhatsApp</a>
+  <input class="ks-share" value="{{ share_url }}" readonly onclick="this.select()">
+  {% if invoice.next_period_start %}
+  <a class="ks-btn-renew" href="{% url 'portal_invoice_renew' invoice.pk %}"
+     onclick="return confirm('Create the next period invoice for this subscription?');">
+     <i class="fas fa-rotate"></i> Renew — next period</a>
+  {% endif %}
+</div>
+<div class="ks-card">
+  <div class="ks-summary">
+    <div><span class="k">Total</span><span class="v">{{ invoice.currency }} {{ invoice.total }}</span></div>
+    {% if invoice.is_subscription %}
+      <div><span class="k">Period ({{ invoice.get_billing_cycle_display }})</span><span class="v" style="font-size:0.95rem">{{ invoice.period_label|default:"—" }}</span></div>
+    {% else %}
+      <div><span class="k">Deposit ({{ invoice.deposit_percentage }}%)</span><span class="v">{{ invoice.currency }} {{ invoice.deposit_amount }}</span></div>
+    {% endif %}
+    <div><span class="k">Paid</span><span class="v paid">{{ invoice.currency }} {{ invoice.amount_paid }}</span></div>
+    <div><span class="k">Balance due</span><span class="v bal">{{ invoice.currency }} {{ invoice.balance_due }}</span></div>
+  </div>
+  {% if invoice.is_subscription or invoice.next_period_start %}
+    <div class="ks-renew-note">
+      {% if invoice.next_period_start %}
+        Next payment <b style="color:#f59e0b">{{ invoice.currency }} {{ invoice.next_payment_amount|floatformat:0 }}</b>
+        on <b style="color:#f59e0b">{{ invoice.next_period_start|date:"d M Y" }}</b>{% if invoice.has_price_change %} (price changes after this invoice){% endif %}{% if invoice.plan_name %} · Plan: {{ invoice.plan_name }}{% endif %}.
+      {% else %}
+        Auto-renew is off — no further invoices will be generated for this plan.
+      {% endif %}
+      {% if invoice.previous_invoice %}
+        Previous period: <a href="{% url 'portal_update' 'invoices' invoice.previous_invoice.pk %}" style="color:#00f0ff">{{ invoice.previous_invoice.number }}</a>.
+      {% endif %}
+      {% if invoice.renewals.exists %}
+        Renewed as:
+        {% for r in invoice.renewals.all %}<a href="{% url 'portal_update' 'invoices' r.pk %}" style="color:#00f0ff">{{ r.number }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}.
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endif %}
+
+<div class="ks-form-wrap">
+  <form method="post">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div style="color:#ff6b6b;margin-bottom:12px;">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="ks-card">
+      <h5><i class="fas fa-tags"></i> What are you billing?</h5>
+      <div class="ks-billing">
+        {% for radio in form.billing_type %}
+          <label>
+            {{ radio.tag }}
+            <div class="box">
+              <b><i class="fas {% if radio.data.value == 'subscription' %}fa-rotate{% else %}fa-briefcase{% endif %}"></i>{{ radio.choice_label }}</b>
+              <span>{% if radio.data.value == 'subscription' %}Recurring SaaS plan billed per period{% else %}Website, system, design — billed once{% endif %}</span>
+            </div>
+          </label>
+        {% endfor %}
+      </div>
+      {{ form.billing_type.errors }}
+    </div>
+
+    <div class="ks-card" id="sub-card">
+      <h5><i class="fas fa-rotate"></i> Subscription period</h5>
+      <div class="ks-grid-2">
+        <div class="ks-form-group">
+          <label class="ks-form-label">Plan name</label>{{ form.plan_name }}
+          <span class="helptext">e.g. "Pro — 10 users", "School System — Standard".</span>
+        </div>
+        <div class="ks-form-group" id="cycle-group">
+          <label class="ks-form-label" id="cycle-label">Billing cycle</label>{{ form.billing_cycle }}
+          <span class="helptext" id="cycle-hint">How often this plan is billed.</span>
+        </div>
+      </div>
+      <div class="ks-grid-3">
+        <div class="ks-form-group"><label class="ks-form-label">Period start</label>{{ form.period_start }}</div>
+        <div class="ks-form-group"><label class="ks-form-label">Period end</label>{{ form.period_end }}
+          <span class="helptext">Filled in from the cycle — change it for a custom period.</span></div>
+        <div class="ks-form-group">
+          <label class="ks-form-label">Renewal</label>
+          <div class="ks-check" style="padding-top:9px;">{{ form.auto_renew }} <span>Auto-renew — keep billing after this period</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ks-card">
+      <h5><i class="fas fa-info-circle"></i> Invoice details</h5>
+      <div class="ks-grid-2">
+        <div class="ks-form-group">
+          <label class="ks-form-label">Client *</label>
+          {{ form.client.errors }}{{ form.client }}
+          <span class="helptext">Not listed? Add them under Billing → Clients first.</span>
+        </div>
+        <div class="ks-form-group">
+          <label class="ks-form-label">Project type</label>
+          {{ form.project_type }}
+        </div>
+      </div>
+      <div class="ks-form-group">
+        <label class="ks-form-label">Project title *</label>
+        {{ form.project_title.errors }}{{ form.project_title }}
+      </div>
+      <div class="ks-grid-3">
+        <div class="ks-form-group"><label class="ks-form-label">Issue date</label>{{ form.issue_date }}</div>
+        <div class="ks-form-group"><label class="ks-form-label">Due date</label>{{ form.due_date }}</div>
+        <div class="ks-form-group"><label class="ks-form-label">Status</label>{{ form.status }}</div>
+      </div>
+    </div>
+
+    <div class="ks-card">
+      <h5><i class="fas fa-list"></i> Line items</h5>
+      {{ formset.management_form }}
+      {% if formset.non_form_errors %}<div style="color:#ff6b6b;">{{ formset.non_form_errors }}</div>{% endif %}
+      <table class="ks-items">
+        <thead>
+          <tr>
+            <th class="col-desc">Description</th>
+            <th class="col-qty">Qty</th>
+            <th class="col-price">Unit price</th>
+            <th class="col-del">Remove</th>
+          </tr>
+        </thead>
+        <tbody id="items-body">
+          {% for f in formset %}
+          <tr>
+            {{ f.id }}{{ f.order.as_hidden }}
+            <td class="col-desc">{{ f.description }}{{ f.description.errors }}</td>
+            <td class="col-qty">{{ f.quantity }}</td>
+            <td class="col-price">{{ f.unit_price }}</td>
+            <td class="col-del">{% if f.instance.pk %}{{ f.DELETE }}{% else %}<span style="color:rgba(255,255,255,0.15)">—</span>{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button type="button" class="ks-add-row" id="add-row"><i class="fas fa-plus"></i> Add line</button>
+
+      <div id="preset-bar" style="margin-top:12px;">
+        <span class="ks-form-label" style="margin-bottom:7px;">Quick subscription lines</span>
+        {% for preset in subscription_presets %}
+          <button type="button" class="ks-preset" data-desc="{{ preset }}">+ {{ preset }}</button>
+        {% endfor %}
+      </div>
+
+      <!-- empty form template for JS -->
+      <template id="empty-form">
+        <tr>
+          {{ formset.empty_form.id }}{{ formset.empty_form.order.as_hidden }}
+          <td class="col-desc">{{ formset.empty_form.description }}</td>
+          <td class="col-qty">{{ formset.empty_form.quantity }}</td>
+          <td class="col-price">{{ formset.empty_form.unit_price }}</td>
+          <td class="col-del"><span style="color:rgba(255,255,255,0.15)">—</span></td>
+        </tr>
+      </template>
+    </div>
+
+    <div class="ks-card">
+      <h5><i class="fas fa-money-bill-wave"></i> Payment</h5>
+      <div class="ks-grid-3">
+        <div class="ks-form-group"><label class="ks-form-label">Currency</label>{{ form.currency }}</div>
+        <div class="ks-form-group"><label class="ks-form-label">Discount</label>{{ form.discount }}</div>
+        <div class="ks-form-group" id="deposit-group"><label class="ks-form-label">Deposit %</label>{{ form.deposit_percentage }}
+          <span class="helptext">75 = deposit to start. 100 = pay in full.</span></div>
+      </div>
+      <div class="ks-form-group" style="max-width:280px;">
+        <label class="ks-form-label">Amount paid so far</label>{{ form.amount_paid }}
+        <span class="helptext">Update this as the client pays.</span>
+      </div>
+      <div class="ks-grid-3">
+        <div class="ks-form-group"><label class="ks-form-label">Account name</label>{{ form.account_name }}</div>
+        <div class="ks-form-group"><label class="ks-form-label">Bank</label>{{ form.bank_name }}</div>
+        <div class="ks-form-group"><label class="ks-form-label">Account number</label>{{ form.account_number }}</div>
+      </div>
+    </div>
+
+    <div class="ks-card">
+      <h5><i class="fas fa-arrow-trend-up"></i> Next payment <span style="color:rgba(255,255,255,0.25);font-weight:400;font-size:0.8rem;">— optional, only if the price changes</span></h5>
+      <p style="color:rgba(255,255,255,0.35);font-size:0.8rem;margin:-8px 0 16px;">
+        Use this when the client pays one amount now and a different amount later —
+        e.g. system built now, then hosting &amp; support every year. It prints on the
+        invoice so there are no surprises, and the renewal is billed at this price.
+      </p>
+      <div class="ks-grid-3">
+        <div class="ks-form-group">
+          <label class="ks-form-label">Next amount</label>{{ form.renewal_amount }}
+          <span class="helptext">Leave blank if the price stays the same.</span>
+        </div>
+        <div class="ks-form-group">
+          <label class="ks-form-label">Payable from</label>{{ form.renewal_date }}
+          <span class="helptext" id="renewal-date-hint">Subscriptions use the day after the period ends.</span>
+        </div>
+        <!-- the cycle field is moved in here for one-off invoices -->
+        <div id="cycle-slot"></div>
+      </div>
+      <div class="ks-form-group">
+        <label class="ks-form-label">What it covers</label>{{ form.renewal_label }}
+      </div>
+      <div id="renewal-preview" style="display:none;color:#f59e0b;font-size:0.85rem;">
+        <i class="fas fa-circle-info"></i> <span></span>
+      </div>
+    </div>
+
+    <div class="ks-card">
+      <h5><i class="fas fa-sticky-note"></i> Note to client</h5>
+      <div class="ks-form-group">{{ form.notes }}<span class="helptext">Swahili is fine, e.g. malipo ya 75% kuanzia kazi.</span></div>
+    </div>
+
+    <div class="d-flex align-items-center gap-3">
+      <button type="submit" class="ks-btn-save"><i class="fas fa-save me-1"></i> Save invoice</button>
+      <a href="{% url 'portal_list' 'invoices' %}" class="ks-btn-cancel">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<script>
+(function(){
+  var addBtn = document.getElementById('add-row');
+  var body = document.getElementById('items-body');
+  var tpl = document.getElementById('empty-form');
+  var totalForms = document.querySelector('#id_{{ formset.prefix }}-TOTAL_FORMS');
+  if(!addBtn || !body || !tpl || !totalForms) return;
+
+  function addRow(){
+    var idx = parseInt(totalForms.value, 10);
+    var html = tpl.innerHTML.replace(/__prefix__/g, idx);
+    var holder = document.createElement('tbody');
+    holder.innerHTML = html;
+    var row = holder.firstElementChild;
+    body.appendChild(row);
+    totalForms.value = idx + 1;
+    return row;
+  }
+  addBtn.addEventListener('click', addRow);
+
+  // Quick subscription line presets — fill the first blank description, else add a row.
+  document.querySelectorAll('.ks-preset').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var blank = Array.prototype.find.call(
+        body.querySelectorAll('input[name$="-description"]'),
+        function(i){ return !i.value.trim(); }
+      );
+      if(!blank){ blank = addRow().querySelector('input[name$="-description"]'); }
+      blank.value = btn.dataset.desc;
+      var qty = blank.closest('tr').querySelector('input[name$="-quantity"]');
+      if(qty && !qty.value){ qty.value = '1'; }
+      blank.focus();
+    });
+  });
+})();
+
+// Subscription vs one-off: show the right fields, auto-fill the period end.
+(function(){
+  var radios = document.querySelectorAll('input[name="billing_type"]');
+  var subCard = document.getElementById('sub-card');
+  var depositGroup = document.getElementById('deposit-group');
+  var presetBar = document.getElementById('preset-bar');
+  var cycle = document.getElementById('id_billing_cycle');
+  var start = document.getElementById('id_period_start');
+  var end = document.getElementById('id_period_end');
+  var issue = document.getElementById('id_issue_date');
+  var due = document.getElementById('id_due_date');
+  if(!radios.length || !subCard) return;
+
+  var MONTHS = { monthly:1, quarterly:3, semi_annual:6, annual:12 };
+
+  function isSub(){
+    var checked = document.querySelector('input[name="billing_type"]:checked');
+    return checked && checked.value === 'subscription';
+  }
+
+  var cycleGroup = document.getElementById('cycle-group');
+  var cycleSlot = document.getElementById('cycle-slot');
+  var cycleLabel = document.getElementById('cycle-label');
+  var cycleHint = document.getElementById('cycle-hint');
+  var subGrid = cycleGroup ? cycleGroup.parentNode : null;
+  var renewalDateHint = document.getElementById('renewal-date-hint');
+
+  function sync(){
+    var sub = isSub();
+    subCard.style.display = sub ? '' : 'none';
+    if(presetBar){ presetBar.style.display = sub ? '' : 'none'; }
+    if(depositGroup){ depositGroup.style.display = sub ? 'none' : ''; }
+    if(sub && start && !start.value && issue && issue.value){ start.value = issue.value; }
+
+    // The cycle field serves both cards — park it wherever it's visible.
+    if(cycleGroup && cycleSlot && subGrid){
+      if(sub){
+        if(cycleGroup.parentNode !== subGrid){ subGrid.appendChild(cycleGroup); }
+        if(cycleLabel){ cycleLabel.textContent = 'Billing cycle'; }
+        if(cycleHint){ cycleHint.textContent = 'How often this plan is billed.'; }
+      }else{
+        if(cycleGroup.parentNode !== cycleSlot){ cycleSlot.appendChild(cycleGroup); }
+        if(cycleLabel){ cycleLabel.textContent = 'Then repeats every'; }
+        if(cycleHint){ cycleHint.textContent = 'Used when you press Renew again later.'; }
+      }
+    }
+    if(renewalDateHint){
+      renewalDateHint.textContent = sub
+        ? 'Blank = the day after the period ends.'
+        : 'When the next payment falls due, e.g. one year from now.';
+    }
+    fillEnd(true);
+    previewRenewal();
+  }
+
+  // Live preview of the sentence the client will read on the invoice.
+  var rAmount = document.getElementById('id_renewal_amount');
+  var rDate = document.getElementById('id_renewal_date');
+  var rLabel = document.getElementById('id_renewal_label');
+  var preview = document.getElementById('renewal-preview');
+  var currency = document.getElementById('id_currency');
+
+  function previewRenewal(){
+    if(!preview || !rAmount) return;
+    var when = (rDate && rDate.value) || (isSub() && end && end.value
+      ? new Date(new Date(end.value + 'T00:00:00').getTime() + 86400000).toISOString().slice(0,10)
+      : '');
+    if(!rAmount.value || !when){ preview.style.display = 'none'; return; }
+    var cur = (currency && currency.value) || 'TSh';
+    var amount = Number(rAmount.value).toLocaleString('en-US');
+    var covers = (rLabel && rLabel.value.trim()) ? ' for ' + rLabel.value.trim() : '';
+    preview.querySelector('span').textContent =
+      'The invoice will read: “From ' + new Date(when + 'T00:00:00')
+        .toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'}) +
+      ', the amount payable is ' + cur + ' ' + amount + covers + '.”';
+    preview.style.display = '';
+  }
+  [rAmount, rDate, rLabel, currency].forEach(function(el){
+    if(el){ el.addEventListener('input', previewRenewal); el.addEventListener('change', previewRenewal); }
+  });
+
+  // period end = start + cycle − 1 day. `onlyIfBlank` protects a custom end date.
+  function fillEnd(onlyIfBlank){
+    if(!isSub() || !start || !end || !cycle) return;
+    if(onlyIfBlank === true && end.value) return;
+    var months = MONTHS[cycle.value];
+    if(!months || !start.value) return;
+    var d = new Date(start.value + 'T00:00:00');
+    if(isNaN(d)) return;
+    var day = d.getDate();
+    var target = new Date(d.getFullYear(), d.getMonth() + months, 1);
+    var lastDay = new Date(target.getFullYear(), target.getMonth() + 1, 0).getDate();
+    target.setDate(Math.min(day, lastDay));
+    target.setDate(target.getDate() - 1);
+    end.value = target.toISOString().slice(0, 10);
+    if(due && !due.value){ due.value = start.value; }
+    previewRenewal();
+  }
+
+  radios.forEach(function(r){ r.addEventListener('change', sync); });
+  if(cycle){ cycle.addEventListener('change', fillEnd); }
+  if(start){ start.addEventListener('change', fillEnd); }
+  sync();
+})();
+</script>
+{% endblock %}

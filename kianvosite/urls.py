@@ -29,6 +29,8 @@ urlpatterns = [
     path('portal/', portal_views.portal_login),
 
     # Portal CRUD
+    path('portal/invoices/<int:pk>/renew/', portal_views.portal_invoice_renew,
+         name='portal_invoice_renew'),
     path('portal/<slug:model_name>/', portal_views.portal_list, name='portal_list'),
     path('portal/<slug:model_name>/create/', portal_views.portal_create, name='portal_create'),
     path('portal/<slug:model_name>/<int:pk>/', portal_views.portal_detail, name='portal_detail'),

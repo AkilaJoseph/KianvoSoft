@@ -17,11 +17,17 @@
 	<meta property="og:description" content="Tanzanian technology company delivering software products, technical training, applied AI research, and technology consultancy.">
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="{{ request.build_absolute_uri }}">
-	<meta property="og:image" content="{% static 'assets/img/favicon-1.png' %}">
+	{# Share cards need an absolute URL and a 1.91:1 raster; a relative path or small favicon shows blank/tiny. #}
+	<meta property="og:image" content="{{ SITE_URL }}{% static 'assets/img/generated/og-image.png' %}">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta property="og:image:alt" content="KianvoSoft — software that solves real problems">
+	<meta property="og:site_name" content="KianvoSoft">
 	<meta property="og:locale" content="en_US">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="KianvoSoft — Innovating Africa's Digital Future">
 	<meta name="twitter:description" content="Tanzanian technology company delivering software products, technical training, applied AI research, and technology consultancy.">
+	<meta name="twitter:image" content="{{ SITE_URL }}{% static 'assets/img/generated/og-image.png' %}">
 	{% endblock seo_meta %}
 
 	<link rel="canonical" href="{{ request.build_absolute_uri }}">

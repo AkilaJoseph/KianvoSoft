@@ -1,0 +1,14 @@
+{% if invoice.is_subscription and invoice.period_label %}
+<div class="sub-band">
+  <div>
+    <span class="lbl">Subscription{% if invoice.plan_name %} — {{ invoice.plan_name }}{% endif %}</span>
+    <b>{{ invoice.period_label }}</b>
+  </div>
+  {% if invoice.next_period_start %}
+  <div class="r">
+    <span class="lbl">Renews on / Inaendelea</span>
+    <b>{{ invoice.next_period_start|date:"d M Y" }}</b>
+  </div>
+  {% endif %}
+</div>
+{% endif %}

@@ -1,5 +1,5 @@
 {% extends 'main/base.html' %}
-{% load static %}
+{% load static brand_art %}
 {% block title %}Testimonials - KianvoSoft{% endblock title %}
 {% block content %}
 
@@ -35,9 +35,16 @@
         <div class="ks-reveal ks-reveal-delay-{{ forloop.counter0 }}" style="width: 100%;">
           <div style="padding: 40px; text-align: center; height: 100%; display: flex; flex-direction: column; background: rgba(10, 14, 26, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 12px;">
             <div style="margin-bottom: 20px;">
-              <img src="{% if testimonial.client_image %}{{ testimonial.client_image.url }}{% else %}{% static 'assets/img/testimonial/user-pic-2.png' %}{% endif %}"
-                   alt="{{ testimonial.client_name }}"
+              {% if testimonial.client_image %}
+              <img src="{{ testimonial.client_image.url }}" alt="{{ testimonial.client_name }}"
                    style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 2px solid var(--ks-cyan); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);">
+              {% else %}
+              {# Initials, not a stock face: a stand-in portrait puts a stranger's photo to a real client's name. #}
+              <div aria-label="{{ testimonial.client_name }}"
+                   style="width: 80px; height: 80px; margin: 0 auto; border-radius: 50%; border: 2px solid var(--ks-cyan); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, rgba(139,92,246,0.22), rgba(0,240,255,0.12)); color: var(--ks-cyan); font-family: var(--ks-font-heading), sans-serif; font-weight: 700; font-size: 1.7rem; letter-spacing: 1px;">
+                {{ testimonial.client_name|initials }}
+              </div>
+              {% endif %}
             </div>
             <h3 style="margin-bottom: 5px; font-size: 1.2rem; color: white;">{{ testimonial.client_name }}</h3>
             <span style="display: block; color: var(--ks-cyan); font-size: 0.9rem; margin-bottom: 15px;">{{ testimonial.client_position }}{% if testimonial.client_company %}, {{ testimonial.client_company }}{% endif %}</span>

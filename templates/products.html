@@ -1,5 +1,5 @@
 {% extends 'main/base.html' %}
-{% load static %}
+{% load static brand_art %}
 {% block title %}Our Products - KianvoSoft{% endblock title %}
 {% block content %}
 
@@ -236,6 +236,9 @@
             <img src="{{ project.thumbnail.url }}" alt="{{ project.name }}" class="ks-preview-img">
             {% elif project.screenshot_1 %}
             <img src="{{ project.screenshot_1.url }}" alt="{{ project.name }}" class="ks-preview-img">
+            {% else %}
+            {# Abstract cover, deliberately not a mock UI: a fabricated screenshot would misrepresent the work. #}
+            <img src="{% brand_art 'project' %}" alt="{{ project.name }}" class="ks-preview-img">
             {% endif %}
 
             <!-- Image gallery strip (ProductImage + direct screenshot fields) -->

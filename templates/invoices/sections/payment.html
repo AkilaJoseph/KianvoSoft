@@ -1,0 +1,17 @@
+{% load humanize %}
+<div class="blk">
+  <div class="card pay">
+    <h4>Payment Details / Malipo</h4>
+    <div class="kv"><span>Account name</span><span>{{ invoice.account_name }}</span></div>
+    <div class="kv"><span>Bank</span><span>{{ invoice.bank_name }}</span></div>
+    <div class="kv"><span>Account number</span><span>{{ invoice.account_number }}</span></div>
+    {% with call=invoice.payment_call %}
+      {% if call %}
+      <div class="deposit-call">
+        <span>{{ call.label }}</span>
+        <b>{{ invoice.currency }} {{ call.amount|floatformat:0|intcomma }}</b>
+      </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+</div>

@@ -60,9 +60,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.sites',
+    'django.contrib.humanize',
     'ckeditor',
     'ckeditor_uploader',
     'kianvosite',
+    'invoices',
 ]
 
 SITE_ID = 1

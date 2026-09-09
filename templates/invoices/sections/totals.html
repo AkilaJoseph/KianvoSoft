@@ -1,0 +1,29 @@
+{% load humanize %}
+<div class="totals">
+  <table>
+    <tr>
+      <td>Subtotal</td>
+      <td class="r">{{ invoice.currency }} {{ invoice.subtotal|floatformat:0|intcomma }}</td>
+    </tr>
+    {% if invoice.discount %}
+    <tr>
+      <td>Discount</td>
+      <td class="r">− {{ invoice.currency }} {{ invoice.discount|floatformat:0|intcomma }}</td>
+    </tr>
+    {% endif %}
+    <tr class="grand">
+      <td>Total</td>
+      <td class="r">{{ invoice.currency }} {{ invoice.total|floatformat:0|intcomma }}</td>
+    </tr>
+    {% if invoice.amount_paid %}
+    <tr class="paid-row">
+      <td>Paid</td>
+      <td class="r">− {{ invoice.currency }} {{ invoice.amount_paid|floatformat:0|intcomma }}</td>
+    </tr>
+    {% endif %}
+    <tr class="bal">
+      <td>Balance Due</td>
+      <td class="r">{{ invoice.currency }} {{ invoice.balance_due|floatformat:0|intcomma }}</td>
+    </tr>
+  </table>
+</div>

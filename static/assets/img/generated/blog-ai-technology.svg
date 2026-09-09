@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="AI &amp; Technology">
+  <defs>
+    <linearGradient id="g888bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="52%" stop-color="#1a103d"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="g888glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g888glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#00f0ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g888stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#00f0ff"/>
+    </linearGradient>
+    <pattern id="g888grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#f1f5f9" stroke-opacity=".045" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g888bg)"/>
+  <rect width="1200" height="630" fill="url(#g888grid)"/>
+  <ellipse cx="192" cy="38" rx="504" ry="315" fill="url(#g888glowA)"/>
+  <ellipse cx="972" cy="498" rx="456" ry="290" fill="url(#g888glowB)"/>
+    <path d="M58 116 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g888stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="252" cy="116" r="3" fill="url(#g888stroke)" fill-opacity=".5"/>
+  <path d="M7 251 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g888stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="201" cy="251" r="3" fill="url(#g888stroke)" fill-opacity=".5"/>
+  <path d="M-13 357 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g888stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="181" cy="357" r="3" fill="url(#g888stroke)" fill-opacity=".5"/>
+  <path d="M50 486 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g888stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="244" cy="486" r="3" fill="url(#g888stroke)" fill-opacity=".5"/>
+  <g transform="translate(772.2,151.2) scale(3.2760)" fill="none" stroke="url(#g888stroke)" color="url(#g888stroke)" stroke-width="1.28" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"><circle cx="22" cy="30" r="7"/><circle cx="22" cy="70" r="7"/>
+                <circle cx="50" cy="50" r="9"/><circle cx="78" cy="30" r="7"/>
+                <circle cx="78" cy="70" r="7"/>
+                <path d="M29 33l13 12M29 67l13-13M58 45l13-12M58 55l13 12" stroke-opacity=".6"/></g>
+  <rect x="79" y="189" width="4" height="189" rx="2" fill="url(#g888stroke)"/>
+  <text x="120" y="227" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="3" fill="#3b82f6">ARTICLE</text>
+  <text x="120" y="315" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="72" font-weight="800" fill="#f1f5f9">AI &amp; Technology</text>
+  <text x="120" y="554" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="23" font-weight="600" letter-spacing="2" fill="#94a3b8">KIANVOSOFT</text>
+</svg>

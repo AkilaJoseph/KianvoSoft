@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Tech">
+  <defs>
+    <linearGradient id="g79263bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="52%" stop-color="#1a103d"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="g79263glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g79263glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g79263stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <pattern id="g79263grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#f1f5f9" stroke-opacity=".045" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g79263bg)"/>
+  <rect width="1200" height="630" fill="url(#g79263grid)"/>
+  <ellipse cx="372" cy="139" rx="504" ry="315" fill="url(#g79263glowA)"/>
+  <ellipse cx="696" cy="422" rx="456" ry="290" fill="url(#g79263glowB)"/>
+    <path d="M63 121 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g79263stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="257" cy="121" r="3" fill="url(#g79263stroke)" fill-opacity=".5"/>
+  <path d="M41 225 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g79263stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="235" cy="225" r="3" fill="url(#g79263stroke)" fill-opacity=".5"/>
+  <path d="M68 378 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g79263stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="262" cy="378" r="3" fill="url(#g79263stroke)" fill-opacity=".5"/>
+  <path d="M42 478 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g79263stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="236" cy="478" r="3" fill="url(#g79263stroke)" fill-opacity=".5"/>
+  <g transform="translate(772.2,151.2) scale(3.2760)" fill="none" stroke="url(#g79263stroke)" color="url(#g79263stroke)" stroke-width="1.28" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"><path d="M50 10l9 27 27 9-27 9-9 27-9-27-27-9 27-9z"/>
+                   <circle cx="80" cy="24" r="5" stroke-opacity=".7"/></g>
+  <rect x="79" y="189" width="4" height="189" rx="2" fill="url(#g79263stroke)"/>
+  <text x="120" y="227" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="3" fill="#ec4899">ARTICLE</text>
+  <text x="120" y="315" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="72" font-weight="800" fill="#f1f5f9">Tech</text>
+  <text x="120" y="554" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="23" font-weight="600" letter-spacing="2" fill="#94a3b8">KIANVOSOFT</text>
+</svg>

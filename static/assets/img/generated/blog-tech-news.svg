@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Tech News">
+  <defs>
+    <linearGradient id="g15588bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="52%" stop-color="#1a103d"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="g15588glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g15588glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g15588stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <pattern id="g15588grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#f1f5f9" stroke-opacity=".045" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g15588bg)"/>
+  <rect width="1200" height="630" fill="url(#g15588grid)"/>
+  <ellipse cx="432" cy="145" rx="504" ry="315" fill="url(#g15588glowA)"/>
+  <ellipse cx="732" cy="315" rx="456" ry="290" fill="url(#g15588glowB)"/>
+    <path d="M28 116 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g15588stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="222" cy="116" r="3" fill="url(#g15588stroke)" fill-opacity=".5"/>
+  <path d="M17 231 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g15588stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="211" cy="231" r="3" fill="url(#g15588stroke)" fill-opacity=".5"/>
+  <path d="M60 370 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g15588stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="254" cy="370" r="3" fill="url(#g15588stroke)" fill-opacity=".5"/>
+  <path d="M-20 476 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g15588stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="174" cy="476" r="3" fill="url(#g15588stroke)" fill-opacity=".5"/>
+  <g transform="translate(772.2,151.2) scale(3.2760)" fill="none" stroke="url(#g15588stroke)" color="url(#g15588stroke)" stroke-width="1.28" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"><rect x="10" y="22" width="66" height="56" rx="5"/>
+                  <path d="M76 36h12v36a6 6 0 01-12 0z" stroke-opacity=".7"/>
+                  <path d="M20 36h30M20 48h46M20 58h46M20 68h30" stroke-opacity=".6"/></g>
+  <rect x="79" y="189" width="4" height="189" rx="2" fill="url(#g15588stroke)"/>
+  <text x="120" y="227" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="3" fill="#f59e0b">ARTICLE</text>
+  <text x="120" y="315" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="72" font-weight="800" fill="#f1f5f9">Tech News</text>
+  <text x="120" y="554" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="23" font-weight="600" letter-spacing="2" fill="#94a3b8">KIANVOSOFT</text>
+</svg>

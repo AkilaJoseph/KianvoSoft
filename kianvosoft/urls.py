@@ -26,9 +26,10 @@ from kianvosite.sitemaps import sitemaps
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('invoices/', include('invoices.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('robots.txt', lambda r: HttpResponse(
-        'User-agent: *\nDisallow: /admin/\nDisallow: /portal/\nAllow: /\n\nSitemap: https://kianvosoft.com/sitemap.xml\n',
+        'User-agent: *\nDisallow: /admin/\nDisallow: /portal/\nDisallow: /invoices/\nAllow: /\n\nSitemap: https://kianvosoft.com/sitemap.xml\n',
         content_type='text/plain'
     )),
     # Serve uploaded media files in both dev and production

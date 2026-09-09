@@ -18,6 +18,7 @@ from .models import (
     HeroSlide, ActiveProduct
 )
 from .utils import send_new_blog_notification, send_new_announcement_notification, send_blog_to_subscribers, send_announcement_to_subscribers
+from invoices.models import Client as BillingClient, Invoice, InvoiceItem
 
 # ---------------------------------------------------------------------------
 #  Icon picker
@@ -165,6 +166,10 @@ def _stats():
         'total_hero_slides': HeroSlide.objects.filter(is_active=True).count(),
         'total_active_products': ActiveProduct.objects.filter(is_active=True).count(),
         'total_stats': CompanyStat.objects.filter(is_active=True).count(),
+        'total_clients': BillingClient.objects.count(),
+        'total_invoices': Invoice.objects.count(),
+        'unpaid_invoices': Invoice.objects.exclude(status=Invoice.STATUS_PAID)
+                                          .exclude(status=Invoice.STATUS_CANCELLED).count(),
     }
 
 SIDEBAR = [
@@ -182,6 +187,10 @@ SIDEBAR = [
         ('Team Members','fas fa-users','teammembers','total_team'),
         ('Gallery','fas fa-images','galleryimages','total_gallery'),
         ('Gallery Categories','fas fa-tags','gallerycategories','total_gallery_cats'),
+    ]},
+    {'name':'Billing', 'links':[
+        ('Invoices','fas fa-file-invoice-dollar','invoices','total_invoices'),
+        ('Clients','fas fa-user-tie','clients','total_clients'),
     ]},
     {'name':'Announcements', 'links':[
         ('All Announcements','fas fa-bullhorn','announcements','total_announcements'),
@@ -210,9 +219,9 @@ def portal_dashboard(request):
         'recent_posts': BlogPost.objects.filter(is_published=True).order_by('-published_date')[:3],
         'open_announcements_list': Announcement.objects.filter(status='open')[:5],
         'quick_actions': [
-            ('New Blog Post','fas fa-plus-circle','blogposts','create','#00f0ff'),
+            ('New Invoice','fas fa-file-invoice-dollar','invoices','create','#00f0ff'),
+            ('New Blog Post','fas fa-plus-circle','blogposts','create','#1a7aff'),
             ('New Project','fas fa-plus-circle','projects','create','#8b5cf6'),
-            ('New Team Member','fas fa-user-plus','teammembers','create','#10b981'),
             ('New Announcement','fas fa-bullhorn','announcements','create','#ffc107'),
         ],
         'pending_count': ContactInquiry.objects.filter(status='new').count(),
@@ -225,6 +234,19 @@ def portal_dashboard(request):
 
 # Model registry: what to display/list/search for each model
 REGISTRY = {
+    'invoices': {
+        'model': Invoice, 'icon': 'fas fa-file-invoice-dollar', 'label': 'Invoice',
+        'list': ['number','client','project_title','billing_type','status','issue_date'],
+        'search': ['number','project_title','client__name','plan_name'],
+        'filter_map': {'status': None, 'project_type': None, 'billing_type': None},
+        'order': ['-issue_date','-id'],
+    },
+    'clients': {
+        'model': BillingClient, 'icon': 'fas fa-user-tie', 'label': 'Client',
+        'list': ['name','contact_person','phone','email'],
+        'search': ['name','contact_person','phone','email'],
+        'order': ['name'],
+    },
     'projects': {
         'model': Project, 'icon': 'fas fa-code', 'label': 'Project',
         'list': ['name','category','status','is_featured','is_active','order'],
@@ -507,6 +529,8 @@ def portal_list(request, model_name):
 
 @login_required
 def portal_create(request, model_name):
+    if model_name == 'invoices':
+        return _portal_invoice_form(request)
     meta = _get_meta(model_name)
     if request.method == 'POST':
         form = _build_form(meta['model'], meta, data=request.POST, files=request.FILES)
@@ -549,6 +573,8 @@ def portal_create(request, model_name):
 
 @login_required
 def portal_update(request, model_name, pk):
+    if model_name == 'invoices':
+        return _portal_invoice_form(request, pk=pk)
     meta = _get_meta(model_name)
     obj = get_object_or_404(meta['model'], pk=pk)
     if request.method == 'POST':
@@ -587,6 +613,8 @@ def portal_delete(request, model_name, pk):
 @login_required
 def portal_detail(request, model_name, pk):
     """Read-only detail view (for inquiries, applications, etc.)."""
+    if model_name == 'invoices':
+        return _portal_invoice_form(request, pk=pk)
     meta = _get_meta(model_name)
     obj = get_object_or_404(meta['model'], pk=pk)
     fields = []
@@ -626,3 +654,109 @@ def portal_detail(request, model_name, pk):
     base_ctx = {'sections': SIDEBAR, 'stats': _stats(), 'meta': meta, 'model_name': model_name}
     context = {**base_ctx, 'obj': obj, 'fields': fields, 'readonly_fields': readonly}
     return render(request, 'portal/model_detail.html', context)
+
+
+# ---------------------------------------------------------------------------
+#  Invoices (custom — the generic CRUD can't handle line items)
+# ---------------------------------------------------------------------------
+
+INVOICE_FIELDS = [
+    'client', 'project_title', 'project_type', 'issue_date', 'due_date',
+    'billing_type', 'plan_name', 'billing_cycle', 'period_start', 'period_end',
+    'auto_renew', 'renewal_amount', 'renewal_date', 'renewal_label',
+    'currency', 'discount', 'deposit_percentage', 'amount_paid',
+    'status', 'account_name', 'bank_name', 'account_number', 'notes',
+]
+
+
+def _invoice_form_classes():
+    from django import forms as _f
+
+    InvoiceForm = _f.modelform_factory(
+        Invoice, fields=INVOICE_FIELDS,
+        widgets={
+            'issue_date': _f.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'due_date': _f.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'period_start': _f.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'period_end': _f.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'billing_type': _f.RadioSelect(attrs={'class': 'ks-billing-radio'}),
+            'renewal_date': _f.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'renewal_label': _f.TextInput(
+                attrs={'placeholder': 'e.g. Hosting, domain & support (1 year)'},
+            ),
+            'notes': _f.Textarea(attrs={'rows': 3}),
+        },
+    )
+    ItemFormSet = _f.inlineformset_factory(
+        Invoice, InvoiceItem,
+        fields=['description', 'quantity', 'unit_price', 'order'],
+        extra=4, can_delete=True,
+    )
+    return InvoiceForm, ItemFormSet
+
+
+@login_required
+def _portal_invoice_form(request, pk=None):
+    meta = REGISTRY['invoices']
+    instance = get_object_or_404(Invoice, pk=pk) if pk else None
+    InvoiceForm, ItemFormSet = _invoice_form_classes()
+
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST, instance=instance)
+        formset = ItemFormSet(request.POST, instance=instance or Invoice())
+        if form.is_valid() and formset.is_valid():
+            obj = form.save()
+            formset.instance = obj
+            formset.save()
+            messages.success(request, f'Invoice {obj.number} saved.')
+            return redirect('portal_update', model_name='invoices', pk=obj.pk)
+        messages.error(request, 'Please correct the errors below.')
+    else:
+        form = InvoiceForm(instance=instance)
+        formset = ItemFormSet(instance=instance or Invoice())
+
+    share_url = pdf_url = None
+    if instance:
+        share_url = request.build_absolute_uri(instance.get_absolute_url())
+        pdf_url = request.build_absolute_uri(
+            reverse('invoices:invoice_pdf', args=[instance.public_token])
+        )
+
+    context = {
+        'sections': SIDEBAR, 'stats': _stats(), 'meta': meta,
+        'model_name': 'invoices',
+        'form': form, 'formset': formset,
+        'is_edit': instance is not None,
+        'invoice': instance,
+        'share_url': share_url,
+        'pdf_url': pdf_url,
+        'subscription_presets': SUBSCRIPTION_PRESETS,
+    }
+    return render(request, 'portal/invoice_form.html', context)
+
+
+# Line items pre-filled when you pick "Subscription" on a blank invoice.
+SUBSCRIPTION_PRESETS = [
+    'System subscription — hosting, updates & support',
+    'Domain renewal',
+    'Extra user licences',
+]
+
+
+@login_required
+def portal_invoice_renew(request, pk):
+    """Create the next period's invoice from a subscription invoice."""
+    invoice = get_object_or_404(Invoice, pk=pk)
+    renewal = invoice.create_next_period_invoice()
+    if not renewal:
+        messages.error(
+            request,
+            'Cannot renew: this invoice must be a Subscription with auto-renew on '
+            'and a period end date.',
+        )
+        return redirect('portal_update', model_name='invoices', pk=invoice.pk)
+    messages.success(
+        request,
+        f'Renewal invoice {renewal.number} created for {renewal.period_label}.',
+    )
+    return redirect('portal_update', model_name='invoices', pk=renewal.pk)

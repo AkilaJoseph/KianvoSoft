@@ -1,0 +1,21 @@
+{% load humanize %}
+{% if invoice.next_period_start %}
+<div class="next-pay">
+  <div>
+    <div class="t">Next payment / Malipo yajayo</div>
+    <div class="d">
+      This invoice covers {% if invoice.is_subscription and invoice.period_label %}{{ invoice.period_label }}{% else %}the work listed above{% endif %}.
+      From <b>{{ invoice.next_period_start|date:"d M Y" }}</b> the amount payable is
+      <b>{{ invoice.currency }} {{ invoice.next_payment_amount|floatformat:0|intcomma }}</b>
+      for <b>{{ invoice.renewal_covers }}</b>.
+      {% if invoice.has_price_change %}
+        This differs from the amount on this invoice — kiasi cha malipo kitabadilika.
+      {% endif %}
+    </div>
+  </div>
+  <div class="amt">
+    <div class="w">From {{ invoice.next_period_start|date:"d M Y" }}</div>
+    <div class="v">{{ invoice.currency }} {{ invoice.next_payment_amount|floatformat:0|intcomma }}</div>
+  </div>
+</div>
+{% endif %}

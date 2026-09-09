@@ -1,5 +1,5 @@
 {% extends 'main/base.html' %}
-{% load static %}
+{% load static brand_art %}
 {% block title %}Blog & Insights - KianvoSoft{% endblock title %}
 {% block content %}
 
@@ -78,7 +78,9 @@
 						{% if post.featured_image %}
 							<img src="{{ post.featured_image.url }}" alt="{{ post.title }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px 20px 0 0;">
 						{% else %}
-							<img src="{% static 'assets/img/blog/blog-1.png' %}" alt="{{ post.title }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px 20px 0 0;">
+							{# Cover keyed to the category, so posts without images don't repeat one stock photo. #}
+							<img src="{% brand_art 'blog' post.category.slug %}" alt="{{ post.title }}"
+							     style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px 20px 0 0;">
 						{% endif %}
 					</div>
 					<div class="blog__five-single-blog-content">

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Project">
+  <defs>
+    <linearGradient id="g47301bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="52%" stop-color="#1a103d"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="g47301glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g47301glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g47301stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <pattern id="g47301grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#f1f5f9" stroke-opacity=".045" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g47301bg)"/>
+  <rect width="1200" height="630" fill="url(#g47301grid)"/>
+  <ellipse cx="348" cy="107" rx="504" ry="315" fill="url(#g47301glowA)"/>
+  <ellipse cx="888" cy="328" rx="456" ry="290" fill="url(#g47301glowB)"/>
+    <path d="M11 99 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g47301stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="205" cy="99" r="3" fill="url(#g47301stroke)" fill-opacity=".5"/>
+  <path d="M63 247 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g47301stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="257" cy="247" r="3" fill="url(#g47301stroke)" fill-opacity=".5"/>
+  <path d="M-7 363 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g47301stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="187" cy="363" r="3" fill="url(#g47301stroke)" fill-opacity=".5"/>
+  <path d="M40 476 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g47301stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="234" cy="476" r="3" fill="url(#g47301stroke)" fill-opacity=".5"/>
+  <g transform="translate(772.2,151.2) scale(3.2760)" fill="none" stroke="url(#g47301stroke)" color="url(#g47301stroke)" stroke-width="1.28" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"><path d="M50 12l34 19v38L50 88 16 69V31z"/>
+                     <path d="M16 31l34 19 34-19M50 50v38" stroke-opacity=".55"/></g>
+  <rect x="79" y="189" width="4" height="189" rx="2" fill="url(#g47301stroke)"/>
+  <text x="120" y="227" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="3" fill="#ec4899">BUILT BY KIANVOSOFT</text>
+  <text x="120" y="315" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="72" font-weight="800" fill="#f1f5f9">Project</text>
+  <text x="120" y="554" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="23" font-weight="600" letter-spacing="2" fill="#94a3b8">KIANVOSOFT</text>
+</svg>

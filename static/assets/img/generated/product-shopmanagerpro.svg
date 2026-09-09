@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" width="720" height="720" role="img" aria-label="p-shopmanagerpro">
+  <defs>
+    <linearGradient id="g86684bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="52%" stop-color="#1a103d"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="g86684glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g86684glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#00f0ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g86684stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#00f0ff"/>
+    </linearGradient>
+    <pattern id="g86684grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#f1f5f9" stroke-opacity=".045" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="720" height="720" fill="url(#g86684bg)"/>
+  <rect width="720" height="720" fill="url(#g86684grid)"/>
+  <ellipse cx="86" cy="72" rx="302" ry="360" fill="url(#g86684glowA)"/>
+  <ellipse cx="518" cy="461" rx="274" ry="331" fill="url(#g86684glowB)"/>
+    <path d="M34 139 h116 l40 -40 h106 l36 36 h212" fill="none" stroke="url(#g86684stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="150" cy="139" r="3" fill="url(#g86684stroke)" fill-opacity=".5"/>
+  <path d="M38 287 h116 l40 -40 h106 l36 36 h212" fill="none" stroke="url(#g86684stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="154" cy="287" r="3" fill="url(#g86684stroke)" fill-opacity=".5"/>
+  <path d="M-16 407 h116 l40 -40 h106 l36 36 h212" fill="none" stroke="url(#g86684stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="100" cy="407" r="3" fill="url(#g86684stroke)" fill-opacity=".5"/>
+  <path d="M10 547 h116 l40 -40 h106 l36 36 h212" fill="none" stroke="url(#g86684stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="126" cy="547" r="3" fill="url(#g86684stroke)" fill-opacity=".5"/>
+  <rect x="86" y="86" width="547" height="547" rx="50" fill="#f1f5f9" fill-opacity=".03" stroke="url(#g86684stroke)" stroke-opacity=".35" stroke-width="2"/>
+  <g transform="translate(201.6,201.6) scale(3.1680)" fill="none" stroke="url(#g86684stroke)" color="url(#g86684stroke)" stroke-width="1.26" stroke-linecap="round" stroke-linejoin="round" opacity="1.0"><path d="M50 12l34 19v38L50 88 16 69V31z"/>
+                     <path d="M16 31l34 19 34-19M50 50v38" stroke-opacity=".55"/></g>
+</svg>

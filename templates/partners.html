@@ -1,5 +1,5 @@
 {% extends 'main/base.html' %}
-{% load static %}
+{% load static brand_art %}
 {% block title %}Partners - KianvoSoft{% endblock title %}
 {% block content %}
 
@@ -75,6 +75,12 @@
         <div class="ks-partner-card ks-reveal ks-reveal-delay-{{ forloop.counter0 }}">
           {% if partner.logo %}
           <img src="{{ partner.logo.url }}" alt="{{ partner.name }}">
+          {% else %}
+          {# Initials badge — never a generated logo. The mark belongs to them. #}
+          <div aria-label="{{ partner.name }}"
+               style="width: 84px; height: 84px; margin: 0 auto 12px; border-radius: 18px; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, rgba(139,92,246,0.18), rgba(0,240,255,0.10)); border: 1px solid rgba(0,240,255,0.28); color: var(--ks-cyan); font-family: var(--ks-font-heading), sans-serif; font-weight: 800; font-size: 1.6rem; letter-spacing: 1px;">
+            {{ partner.name|initials }}
+          </div>
           {% endif %}
           <h5>{{ partner.name }}</h5>
           {% if partner.website_url %}

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Security">
+  <defs>
+    <linearGradient id="g82824bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="52%" stop-color="#1a103d"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="g82824glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g82824glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#00f0ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g82824stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#00f0ff"/>
+    </linearGradient>
+    <pattern id="g82824grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#f1f5f9" stroke-opacity=".045" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g82824bg)"/>
+  <rect width="1200" height="630" fill="url(#g82824grid)"/>
+  <ellipse cx="384" cy="113" rx="504" ry="315" fill="url(#g82824glowA)"/>
+  <ellipse cx="744" cy="397" rx="456" ry="290" fill="url(#g82824glowB)"/>
+    <path d="M-6 112 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g82824stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="188" cy="112" r="3" fill="url(#g82824stroke)" fill-opacity=".5"/>
+  <path d="M48 232 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g82824stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="242" cy="232" r="3" fill="url(#g82824stroke)" fill-opacity=".5"/>
+  <path d="M36 376 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g82824stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="230" cy="376" r="3" fill="url(#g82824stroke)" fill-opacity=".5"/>
+  <path d="M66 502 h194 l35 -35 h176 l32 32 h353" fill="none" stroke="url(#g82824stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="260" cy="502" r="3" fill="url(#g82824stroke)" fill-opacity=".5"/>
+  <g transform="translate(772.2,151.2) scale(3.2760)" fill="none" stroke="url(#g82824stroke)" color="url(#g82824stroke)" stroke-width="1.28" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"><path d="M50 10l32 12v26c0 22-14 34-32 42-18-8-32-20-32-42V22z"/>
+                      <path d="M36 50l10 10 20-20" stroke-opacity=".85"/></g>
+  <rect x="79" y="189" width="4" height="189" rx="2" fill="url(#g82824stroke)"/>
+  <text x="120" y="227" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="3" fill="#3b82f6">ARTICLE</text>
+  <text x="120" y="315" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="72" font-weight="800" fill="#f1f5f9">Security</text>
+  <text x="120" y="554" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="23" font-weight="600" letter-spacing="2" fill="#94a3b8">KIANVOSOFT</text>
+</svg>

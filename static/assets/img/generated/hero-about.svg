@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 700" width="1600" height="700" role="img" aria-label="about-hero">
+  <defs>
+    <linearGradient id="g86333bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="52%" stop-color="#1a103d"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="g86333glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g86333glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g86333stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <pattern id="g86333grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#f1f5f9" stroke-opacity=".045" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="700" fill="url(#g86333bg)"/>
+  <rect width="1600" height="700" fill="url(#g86333grid)"/>
+  <ellipse cx="336" cy="182" rx="672" ry="350" fill="url(#g86333glowA)"/>
+  <ellipse cx="1024" cy="504" rx="608" ry="322" fill="url(#g86333glowB)"/>
+    <path d="M43 114 h259 l38 -38 h235 l35 35 h471" fill="none" stroke="url(#g86333stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="302" cy="114" r="3" fill="url(#g86333stroke)" fill-opacity=".5"/>
+  <path d="M32 273 h259 l38 -38 h235 l35 35 h471" fill="none" stroke="url(#g86333stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="291" cy="273" r="3" fill="url(#g86333stroke)" fill-opacity=".5"/>
+  <path d="M-4 407 h259 l38 -38 h235 l35 35 h471" fill="none" stroke="url(#g86333stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="255" cy="407" r="3" fill="url(#g86333stroke)" fill-opacity=".5"/>
+  <path d="M-1 550 h259 l38 -38 h235 l35 35 h471" fill="none" stroke="url(#g86333stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="258" cy="550" r="3" fill="url(#g86333stroke)" fill-opacity=".5"/>
+  <circle cx="480" cy="350" r="112" fill="none" stroke="url(#g86333stroke)" stroke-opacity="0.30" stroke-width="1.6"/><circle cx="480" cy="350" r="189" fill="none" stroke="url(#g86333stroke)" stroke-opacity="0.23" stroke-width="1.6"/><circle cx="480" cy="350" r="266" fill="none" stroke="url(#g86333stroke)" stroke-opacity="0.16" stroke-width="1.6"/>
+  <g transform="translate(389.0,259.0) scale(1.8200)" fill="none" stroke="url(#g86333stroke)" color="url(#g86333stroke)" stroke-width="1.98" stroke-linecap="round" stroke-linejoin="round" opacity="1.0"><path d="M50 8c14 12 22 26 22 40a22 22 0 01-44 0c0-14 8-28 22-40z"/>
+                        <circle cx="50" cy="46" r="9"/>
+                        <path d="M34 74l-10 16 18-6M66 74l10 16-18-6" stroke-opacity=".7"/></g>
+  <g transform="translate(906.0,140.0) scale(3.6400)" fill="none" stroke="url(#g86333stroke)" color="url(#g86333stroke)" stroke-width="1.21" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"><path d="M34 30 12 50l22 20" /><path d="M66 30l22 20-22 20"/>
+                  <path d="M58 22 42 78" stroke-opacity=".65"/></g>
+</svg>

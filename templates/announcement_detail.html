@@ -8,7 +8,9 @@
 <meta property="og:description" content="{{ announcement.short_description|truncatechars:155 }}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
-{% if announcement.cover_image %}<meta property="og:image" content="{{ SITE_URL }}{{ announcement.cover_image.url }}">{% endif %}
+{% if announcement.cover_image %}<meta property="og:image" content="{{ SITE_URL }}{{ announcement.cover_image.url }}">
+{% else %}<meta property="og:image" content="{{ SITE_URL }}{% static 'assets/img/generated/og-image.png' %}">{% endif %}
+<meta name="twitter:image" content="{% if announcement.cover_image %}{{ SITE_URL }}{{ announcement.cover_image.url }}{% else %}{{ SITE_URL }}{% static 'assets/img/generated/og-image.png' %}{% endif %}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ announcement.title }}">
 <meta name="twitter:description" content="{{ announcement.short_description|truncatechars:155 }}">

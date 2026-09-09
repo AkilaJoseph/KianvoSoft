@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="640" height="640" role="img" aria-label="automation-systems">
+  <defs>
+    <linearGradient id="g699bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="52%" stop-color="#1a103d"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="g699glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g699glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g699stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <pattern id="g699grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#f1f5f9" stroke-opacity=".045" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="640" fill="url(#g699bg)"/>
+  <rect width="640" height="640" fill="url(#g699grid)"/>
+  <ellipse cx="173" cy="141" rx="269" ry="320" fill="url(#g699glowA)"/>
+  <ellipse cx="467" cy="499" rx="243" ry="294" fill="url(#g699glowB)"/>
+    <path d="M49 109 h104 l35 -35 h94 l32 32 h188" fill="none" stroke="url(#g699stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="153" cy="109" r="3" fill="url(#g699stroke)" fill-opacity=".5"/>
+  <path d="M31 249 h104 l35 -35 h94 l32 32 h188" fill="none" stroke="url(#g699stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="135" cy="249" r="3" fill="url(#g699stroke)" fill-opacity=".5"/>
+  <path d="M-9 367 h104 l35 -35 h94 l32 32 h188" fill="none" stroke="url(#g699stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="95" cy="367" r="3" fill="url(#g699stroke)" fill-opacity=".5"/>
+  <path d="M0 504 h104 l35 -35 h94 l32 32 h188" fill="none" stroke="url(#g699stroke)" stroke-opacity=".22" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="104" cy="504" r="3" fill="url(#g699stroke)" fill-opacity=".5"/>
+  <rect x="77" y="77" width="486" height="486" rx="45" fill="#f1f5f9" fill-opacity=".03" stroke="url(#g699stroke)" stroke-opacity=".35" stroke-width="2"/>
+  <g transform="translate(179.2,179.2) scale(2.8160)" fill="none" stroke="url(#g699stroke)" color="url(#g699stroke)" stroke-width="1.42" stroke-linecap="round" stroke-linejoin="round" opacity="1.0"><circle cx="38" cy="42" r="16"/><circle cx="38" cy="42" r="6"/>
+                        <circle cx="68" cy="66" r="11"/><circle cx="68" cy="66" r="4"/>
+                        <path d="M38 20v-8M38 64v8M16 42H8M60 42h8M23 27l-6-6M53 57l6 6"
+                              stroke-opacity=".75"/></g>
+</svg>

@@ -1,1 +1,10 @@
 venv
+
+# Each environment (local dev, production) keeps its own live database and
+# uploaded media — a deploy must never overwrite production's real data.
+db.sqlite3
+staticfiles/
+
+# A full-project backup archive that isn't part of the running site — it was
+# bloating every clone/push to ~90MB. Kept on disk locally, just not tracked.
+kianvosite.zip
